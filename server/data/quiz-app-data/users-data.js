@@ -1,19 +1,18 @@
 import pool from './pool.js';
 
-const createUser = async (username, password, firstName, lastName, role) => {
+const createUser = async (username, password, firstName, lastName) => {
   const insertSql = `
     insert into users(username, password, firstName, lastName, roleID, registerDate)
-    values (?, ?, ?, ?, (select id from roles where role = ?), ?)
+    values (?, ?, ?, ?, 2, ?)
   `;
 
-  const insertData = await pool.query(insertSql, [username, password, firstName, lastName, role, new Date()]);
+  const insertData = await pool.query(insertSql, [username, password, firstName, lastName, new Date()]);
 
   return {
     id: insertData.insertId,
     username,
     firstName,
     lastName,
-    role,
   };
 };
 

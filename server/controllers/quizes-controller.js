@@ -6,8 +6,9 @@ import quizesService from '../services/quizes-service.js';
 import quizesData from '../data/quiz-app-data/quizes-data.js';
 
 const quizesController = express.Router();
+quizesController.use(authMiddleware, checkTokenMiddleware(usersService));
 
-quizesController.get('/', authMiddleware, checkTokenMiddleware(usersService), async (req, res) => {
+quizesController.get('/', async (req, res) => {
   const { page, category, teacher } = req.query;
 
   if (!page || page !== page || page < 1) {

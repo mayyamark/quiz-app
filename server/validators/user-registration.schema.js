@@ -43,17 +43,6 @@ const userRegisterSchema = {
 
     return null;
   },
-  role: (value) => {
-    if (!value) {
-      return 'Role is required!';
-    }
-    
-    if (value !== 'student' && value !== 'teacher') {
-      return 'Role should be a student or a teacher!';
-    }
-
-    return null;
-  },
 };
 
 

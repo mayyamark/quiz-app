@@ -18,7 +18,7 @@ authController.post('/registration', bodyValidator(userRegistrationSchema), asyn
   const { user, userError } = await usersService.registerUser(usersData)(registrationData);
   
   if (userError === serviceErrors.DUPLICATE_RESOURCE) {
-      return res.status(401).send({ message: 'The username is already taken!' });
+    return res.status(401).send({ message: 'The username is already taken!' });
   } 
   
   const payload = {
@@ -26,7 +26,7 @@ authController.post('/registration', bodyValidator(userRegistrationSchema), asyn
     username: user.username,
     firstName: user.firstName,
     lastName: user.lastName,
-    role: user.role === 'teacher' ? USER_ROLES.TEACHER : USER_ROLES.STUDENT,
+    role: USER_ROLES.STUDENT,
   };
   
   const token = createToken(payload);
@@ -51,7 +51,7 @@ authController.post('/session', bodyValidator(userLogInSchema), async (req, res)
     username: user.username,
     firstName: user.firstName,
     lastName: user.lastName,
-    role: user.role === 'teacher' ? USER_ROLES.TEACHER : USER_ROLES.STUDENT,
+    role: user.role === USER_ROLES.TEACHER ? USER_ROLES.TEACHER : USER_ROLES.STUDENT,
   };
 
   const token = createToken(payload);
@@ -63,6 +63,7 @@ authController.delete('/session', authMiddleware, async (req, res) => {
   const token =  req.headers.authorization.split(' ')[1];
 
   const { tokenError } = await usersService.logOutUser(blacklistData)(token);
+  
   if (tokenError === serviceErrors.UNAUTHORIZED) {
     return res.status(403).json({ message: 'User is not logged in!' });
   }
