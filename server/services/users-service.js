@@ -68,7 +68,26 @@ const isUserLoggedOut = (blacklistData) => {
     if (isTokenBlacklisted) {
       return { isTokenBlacklisted, tokenError: serviceErrors.UNAUTHORIZED };
     }
+    
     return { isTokenBlacklisted, tokenError: null };
+  };
+};
+
+const getUserById = (usersData) => {
+  return async (userID) => {
+    const user = await usersData.getById(userID);
+
+    if (!user) {
+      return {
+        user: null,
+        userError: serviceErrors.RESOURCE_NOT_FOUND,
+      };
+    }
+
+    return {
+      user,
+      userError: null,
+    };
   };
 };
 
@@ -77,4 +96,5 @@ export default {
   getLoggedUser,
   logOutUser,
   isUserLoggedOut,
+  getUserById,
 };
