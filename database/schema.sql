@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `quiz`.`users` (
   `password` VARCHAR(70) NOT NULL,
   `registerDate` DATETIME NULL,
   `avatar` VARCHAR(45) NULL,
+  `additionalInfo` VARCHAR(250) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_users_roles_idx` (`roleID` ASC),
   CONSTRAINT `fk_users_roles`
