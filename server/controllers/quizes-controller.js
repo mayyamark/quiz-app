@@ -9,13 +9,13 @@ const quizesController = express.Router();
 quizesController.use(authMiddleware, checkTokenMiddleware(usersService));
 
 quizesController.get('/', async (req, res) => {
-  const { page, category, teacher } = req.query;
+  const { page, limit, category, teacher } = req.query;
 
   if (!page || page !== page || page < 1) {
     return res.status(400).send({ message: 'Invalid page number!' });
   }
 
-  const quizes = await quizesService.getQuizes(quizesData)(+page, category, teacher);
+  const quizes = await quizesService.getQuizes(quizesData)(+page, +limit, category, teacher);
 
   res.status(200).send(quizes);
 });

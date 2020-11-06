@@ -2,6 +2,7 @@ const getHistoryByStrudentId = (historyData) => {
   return async (userID, page, limit, quiz) => {
     if (page || quiz) {
       let offset, settedLimit;
+      
       if (limit) {
         settedLimit = limit;
         offset = (page - 1) * settedLimit;

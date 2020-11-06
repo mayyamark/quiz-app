@@ -1,13 +1,20 @@
 const getQuizes = (quizesData) => {
-  return async (page, category, teacher) => {
+  return async (page, limit, category, teacher) => {
     if (page || category || teacher) {
-      const limit = 5;
-      const offset = (page - 1) * limit;
+      let offset, settedLimit;
+      
+      if (limit) {
+        settedLimit = limit;
+        offset = (page - 1) * settedLimit;
+      } else {
+        settedLimit = 5;
+        offset = (page - 1) * settedLimit;
+      }
 
       const allSearchedQuizes = await quizesData.searchBy(category, teacher);
 
       if (page) {
-        const quizesOnPage = await quizesData.searchByWithPages(category, teacher, offset, limit);
+        const quizesOnPage = await quizesData.searchByWithPages(category, teacher, offset, settedLimit);
 
         return {
           quizes: quizesOnPage,
