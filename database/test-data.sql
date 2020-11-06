@@ -9,17 +9,16 @@ INSERT INTO `roles` (`id`, `role`) VALUES
 
 
 
-INSERT INTO `users` (`id`, `username`, `password`, `firstName`, `lastName`, `roleID`,  `registerDate`, `avatar`, `additionalInfo`) VALUES
-(1, 'pesho', '$2b$10$4rwzGQjZgL6qjpI88wPmL.AWID3SS05HrTSzpoStxtmyPy/6JY90.', 'Pesho', 'Peshov', 1, '2020-11-04 18:53:45', NULL, NULL),
-(2, 'gosho', '$2b$10$T0Sa2etBy9pC4rX69Ahj6OshOzwsM5tQJ0nk3Vjq/iGinXiwkaxi6', 'Gosho', 'Goshov', 2, '2020-11-04 18:50:38', NULL, NULL),
-(3, 'tosho', '$2b$10$UINu0b5yEMTMkJe6SzfxuuMGaCAV6JEosFRWF52dFb3qJCSN9.N8i', 'Tosho', 'Toshov', 1, '2020-11-04 18:55:38', NULL, NULL);
+INSERT INTO `users` (`id`, `username`, `password`, `firstName`, `lastName`, `roleID`,  `registerDate`, `avatar`) VALUES
+(1, 'pesho', '$2b$10$4rwzGQjZgL6qjpI88wPmL.AWID3SS05HrTSzpoStxtmyPy/6JY90.', 'Pesho', 'Peshov', 1, '2020-11-04 18:53:45', NULL),
+(2, 'gosho', '$2b$10$T0Sa2etBy9pC4rX69Ahj6OshOzwsM5tQJ0nk3Vjq/iGinXiwkaxi6', 'Gosho', 'Goshov', 2, '2020-11-04 18:50:38', NULL),
+(3, 'tosho', '$2b$10$UINu0b5yEMTMkJe6SzfxuuMGaCAV6JEosFRWF52dFb3qJCSN9.N8i', 'Tosho', 'Toshov', 1, '2020-11-04 18:55:38', NULL);
 
 
 
 INSERT INTO `categories` (`id`, `category`) VALUES
 (1, 'chemistry'),
 (2, 'mathematics');
-
 
 
 

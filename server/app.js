@@ -22,7 +22,6 @@ app.use(passport.initialize());
 
 app.use('/', authController);
 app.use('/quizes', quizesController);
-app.use('/users', usersController);
 app.use('/students', studentsController);
 
 app.all('*', (req, res) =>

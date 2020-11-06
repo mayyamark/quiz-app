@@ -73,28 +73,9 @@ const isUserLoggedOut = (blacklistData) => {
   };
 };
 
-const getUserById = (usersData) => {
-  return async (userID) => {
-    const user = await usersData.getById(userID);
-
-    if (!user) {
-      return {
-        user: null,
-        userError: serviceErrors.RESOURCE_NOT_FOUND,
-      };
-    }
-
-    return {
-      user,
-      userError: null,
-    };
-  };
-};
-
 export default {
   registerUser,
   getLoggedUser,
   logOutUser,
   isUserLoggedOut,
-  getUserById,
 };

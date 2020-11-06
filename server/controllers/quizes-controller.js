@@ -23,7 +23,7 @@ quizesController.get('/', async (req, res) => {
   res.status(200).send(quizes);
 });
 
-quizesController.post('/:id', authMiddleware, async (req, res) => {
+quizesController.post('/:id', async (req, res) => {
   const { id } = req.params;
   const user = req.user;
 

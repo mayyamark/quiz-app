@@ -28,20 +28,7 @@ const getByUsername = async (username) => {
   return userData[0];
 };
 
-const getById = async (userID) => {
-  const userSql = `
-    select u.id, u.username, u.firstName, u.lastName, r.role, DATE_FORMAT(u.registerDate, '%d %b %Y, %H:%i:%s') as registerDate, u.avatar, u.additionalInfo  
-    from users u
-    join roles r on u.roleID = r.id
-    where u.id = ?
-  `;
-
-  const userData = await pool.query(userSql, [userID]);
-  return userData[0];
-};
-
 export default {
   createUser,
   getByUsername,
-  getById,
 };
