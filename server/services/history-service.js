@@ -1,16 +1,9 @@
 const getHistoryByStrudentId = (historyData) => {
   return async (userID, page, limit, quiz) => {
     if (page || quiz) {
-      let offset, settedLimit;
-      
-      if (limit) {
-        settedLimit = limit;
-        offset = (page - 1) * settedLimit;
-      } else {
-        settedLimit = 5;
-        offset = (page - 1) * settedLimit;
-      }
-    
+      const settedLimit = limit ? limit : 5;
+      const offset = (page - 1) * settedLimit;
+
       const allSearchedHistory = await historyData.searchBy(userID, quiz);
   
       if (page) {
