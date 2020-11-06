@@ -6,6 +6,7 @@ import passport from 'passport';
 import jwtStrategy from './auth/strategy.js';
 import { PORT } from './config.js';
 import authController from './controllers/auth-controller.js';
+import quizesController from './controllers/quizes-controller.js';
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(helmet());
 app.use(passport.initialize());
 
 app.use('/', authController);
+app.use('/quizes', quizesController);
 
 app.all('*', (req, res) =>
   res.status(404).send({ message: 'Resource not found!' }),
