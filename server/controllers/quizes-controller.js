@@ -27,6 +27,12 @@ quizesController.post('/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
   const user = req.user;
 
+  const { quiz, quizError } = await quizesService.getQuizById(quizesData)(id);
+  
+  if (quizError === serviceErrors.RESOURCE_NOT_FOUND) {
+    return res.status(404).send({ message: 'Quiz is not found!' });
+  }
+
   if (user.role === 'student') {
     const { historyError } = await historyService.isQuizSolvedByStudent(historyData)(user.id, id);
 
@@ -37,7 +43,7 @@ quizesController.post('/:id', authMiddleware, async (req, res) => {
 
   const startTime = await historyService.startSolvingQuiz(historyData)(user.id, id);
 
-  res.status(200).send({ startTime });
+  res.status(200).send({ quiz, startTime });
 });
 
 export default quizesController;

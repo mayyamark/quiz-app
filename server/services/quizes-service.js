@@ -1,3 +1,5 @@
+import serviceErrors from './errors-service.js';
+
 const getQuizes = (quizesData) => {
   return async (page, limit, category, teacher) => {
     if (page || category || teacher) {
@@ -26,6 +28,25 @@ const getQuizes = (quizesData) => {
   };
 };
 
+const getQuizById = (quizesData) => {
+  return async (quizID) => {
+    const quiz = await quizesData.getById(quizID);
+
+    if (!quiz) {
+      return { 
+        quiz: null, 
+        quizError: serviceErrors.RESOURCE_NOT_FOUND,
+      };
+    }
+
+    return { 
+      quiz, 
+      quizError: null,
+    };
+  };
+};
+
 export default {
   getQuizes,
+  getQuizById,
 };
