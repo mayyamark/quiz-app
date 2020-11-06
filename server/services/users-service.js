@@ -46,7 +46,23 @@ const getLoggedUser = (usersData) => {
 
   };
 };
+
+const logOutUser = (blacklistData) => {
+  return async (token) => {
+    const isTokenBlacklisted = await blacklistData.isTokenBlacklisted(token);
+
+    if (isTokenBlacklisted) {
+      return { tokenError: serviceErrors.UNAUTHORIZED };
+    }
+    
+    const _ = await blacklistData.blacklistToken(token);
+
+    return { tokenError: null };
+  };
+};
+
 export default {
   registerUser,
   getLoggedUser,
+  logOutUser,
 };
