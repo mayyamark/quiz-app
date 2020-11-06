@@ -1,0 +1,6 @@
+export default {
+  RESOURCE_NOT_FOUND: 1,
+  DUPLICATE_RESOURCE: 2,
+  BAD_REQUEST: 3,
+  UNAUTHORIZED: 4,
+};
