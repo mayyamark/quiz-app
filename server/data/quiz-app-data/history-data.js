@@ -40,7 +40,32 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
   return await pool.query(historySql, [userID]);
 };
 
+const getSolveInfo = async (userID, quizID) => {
+  const historySql = `
+    select * 
+    from history
+    where userID = ? and quizID = ?;
+  `;
+
+  const historyData = await pool.query(historySql, [userID, quizID]);
+  return historyData?.[0];
+};
+
+const logStartSolving = async (userID, quizID) => {
+  const startTime = new Date();
+
+  const insertSql = `
+    insert into history(userID, quizID, started)
+    values (?, ?, ?);
+  `;
+
+  const _ = await pool.query(insertSql, [userID, quizID, startTime]);
+  return startTime;
+};
+
 export default {
   searchBy,
   searchByWithPages,
+  getSolveInfo,
+  logStartSolving,
 };

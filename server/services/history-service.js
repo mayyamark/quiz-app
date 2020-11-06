@@ -1,3 +1,5 @@
+import serviceErrors from './errors-service.js';
+
 const getHistoryByStrudentId = (historyData) => {
   return async (userID, page, limit, quiz) => {
     if (page || quiz) {
@@ -26,6 +28,26 @@ const getHistoryByStrudentId = (historyData) => {
   };
 };
 
+const isQuizSolvedByStudent = (historyData) => {
+  return async (userID, quizID) => {
+    const history = await historyData.getSolveInfo(userID, quizID);
+
+    if (history) {
+      return {
+        history,
+        historyError: serviceErrors.DUPLICATE_RESOURCE,
+      };
+    }
+
+    return { history: null, historyError: null };
+  };
+};
+
+const startSolvingQuiz = (historyData) => async (userID, quizID) =>
+  await historyData.logStartSolving(userID, quizID);
+
 export default {
   getHistoryByStrudentId,
+  isQuizSolvedByStudent,
+  startSolvingQuiz,
 };

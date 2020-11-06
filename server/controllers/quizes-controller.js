@@ -4,6 +4,9 @@ import checkTokenMiddleware from '../middlewares/check-token-middlware.js';
 import usersService from '../services/users-service.js';
 import quizesService from '../services/quizes-service.js';
 import quizesData from '../data/quiz-app-data/quizes-data.js';
+import serviceErrors from '../services/errors-service.js';
+import historyService from '../services/history-service.js';
+import historyData from '../data/quiz-app-data/history-data.js';
 
 const quizesController = express.Router();
 quizesController.use(authMiddleware, checkTokenMiddleware(usersService));
@@ -18,6 +21,23 @@ quizesController.get('/', async (req, res) => {
   const quizes = await quizesService.getQuizes(quizesData)(+page, +limit, category, teacher);
 
   res.status(200).send(quizes);
+});
+
+quizesController.post('/:id', authMiddleware, async (req, res) => {
+  const { id } = req.params;
+  const user = req.user;
+
+  if (user.role === 'student') {
+    const { historyError } = await historyService.isQuizSolvedByStudent(historyData)(user.id, id);
+
+    if (historyError === serviceErrors.DUPLICATE_RESOURCE) {
+      return res.status(400).send({ message: 'Quiz has been already solved!' });
+    }
+  }
+
+  const startTime = await historyService.startSolvingQuiz(historyData)(user.id, id);
+
+  res.status(200).send({ startTime });
 });
 
 export default quizesController;
