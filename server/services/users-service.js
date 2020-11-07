@@ -73,9 +73,38 @@ const isUserLoggedOut = (blacklistData) => {
   };
 };
 
+const getTopStudents = (usersData) => {
+  return async (page, limit, username) => {
+    if (page || username) {
+      const settedLimit = limit ? limit : 10;
+      const offset = (page - 1) * settedLimit;
+
+      const allSearchedStudents = await usersData.searchBy(username);
+  
+      if (page) {
+        const studentsOnPage = await usersData.searchByWithPages(username, offset, settedLimit);
+    
+        return {
+          students: studentsOnPage,
+          currentPage: page,
+          studentsCount: allSearchedStudents.length,
+          hasNextPage: offset + settedLimit < allSearchedStudents.length,
+          hasPreviousPage: page > 1,
+        };
+      } else {
+        return {
+          history: allSearchedStudents,
+          historyCount: allSearchedStudents.length,
+        };
+      }
+    }
+  };
+};
+
 export default {
   registerUser,
   getLoggedUser,
   logOutUser,
   isUserLoggedOut,
+  getTopStudents,
 };

@@ -28,7 +28,45 @@ const getByUsername = async (username) => {
   return userData[0];
 };
 
+const searchBy = async (username) => {
+  let usersSql = `
+    select u.id, u.avatar, u.username, u.firstName, u.lastName, (select sum(score) from history h where h.userID = u.id) as totalScore
+    from users u
+    where u.roleID = 2
+  `;
+
+  if (username) {
+    usersSql += ` and u.username like '%${username}%'`;
+  }
+
+  usersSql += ' order by totalScore desc';
+
+  return await pool.query(usersSql);
+};
+
+const searchByWithPages = async (username, offset, limit) => {
+  let usersSql = `
+    select u.id, u.avatar, u.username, u.firstName, u.lastName, (select sum(score) from history h where h.userID = u.id) as totalScore
+    from users u
+    where u.roleID = 2
+  `;
+
+  if (username) {
+    usersSql += ` and u.username like '%${username}%'`;
+  }
+
+  usersSql += ' order by totalScore desc';
+  
+  if (offset !== undefined && limit) {
+    usersSql += ` limit ${limit} offset ${offset}`;
+  }
+
+  return await pool.query(usersSql);
+};
+
 export default {
   createUser,
   getByUsername,
+  searchBy,
+  searchByWithPages,
 };

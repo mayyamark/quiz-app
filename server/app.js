@@ -7,7 +7,6 @@ import jwtStrategy from './auth/strategy.js';
 import { PORT } from './config.js';
 import authController from './controllers/auth-controller.js';
 import quizesController from './controllers/quizes-controller.js';
-import usersController from './controllers/users-controller.js';
 import studentsController from './controllers/students-controller.js';
 
 const app = express();
