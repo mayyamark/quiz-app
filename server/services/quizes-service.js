@@ -46,7 +46,76 @@ const getQuizById = (quizesData) => {
   };
 };
 
+const createQuestion = (questionsData, answersData) => async (quiz, question) => {
+  const quizQuestion = await questionsData.create(
+      quiz, 
+      question.points, 
+      question.text,
+  );
+  quizQuestion.answers = [];
+
+  for(const answer of question.answers) {
+    const questAnswer = await answersData.create(
+      quizQuestion,
+      answer.text,
+      answer.isTrue,
+    );
+
+    if(!questAnswer){
+      return null;
+    }
+
+    quizQuestion.answers.push(questAnswer);
+  }
+
+  return quizQuestion;
+};
+
+const createQuiz = (quizesData, questionsData, answersData, categoriesData) =>  async (user, quizData) => {
+  const category = await categoriesData.getByName(quizData.category);
+
+  if(!category){
+    return {
+      error: serviceErrors.RESOURCE_NOT_FOUND,
+      quiz: null,
+    };
+  }
+
+  const quiz = await quizesData.create(
+    quizData.name, 
+    quizData.timeLimit, 
+    user, 
+    category,
+  );
+
+  if(!quiz){
+    return {
+      error: serviceErrors.BAD_REQUEST,
+      quiz: null,
+    };
+  }
+
+  quiz.questions = [];
+
+  for(const question of quizData.questions) {
+    const quizQuestion = await createQuestion(questionsData, answersData)(quiz, question);
+    if(!quizQuestion){
+      return {
+        error: serviceErrors.BAD_REQUEST,
+        quiz: null,
+      };
+    }
+    quiz.questions.push(quizQuestion);
+  }
+
+  return {
+    error: null,
+    quiz: quiz,
+  };
+};
+
 export default {
   getQuizes,
   getQuizById,
+  createQuiz,
 };

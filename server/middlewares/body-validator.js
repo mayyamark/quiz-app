@@ -1,13 +1,11 @@
+import {schemaValidator} from '../validators/schema-validator.js';
+
 const bodyValidator = (schema) => {
   return (req, res, next) => {
     const body = req.body;
-    const validations = Object.keys(schema);
+    const fails = schemaValidator(schema, body);
 
-    const fails = validations
-      .map((validation) => schema[validation](body[validation]))
-      .filter((result) => result !== null);
-
-    if (fails.length > 0) {
+    if (fails) {
       res.status(400).send(fails);
     } else {
       next();

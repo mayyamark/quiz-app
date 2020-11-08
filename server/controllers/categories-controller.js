@@ -9,7 +9,7 @@ import usersService from '../services/users-service.js';
 import categoriesService from '../services/category-service.js';
 
 const categoriesController = express.Router();
-categoriesController.use(authMiddleware, checkTokenMiddleware(usersService));
+// categoriesController.use(authMiddleware, checkTokenMiddleware(usersService));
 
 categoriesController.post('/',
     roleMiddleware(USER_ROLES.TEACHER),

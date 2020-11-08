@@ -88,8 +88,35 @@ const getById = async (quizID) => {
   return quizData?.[0];
 };
 
+const create = async (name, time, teacher, category) => {
+  const insertQuiz = `
+      INSERT INTO quizes (name, time, teacherID, categoryID) 
+      VALUES (?, ?, ?, ?);
+  `;
+  
+  try {
+      const result = await pool.query(
+          insertQuiz, 
+          [name, time, teacher.id, category.id],
+      );
+
+      return {
+          id: result.insertId,
+          name: name,
+          time: time, 
+          teacher: teacher,
+          category: category,
+      };
+  }
+  catch (err) {
+      console.log(`db insert failed ${err.message}`);
+      return null;
+  }
+};
+
 export default {
   searchBy,
   searchByWithPages,
   getById,
+  create,
 };

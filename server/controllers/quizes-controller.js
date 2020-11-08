@@ -4,9 +4,16 @@ import checkTokenMiddleware from '../middlewares/check-token-middlware.js';
 import usersService from '../services/users-service.js';
 import quizesService from '../services/quizes-service.js';
 import quizesData from '../data/quiz-app-data/quizes-data.js';
+import questionsData from '../data/quiz-app-data/questions-data.js';
+import answersData from '../data/quiz-app-data/answers-data.js';
 import serviceErrors from '../services/service-errors.js';
 import historyService from '../services/history-service.js';
 import historyData from '../data/quiz-app-data/history-data.js';
+import roleMiddleware from '../middlewares/role-middleware.js';
+import { USER_ROLES } from '../config.js';
+import bodyValidator from '../middlewares/body-validator.js';
+import quizCreateSchema from '../validators/quiz-create-schema.js';
+import categoriesData from '../data/quiz-app-data/categories-data.js';
 
 const quizesController = express.Router();
 quizesController.use(authMiddleware, checkTokenMiddleware(usersService));
@@ -44,6 +51,18 @@ quizesController.post('/:id', async (req, res) => {
   const startTime = await historyService.startSolvingQuiz(historyData)(user.id, id);
 
   res.status(200).send({ quiz, startTime });
+});
+
+quizesController.post('/', 
+roleMiddleware(USER_ROLES.TEACHER),
+bodyValidator(quizCreateSchema),
+async (req, res) => {
+  const user = req.user;
+  const result = await quizesService.createQuiz(quizesData, questionsData, answersData, categoriesData)(user, req.body);
+  if(result.error){
+    return res.status(409).send({error: result.error});
+  }
+  res.status(200).send(result.quiz);
 });
 
 export default quizesController;
