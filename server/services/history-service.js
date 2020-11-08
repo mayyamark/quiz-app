@@ -1,4 +1,4 @@
-import serviceErrors from './errors-service.js';
+import serviceErrors from './service-errors.js';
 
 const getHistoryByStrudentId = (historyData) => {
   return async (userID, page, limit, quiz) => {

@@ -8,6 +8,7 @@ import { PORT } from './config.js';
 import authController from './controllers/auth-controller.js';
 import quizesController from './controllers/quizes-controller.js';
 import studentsController from './controllers/students-controller.js';
+import categoriesController from './controllers/categories-controller.js';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(passport.initialize());
 app.use('/', authController);
 app.use('/quizes', quizesController);
 app.use('/students', studentsController);
+app.use('/categories', categoriesController);
 
 app.all('*', (req, res) =>
   res.status(404).send({ message: 'Resource not found!' }),

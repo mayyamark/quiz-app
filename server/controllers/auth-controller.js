@@ -6,7 +6,7 @@ import userRegistrationSchema from '../validators/user-registration.schema.js';
 import userLogInSchema from '../validators/user-login.schema.js';
 import { USER_ROLES } from '../config.js';
 import usersService from '../services/users-service.js';
-import serviceErrors from '../services/errors-service.js';
+import serviceErrors from '../services/service-errors.js';
 import usersData from '../data/quiz-app-data/users-data.js';
 import blacklistData from '../data/blacklist-data/blacklist-data.js';
 

@@ -52,8 +52,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `quiz`.`categories` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `category` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`))
+  `category` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `category_UNIQUE` (`category` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 

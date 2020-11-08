@@ -1,4 +1,4 @@
-import serviceErrors from '../services/errors-service.js';
+import serviceErrors from '../services/service-errors.js';
 import blacklistData from '../data/blacklist-data/blacklist-data.js';
 
 const checkTokenMiddleware = (usersService) => async (req, res, next) => {

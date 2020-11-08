@@ -4,7 +4,7 @@ import checkTokenMiddleware from '../middlewares/check-token-middlware.js';
 import usersService from '../services/users-service.js';
 import quizesService from '../services/quizes-service.js';
 import quizesData from '../data/quiz-app-data/quizes-data.js';
-import serviceErrors from '../services/errors-service.js';
+import serviceErrors from '../services/service-errors.js';
 import historyService from '../services/history-service.js';
 import historyData from '../data/quiz-app-data/history-data.js';
 
