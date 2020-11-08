@@ -90,4 +90,24 @@ async (req, res) => {
   res.status(200).send(result.quiz);
 });
 
+quizesController.get('/:id/history', 
+roleMiddleware(USER_ROLES.TEACHER),
+async (req, res) => {
+  const { id } = req.params;
+  const { page, limit } = req.query;
+
+  if (page && !(Number(page) > 0)) {
+    return res.status(400).send({ message: 'Invalid page number!' });
+  }
+  if (limit && !(Number(limit) > 0)) {
+    return res.status(400).send({ message: 'Invalid limit number!' });
+  }
+  const result = await historyService.getHistoryByQuizId(historyData)(id, page, limit);
+  
+  if(result.error){
+    return res.status(404).send([]);
+  }
+  res.status(200).send(result);
+});
+
 export default quizesController;

@@ -93,6 +93,36 @@ const logQuizScore = async (id, score) => {
   }
 };
 
+const searchByQuizIdPaged = async (quizId, offset, limit) => {
+  const countEntriesSql = 'select count(*) as count';
+  const historySql = 'select users.username, users.firstName, users.lastName, history.started, history.score';
+  const searchBySql = `
+    from quiz.history
+    join quizes on quizes.id = history.quizID
+    join users on users.id = history.userID
+    where history.quizID = ?
+  `;
+  let withLimit = '';
+
+  if (offset !== undefined && limit) {
+    withLimit = ` limit ${limit} offset ${offset}`;
+  }
+  try {
+    const queryResults = await Promise.all([
+      pool.query(historySql + searchBySql + withLimit, [quizId]), 
+      pool.query(countEntriesSql + searchBySql, [quizId]),
+    ]);
+    return { 
+      history: queryResults[0],
+      entriesCount: queryResults[1][0].count,
+    };
+  }
+  catch(err){
+    console.log(`db select failed ${err.message}`);
+    return null;
+  }
+};
+
 export default {
   searchBy,
   searchByWithPages,
@@ -100,4 +130,5 @@ export default {
   logStartSolving,
   logFinishSolving,
   logQuizScore,
+  searchByQuizIdPaged,
 };

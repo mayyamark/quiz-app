@@ -121,9 +121,36 @@ const finishSolvingQuiz = (historyData, quizesData) =>
     };
 };
 
+const getHistoryByQuizId = (historyData) => {
+  return async (quizId, page, limit) => {
+    let offset;
+    let setLimit;
+
+    if (page) {
+      setLimit = limit ? limit : 5;
+      offset = (page - 1) * setLimit;
+    }
+
+    const historyOnPage = await historyData.searchByQuizIdPaged(quizId, offset, setLimit);
+    const result = {
+      history: historyOnPage.history,
+    };
+
+    if(page){
+      result.currentPage = page;
+      result.historyCount = historyOnPage.entriesCount;
+      result.hasNextPage = (offset + setLimit) < historyOnPage.entriesCount;
+      result.hasPreviousPage = page > 1;
+    }
+
+    return result;
+  };
+};
+
 export default {
   getHistoryByStrudentId,
   isQuizSolvedByStudent,
   startSolvingQuiz,
   finishSolvingQuiz,
+  getHistoryByQuizId,
 };
