@@ -63,9 +63,41 @@ const logStartSolving = async (userID, quizID) => {
   return startTime;
 };
 
+const logFinishSolving = async (id, finishTime) => {
+  const insertSql = `
+    UPDATE history SET finished = ? WHERE id = ?
+  `;
+
+  try {
+    await pool.query(insertSql, [finishTime, id]);
+    return true;
+  }
+  catch (err){
+    console.log(`db update failed ${err.message}`);
+    return false;
+  }
+};
+
+const logQuizScore = async (id, score) => {
+  const insertSql = `
+    UPDATE history SET score = ? WHERE id = ?
+  `;
+
+  try {
+    await pool.query(insertSql, [score, id]);
+    return true;
+  }
+  catch (err){
+    console.log(`db update failed ${err.message}`);
+    return false;
+  }
+};
+
 export default {
   searchBy,
   searchByWithPages,
   getSolveInfo,
   logStartSolving,
+  logFinishSolving,
+  logQuizScore,
 };

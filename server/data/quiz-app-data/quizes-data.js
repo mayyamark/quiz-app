@@ -75,7 +75,7 @@ const getById = async (quizID) => {
 
   await Promise.all(questionsData.map(async el => {
     const answersSql = `
-      select id, text
+      select id, text, isTrue
       from answers
       where questionID = ?
     `;

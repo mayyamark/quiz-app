@@ -3,4 +3,5 @@ export default {
   DUPLICATE_RESOURCE: 2,
   BAD_REQUEST: 3,
   UNAUTHORIZED: 4,
+  TIMEOUT: 5,
 };

@@ -13,6 +13,7 @@ import roleMiddleware from '../middlewares/role-middleware.js';
 import { USER_ROLES } from '../config.js';
 import bodyValidator from '../middlewares/body-validator.js';
 import quizCreateSchema from '../validators/quiz-create-schema.js';
+import quizFinishSchema from '../validators/quiz-finish-schema.js';
 import categoriesData from '../data/quiz-app-data/categories-data.js';
 
 const quizesController = express.Router();
@@ -51,6 +52,30 @@ quizesController.post('/:id', async (req, res) => {
   const startTime = await historyService.startSolvingQuiz(historyData)(user.id, id);
 
   res.status(200).send({ quiz, startTime });
+});
+
+quizesController.put('/finish', 
+bodyValidator(quizFinishSchema),
+async (req, res) => {
+  const user = req.user;
+
+  if (user.role === 'student') {
+    const { historyError } = await historyService.isQuizSolvedByStudent(historyData)(user.id, req.body.id);
+
+    if (historyError === serviceErrors.DUPLICATE_RESOURCE) {
+      return res.status(400).send({ message: 'Quiz already solved!' });
+    }
+  }
+
+  const quizResult = await historyService.finishSolvingQuiz(historyData, quizesData)(user, req.body);
+  if(quizResult.error){
+    if(quizResult.error === serviceErrors.TIMEOUT){
+      return res.status(409).send({ message: 'Out of time!', time:  quizResult.timeout});  
+    }
+    return res.status(500).send({ message: 'There was an error processing your quiz!' });
+  }
+
+  return res.status(200).send(quizResult.result);
 });
 
 quizesController.post('/', 
