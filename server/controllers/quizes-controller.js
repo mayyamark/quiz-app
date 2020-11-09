@@ -15,9 +15,10 @@ import bodyValidator from '../middlewares/body-validator.js';
 import quizCreateSchema from '../validators/quiz-create-schema.js';
 import quizFinishSchema from '../validators/quiz-finish-schema.js';
 import categoriesData from '../data/quiz-app-data/categories-data.js';
+import blacklistData from '../data/blacklist-data/blacklist-data.js';
 
 const quizesController = express.Router();
-quizesController.use(authMiddleware, checkTokenMiddleware(usersService));
+quizesController.use(authMiddleware, checkTokenMiddleware(usersService)(blacklistData));
 
 quizesController.get('/', async (req, res) => {
   const { page, limit, category, teacher } = req.query;
@@ -84,6 +85,7 @@ quizesController.put(
       historyData,
       quizesData,
     )(user, req.body);
+    
     if (quizResult.error) {
       if (quizResult.error === serviceErrors.TIMEOUT) {
         return res

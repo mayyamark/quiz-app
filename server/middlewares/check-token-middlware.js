@@ -1,7 +1,6 @@
 import serviceErrors from '../services/service-errors.js';
-import blacklistData from '../data/blacklist-data/blacklist-data.js';
 
-const checkTokenMiddleware = (usersService) => async (req, res, next) => {
+const checkTokenMiddleware = (usersService) => (blacklistData) => async (req, res, next) => {
   const token =  req.headers.authorization.split(' ')[1];
 
   if (!token) {

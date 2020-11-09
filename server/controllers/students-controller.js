@@ -7,11 +7,12 @@ import usersService from '../services/users-service.js';
 import historyService from '../services/history-service.js';
 import historyData from '../data/quiz-app-data/history-data.js';
 import usersData from '../data/quiz-app-data/users-data.js';
+import blacklistData from '../data/blacklist-data/blacklist-data.js';
 
 const studentsController = express.Router();
 studentsController.use(
   authMiddleware,
-  checkTokenMiddleware(usersService),
+  checkTokenMiddleware(usersService)(blacklistData),
   roleMiddleware(USER_ROLES.STUDENT),
 );
 
