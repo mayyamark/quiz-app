@@ -1,0 +1,10 @@
+#register-form {
+    text-align: -webkit-center;
+    margin: auto;
+    padding: 8% 0 0 0;
+}
+#register-btn {
+    margin-top: 3%;
+    width: 400px;
+    font-weight: bold;
+}
