@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 const registerUser = (usersData) => {
   return async (registrationData) => {
-    const { username, password, firstName, lastName } =  registrationData;
+    const { username, password, firstName, lastName, avatar } =  registrationData;
 
     const exsistingUser = await usersData.getByUsername(username);
     if (exsistingUser) {
@@ -14,7 +14,7 @@ const registerUser = (usersData) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = await usersData.createUser(username, passwordHash, firstName, lastName);
+    const user = await usersData.createUser(username, passwordHash, firstName, lastName, avatar);
     
     return { user, userError: null };
   };

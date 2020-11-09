@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `quiz`.`users` (
   `lastName` VARCHAR(45) NOT NULL,
   `password` VARCHAR(70) NOT NULL,
   `registerDate` DATETIME NULL,
-  `avatar` VARCHAR(45) NULL,
+  `avatar` VARCHAR(100) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_users_roles_idx` (`roleID` ASC),
   CONSTRAINT `fk_users_roles`
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `quiz`.`categories` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `category` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `category_UNIQUE` (`category` ASC) VISIBLE)
+  UNIQUE INDEX `category_UNIQUE` (`category` ASC))
 ENGINE = InnoDB;
 
 
