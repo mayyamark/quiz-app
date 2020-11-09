@@ -1,0 +1,10 @@
+#login-form {
+    text-align: -webkit-center;
+    margin: auto;
+    padding: 8% 0 0 0;
+}
+#login-btn {
+    margin-top: 3%;
+    width: 400px;
+    font-weight: bold;
+}
