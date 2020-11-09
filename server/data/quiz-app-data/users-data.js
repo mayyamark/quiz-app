@@ -1,24 +1,25 @@
 import pool from './pool.js';
 
-const createUser = async (username, password, firstName, lastName) => {
+const createUser = async (username, password, firstName, lastName, avatar) => {
   const insertSql = `
-    INSERT INTO users(username, password, firstName, lastName, roleID, registerDate)
-    VALUES (?, ?, ?, ?, 2, ?)
+    INSERT INTO users(username, password, firstName, lastName, roleID, registerDate, avatar)
+    VALUES (?, ?, ?, ?, 2, ?, ?)
   `;
 
-  const insertData = await pool.query(insertSql, [username, password, firstName, lastName, new Date()]);
+  const insertData = await pool.query(insertSql, [username, password, firstName, lastName, new Date(), avatar]);
 
   return {
     id: insertData.insertId,
     username,
     firstName,
     lastName,
+    avatar,
   };
 };
 
 const getByUsername = async (username) => {
   const userSql = `
-    SELECT u.id, u.username, u.password, u.firstName, u.lastName, r.role  
+    SELECT u.id, u.username, u.password, u.firstName, u.lastName, r.role, u.avatar  
     FROM users u
     JOIN roles r ON u.roleID = r.id
     WHERE username = ?

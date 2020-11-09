@@ -34,6 +34,7 @@ authController.post(
       firstName: user.firstName,
       lastName: user.lastName,
       role: USER_ROLES.STUDENT,
+      avatar: user.avatar,
     };
 
     const token = createToken(payload);
@@ -68,6 +69,7 @@ authController.post(
         user.role === USER_ROLES.TEACHER
           ? USER_ROLES.TEACHER
           : USER_ROLES.STUDENT,
+      avatar: user.avatar,
     };
 
     const token = createToken(payload);

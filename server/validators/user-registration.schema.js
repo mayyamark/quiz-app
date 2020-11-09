@@ -26,8 +26,8 @@ const userRegisterSchema = {
       return 'First name is required!';
     }
 
-    if (typeof value !== 'string' || value.length < 3 || value.length > 25) {
-      return 'First name should be a string in range [3..25]!';
+    if (typeof value !== 'string' || value.length < 2 || value.length > 25) {
+      return 'First name should be a string in range [2..25]!';
     }
 
     return null;
@@ -37,8 +37,15 @@ const userRegisterSchema = {
       return 'Last name is required!';
     }
 
-    if (typeof value !== 'string' || value.length < 3 || value.length > 25) {
-      return 'Last name should be a string in range [3..25]!';
+    if (typeof value !== 'string' || value.length < 2 || value.length > 25) {
+      return 'Last name should be a string in range [2..25]!';
+    }
+
+    return null;
+  },
+  avatar: (value) => {
+    if (!value) {
+      return 'Avatar is required!';
     }
 
     return null;

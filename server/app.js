@@ -20,7 +20,7 @@ app.use(helmet());
 
 app.use(passport.initialize());
 
-app.use('/', authController);
+app.use('/auth', authController);
 app.use('/quizes', quizesController);
 app.use('/students', studentsController);
 app.use('/categories', categoriesController);

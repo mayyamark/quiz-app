@@ -13,6 +13,7 @@ const jwtStrategy = new passportJwt.Strategy(options, async (payload, done) => {
     firstName: payload.firstName,
     lastName: payload.lastName,
     role: payload.role,
+    avatar: payload.avatar,
   };
 
   done(null, user);
