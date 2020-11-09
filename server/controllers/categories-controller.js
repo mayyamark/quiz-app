@@ -7,6 +7,7 @@ import bodyValidator from '../middlewares/body-validator.js';
 import categoryCreateSchema from '../validators/category-create-schema.js';
 import usersService from '../services/users-service.js';
 import categoriesService from '../services/category-service.js';
+import categoriesData from '../data/quiz-app-data/categories-data.js';
 
 const categoriesController = express.Router();
 // categoriesController.use(authMiddleware, checkTokenMiddleware(usersService));
@@ -15,7 +16,7 @@ categoriesController.post('/',
     roleMiddleware(USER_ROLES.TEACHER),
     bodyValidator(categoryCreateSchema),  
     async (req, res) => {
-        const result = await categoriesService.createCategory(req.body);
+        const result = await categoriesService.createCategory(categoriesData)(req.body);
         if(result.error) {
             res.status(409).send({error: 'Category name must be unique'});
         } else {
@@ -26,7 +27,7 @@ categoriesController.post('/',
 
 categoriesController.get('/', 
     async (req, res) => {
-        const result = await categoriesService.getAllCategories();
+        const result = await categoriesService.getAllCategories(categoriesData)();
         if(result.error) {
             res.status(404).send([]);
         } else {
