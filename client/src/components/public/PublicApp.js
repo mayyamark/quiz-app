@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import LandingPage from './LandingPage/LandingPage';
-import Register from '../../containers/public/Register';
-import Login from '../../containers/public/Login';
+import Register from '../../containers/public/Authentication/Register';
+import Login from '../../containers/public/Authentication/Login';
 
 const PublicApp = () => (
   <BrowserRouter>

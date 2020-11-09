@@ -1,42 +1,43 @@
 import React, { useState } from 'react';
 import decode from 'jwt-decode';
 import swal from 'sweetalert';
-import BASE_URL from '../../common/base-url.js';
-import { useAuth } from '../../auth/AuthContext';
+import BASE_URL from '../../../common/base-url.js';
+import { setToken } from '../../../common/manage-token.js';
+import { useAuth } from '../../../auth/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import LoginForm from '../../components/public/LoginForm/LoginForm';
-import PrivateApp from '../../components/private/PrivateApp';
+import RegisterForm from '../../../components/public/RegisterForm/RegisterForm';
+import PrivateApp from '../../../components/private/PrivateApp';
 
-const Login = () => {
+const Register = () => {
   const { setUser } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [fetchSuccess, setFetchSuccess] = useState(false);
-  
-  const handleLogin = (loginData) => {
+
+  const handleRegister = (registerData) => {
     setLoading(true);
 
-    fetch(`${BASE_URL}/auth/session`, {
+    fetch(`${BASE_URL}/auth/registration`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json', 
       },
-      body: JSON.stringify(loginData),
+      body: JSON.stringify(registerData),
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.message) {
           throw new Error(data.message);
         } else {
-          localStorage.setItem('token', data.token);
+          setToken(data.token);
           const user = decode(data.token);
           
           setUser(user);
           setFetchSuccess(true);
 
           swal({
-            title: `Welcome back, ${loginData.username}!`,
+            title: `Welcome, ${registerData.username}!`,
             text: 'Have fun!',
             icon: 'success',
             button: 'Nice!',
@@ -61,14 +62,13 @@ const Login = () => {
   }
   if (error) {
     setError(false);
-    return <LoginForm login={handleLogin} />;
+    return <RegisterForm register={handleRegister} />;
   }
   if (fetchSuccess) {
     return <PrivateApp />;
   }
 
-  return <LoginForm login={handleLogin} />;
+  return <RegisterForm register={handleRegister} />;
 };
 
-export default Login;
-
+export default Register;
