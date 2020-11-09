@@ -21,7 +21,7 @@ USE `blacklist` ;
 -- Table `blacklist`.`token_blacklist`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `blacklist`.`token_blacklist` 
-  (`token` VARCHAR(256) NOT NULL PRIMARY KEY)
+  (`token` VARCHAR(500) NOT NULL PRIMARY KEY)
 ENGINE = InnoDB;
 
 
