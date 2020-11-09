@@ -2,39 +2,39 @@ import pool from './pool.js';
 
 const searchBy = async (userID, quiz) => {
   let historySql = `
-    select h.id, q.name, c.category, h.started, h.finished, h.score
-    from history h
-    join quizes q on q.id = h.quizID
-    join categories c on q.categoryID = c.id
-    where h.userID = ?
+    SELECT h.id, q.name, c.category, h.started, h.finished, h.score
+    FROM history h
+    JOIN quizes q ON q.id = h.quizID
+    JOIN categories c ON q.categoryID = c.id
+    WHERE h.userID = ?
   `;
 
   if (quiz) {
-    historySql += ` and q.name like '%${quiz}%'`;
+    historySql += ` AND q.name LIKE '%${quiz}%'`;
   }
 
-  historySql += ' order by h.finished desc';
+  historySql += ' ORDER BY h.finished DESC';
 
   return await pool.query(historySql, [userID]);
 };
 
 const searchByWithPages = async (userID, quiz, offset, limit) => {
   let historySql = `
-    select h.id, q.name, c.category, h.started, h.finished, h.score
-    from history h
-    join quizes q on q.id = h.quizID
-    join categories c on q.categoryID = c.id
-    where h.userID = ?
+    SELECT h.id, q.name, c.category, h.started, h.finished, h.score
+    FROM history h
+    JOIN quizes q ON q.id = h.quizID
+    JOIN categories c ON q.categoryID = c.id
+    WHERE h.userID = ?
   `;
 
   if (quiz) {
-    historySql += ` and q.name like '%${quiz}%'`;
+    historySql += ` AND q.name LIKE '%${quiz}%'`;
   }
 
-  historySql += ' order by h.finished desc';
+  historySql += ' ORDER BY h.finished DESC';
   
   if (offset !== undefined && limit) {
-    historySql += ` limit ${limit} offset ${offset}`;
+    historySql += ` LIMIT ${limit} OFFSET ${offset}`;
   }
 
   return await pool.query(historySql, [userID]);
@@ -42,9 +42,9 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
 
 const getSolveInfo = async (userID, quizID) => {
   const historySql = `
-    select * 
-    from history
-    where userID = ? and quizID = ?;
+    SELECT * 
+    FROM history
+    WHERE userID = ? AND quizID = ?;
   `;
 
   const historyData = await pool.query(historySql, [userID, quizID]);
@@ -55,8 +55,8 @@ const logStartSolving = async (userID, quizID) => {
   const startTime = new Date();
 
   const insertSql = `
-    insert into history(userID, quizID, started)
-    values (?, ?, ?);
+    INSERT INTO history(userID, quizID, started)
+    VALUES (?, ?, ?);
   `;
 
   const _ = await pool.query(insertSql, [userID, quizID, startTime]);

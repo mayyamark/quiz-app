@@ -9,7 +9,12 @@ const getHistoryByStrudentId = (historyData) => {
       const allSearchedHistory = await historyData.searchBy(userID, quiz);
   
       if (page) {
-        const historyOnPage = await historyData.searchByWithPages(userID, quiz, offset, settedLimit);
+        const historyOnPage = await historyData.searchByWithPages(
+          userID, 
+          quiz, 
+          offset, 
+          settedLimit,
+        );
     
         return {
           history: historyOnPage,

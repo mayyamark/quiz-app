@@ -2,8 +2,9 @@ import pool from './pool.js';
 
 const isTokenBlacklisted = async (token) => {
   const blackListSql = `
-    select token from token_blacklist 
-    where token = ?;
+    SELECT token 
+    FROM token_blacklist 
+    WHERE token = ?;
   `;
 
   const blackListData = await pool.query(blackListSql, [token]);
@@ -13,8 +14,8 @@ const isTokenBlacklisted = async (token) => {
 
 const blacklistToken = async (token) => {
   const insertSql = `
-    insert into token_blacklist 
-    (token) values(?); 
+    INSERT INTO token_blacklist 
+    (token) VALUES(?); 
   `;
   const blacklistData = await pool.query(insertSql, [token]);
 

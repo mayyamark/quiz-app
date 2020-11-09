@@ -9,7 +9,12 @@ const getQuizes = (quizesData) => {
       const allSearchedQuizes = await quizesData.searchBy(category, teacher);
 
       if (page) {
-        const quizesOnPage = await quizesData.searchByWithPages(category, teacher, offset, settedLimit);
+        const quizesOnPage = await quizesData.searchByWithPages(
+          category, 
+          teacher, 
+          offset, 
+          settedLimit,
+        );
 
         return {
           quizes: quizesOnPage,

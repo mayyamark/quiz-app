@@ -1,4 +1,4 @@
-import {schemaValidator} from '../validators/schema-validator.js';
+import { schemaValidator } from '../validators/schema-validator.js';
 
 const bodyValidator = (schema) => {
   return (req, res, next) => {

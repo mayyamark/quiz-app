@@ -2,22 +2,22 @@ import pool from './pool.js';
 
 const searchBy = async (category, teacher) => {
   let quizesSql = `
-    select q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
-    from quizes q
-    join users u on q.teacherID = u.id
-    join categories c on q.categoryID = c.id
+    SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
+    FROM quizes q
+    JOIN users u ON q.teacherID = u.id
+    JOIN categories c ON q.categoryID = c.id
   `;
 
   if (category) {
-    quizesSql += ` and c.category like '%${category}%'`;
+    quizesSql += ` AND c.category LIKE '%${category}%'`;
   }
   if (teacher) {
     quizesSql += ` 
-      and u.username like  '%${teacher}%'
-      order by q.id desc
+      AND u.username LIKE  '%${teacher}%'
+      ORDER BY q.id DESC
     `;
   } else {
-    quizesSql += ' order by q.name asc';
+    quizesSql += ' ORDER BY q.name ASC';
   }
 
   return await pool.query(quizesSql);
@@ -25,26 +25,26 @@ const searchBy = async (category, teacher) => {
 
 const searchByWithPages = async (category, teacher, offset, limit) => {
   let quizesSql = `
-    select q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
-    from quizes q
-    join users u on q.teacherID = u.id
-    join categories c on q.categoryID = c.id
+    SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
+    FROM quizes q
+    JOIN users u ON q.teacherID = u.id
+    JOIN categories c ON q.categoryID = c.id
   `;
 
   if (category) {
-    quizesSql += ` and c.category like '%${category}%'`;
+    quizesSql += ` AND c.category LIKE '%${category}%'`;
   }
   if (teacher) {
     quizesSql += ` 
-      and u.username like  '%${teacher}%'
-      order by q.id desc
+      AND u.username LIKE  '%${teacher}%'
+      ORDER BY q.id DESC
     `;
   } else {
-    quizesSql += ' order by q.name asc';
+    quizesSql += ' ORDER BY q.name ASC';
   }
 
   if (offset !== undefined && limit) {
-    quizesSql += ` limit ${limit} offset ${offset}`;
+    quizesSql += ` LIMIT ${limit} OFFSET ${offset}`;
   }
   
   return await pool.query(quizesSql);
@@ -52,11 +52,11 @@ const searchByWithPages = async (category, teacher, offset, limit) => {
 
 const getById = async (quizID) => {
   const quizSql = `
-    select q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
-    from quizes q
-    join users u on q.teacherID = u.id
-    join categories c on q.categoryID = c.id
-    where q.id = ?
+    SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
+    FROM quizes q
+    JOIN users u ON q.teacherID = u.id
+    JOIN categories c ON q.categoryID = c.id
+    WHERE q.id = ?
   `;
 
   const quizData = await pool.query(quizSql, [quizID]);
@@ -66,18 +66,18 @@ const getById = async (quizID) => {
   }
 
   const questionsSql = `
-    select id, points, text
-    from questions
-    where quizID = ?
+    SELECT id, points, text
+    FROM questions
+    WHERE quizID = ?
   `;
 
   const questionsData = await pool.query(questionsSql, [quizID]);
 
   await Promise.all(questionsData.map(async el => {
     const answersSql = `
-      select id, text, isTrue
-      from answers
-      where questionID = ?
+      SELECT id, text, isTrue
+      FROM answers
+      WHERE questionID = ?
     `;
 
     const answersData = await pool.query(answersSql, [el.id]);
