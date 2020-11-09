@@ -9,7 +9,7 @@ import a8 from './8.png';
 import a9 from './9.png';
 import a10 from './10.png';
 
-const studentsAvatars = [a1, a2, a3, a4, a5, a6, a7, a8, a9, a10];
+export const studentsAvatars = [a1, a2, a3, a4, a5, a6, a7, a8, a9, a10];
 
 const randomAvatar = studentsAvatars[Math.floor(Math.random() * studentsAvatars.length)];
 

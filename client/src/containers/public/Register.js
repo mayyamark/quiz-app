@@ -11,6 +11,7 @@ const Register = () => {
   const { setUser } = useAuth();
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [fetchSuccess, setFetchSuccess] = useState(false);
 
   const handleRegister = (registerData) => {
@@ -30,7 +31,16 @@ const Register = () => {
         } else {
           localStorage.setItem('token', data.token);
           const user = decode(data.token);
+          
           setUser(user);
+          setFetchSuccess(true);
+
+          swal({
+            title: `Welcome, ${registerData.username}!`,
+            text: 'Have fun!',
+            icon: 'success',
+            button: 'Nice!',
+          });
         }
       })
       .catch((err) => {
@@ -40,25 +50,19 @@ const Register = () => {
           icon: 'error',
           button: 'OK :(',
         });
+
+        setError(true);
       })
-      .finally(() => {
-        setLoading(false);
-
-        swal({
-          title: `Welcome, ${registerData.username}!`,
-          text: 'Have fun!',
-          icon: 'success',
-          button: 'Awesome!',
-        });
-
-        setFetchSuccess(true);
-      });
+      .finally(() => setLoading(false));
   };
 
   if (loading) {
     return <CircularProgress />;
   }
-
+  if (error) {
+    setError(false);
+    return <RegisterForm register={handleRegister} />;
+  }
   if (fetchSuccess) {
     return <PrivateApp />;
   }
