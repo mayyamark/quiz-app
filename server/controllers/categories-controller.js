@@ -18,6 +18,7 @@ categoriesController.post(
   bodyValidator(categoryCreateSchema),
   async (req, res) => {
     const result = await categoriesService.createCategory(req.body);
+
     if (result.error) {
       res.status(409).send({ error: 'Category name must be unique' });
     } else {
@@ -28,6 +29,7 @@ categoriesController.post(
 
 categoriesController.get('/', async (req, res) => {
   const result = await categoriesService.getAllCategories();
+
   if (result.error) {
     res.status(404).send([]);
   } else {

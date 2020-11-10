@@ -19,5 +19,6 @@ module.exports = {
 		'comma-dangle': ['warn', 'always-multiline'],
 		'max-classes-per-file': ['error', 1],
 		'no-unused-vars': 'off',
+		'keyword-spacing': 2,
 	},
 };

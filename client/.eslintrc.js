@@ -20,5 +20,6 @@ module.exports = {
 		'max-classes-per-file': ['error', 1],
 		'no-unused-vars': 'off',
 		'no-undef': 'off',
+		'keyword-spacing': 2,
 	},
 };

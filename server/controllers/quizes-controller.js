@@ -85,7 +85,7 @@ quizesController.put(
       historyData,
       quizesData,
     )(user, req.body);
-    
+
     if (quizResult.error) {
       if (quizResult.error === serviceErrors.TIMEOUT) {
         return res
@@ -113,9 +113,11 @@ quizesController.post(
       answersData,
       categoriesData,
     )(user, req.body);
+
     if (result.error) {
       return res.status(409).send({ error: result.error });
     }
+
     res.status(200).send(result.quiz);
   },
 );
@@ -142,6 +144,7 @@ quizesController.get(
     if (result.error) {
       return res.status(404).send([]);
     }
+
     res.status(200).send(result);
   },
 );
