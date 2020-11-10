@@ -61,7 +61,7 @@ const isQuizSolvedByStudent = (historyData) => {
    * Returns the student's result if he/she has already solved the quiz or null-s if not.
    * @author Mayya Markova
    * @async
-   * @function getQuizByIdInnerFunction
+   * @function isQuizSolvedByStudentInnerFunction
    * @param { string|number } userID The ID of the user.
    * @param { string|number } quizID The ID of the quiz.
    * @returns { Promise<object> } The history and an error or null-s.
@@ -91,7 +91,7 @@ const startSolvingQuiz = (historyData) => {
    * Logs that the student has started solving the given quiz.
    * @author Mayya Markova
    * @async
-   * @function getQuizByIdInnerFunction
+   * @function startSolvingQuizInnerFunction
    * @param { string|number } userID The ID of the user.
    * @param { string|number } quizID The ID of the quiz.
    * @returns { Promise<object> } The start time.

@@ -27,6 +27,15 @@ studentsController.use(
   roleMiddleware(USER_ROLES.STUDENT),
 );
 
+/**
+ * Route, which serves searching student's history.
+ * @name get/students
+ * @function
+ * @memberof module:routers/students~studentsController
+ * @inner
+ * @param { string } path - Express path.
+ * @param { callback } middleware - Express middleware.
+ */
 studentsController.get('/', async (req, res) => {
   const { page, limit, username } = req.query;
 
@@ -45,7 +54,7 @@ studentsController.get('/', async (req, res) => {
 
 /**
  * Route, which serves searching student's history.
- * @name get/quizes
+ * @name get/students/:id/history
  * @function
  * @memberof module:routers/students~studentsController
  * @inner

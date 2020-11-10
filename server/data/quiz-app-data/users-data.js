@@ -19,19 +19,26 @@ const createUser = async (username, password, firstName, lastName, avatar) => {
 
 const getByUsername = async (username) => {
   const userSql = `
-    SELECT u.id, u.username, u.password, u.firstName, u.lastName, r.role, u.avatar  
+    SELECT u.id, u.username, u.password, u.firstName, u.lastName, r.role, u.avatar
     FROM users u
     JOIN roles r ON u.roleID = r.id
     WHERE username = ?
   `;
-  
+
   const userData = await pool.query(userSql, [username]);
   return userData[0];
 };
 
+/**
+ * Gets users, matching the search.
+ * @author Mayya Markova
+ * @async
+ * @param { string|undefined } username Search parameter: a users's username.
+ * @returns { Promise<object> } The matching users.
+ */
 const searchBy = async (username) => {
   let usersSql = `
-    SELECT u.id, u.avatar, u.username, u.firstName, u.lastName, 
+    SELECT u.id, u.avatar, u.username, u.firstName, u.lastName,
     (SELECT SUM(score) FROM history h WHERE h.userID = u.id) AS totalScore
     FROM users u
     WHERE u.roleID = 2
@@ -46,9 +53,18 @@ const searchBy = async (username) => {
   return await pool.query(usersSql);
 };
 
+/**
+ * Gets users, matching the search.
+ * @author Mayya Markova
+ * @async
+ * @param { string|undefined } username Search parameter: a users's username.
+ * @param { number|undefined } offset Search parameter: the offset number.
+ * @param { number|undefined } limit Search parameter: the number of quizes per page.
+ * @returns { Promise<object> } The matching users.
+ */
 const searchByWithPages = async (username, offset, limit) => {
   let usersSql = `
-    SELECT u.id, u.avatar, u.username, u.firstName, u.lastName, 
+    SELECT u.id, u.avatar, u.username, u.firstName, u.lastName,
     (SELECT SUM(score) FROM history h WHERE h.userID = u.id) AS totalScore
     FROM users u
     WHERE u.roleID = 2
@@ -59,7 +75,7 @@ const searchByWithPages = async (username, offset, limit) => {
   }
 
   usersSql += ' ORDER BY totalScore DESC';
-  
+
   if (offset !== undefined && limit) {
     usersSql += ` LIMIT ${limit} OFFSET ${offset}`;
   }

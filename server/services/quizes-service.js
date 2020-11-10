@@ -1,6 +1,6 @@
 import serviceErrors from './service-errors.js';
 /**
- * Returns a function, gets quizes by given search parameters.
+ * Returns a function, which gets quizes by given search parameters.
  * @author Mayya Markova
  * @param { object } quizesData An object with data-layer functions.
  * @return { function } A function, which accepts search parameters and returns the matching results.
