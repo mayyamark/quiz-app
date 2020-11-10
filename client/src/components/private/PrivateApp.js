@@ -1,7 +1,16 @@
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { useAuth } from '../../auth/AuthContext';
+import Login from '../../containers/public/Authentication/Login';
 import StudentDashboard from './StudentDashboard/StudentDashboard';
 
-const PrivateApp = () => (
+const PrivateApp = () => {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Login />;
+  } 
+
+  return (
   <BrowserRouter>
     <Switch>
     <Route path="/dashboard" component={StudentDashboard} />
@@ -9,7 +18,7 @@ const PrivateApp = () => (
         <Redirect to="/dashboard" />
       </Route>
     </Switch>
-  </BrowserRouter>
-);
+  </BrowserRouter>);
+};
 
 export default PrivateApp;
