@@ -1,3 +1,6 @@
+/** Express router providing quizes related routes.
+ * @module routers/quizes
+ */
 import express from 'express';
 import authMiddleware from '../middlewares/auth-middleware.js';
 import checkTokenMiddleware from '../middlewares/check-token-middlware.js';
@@ -17,9 +20,25 @@ import quizFinishSchema from '../validators/quiz-finish-schema.js';
 import categoriesData from '../data/quiz-app-data/categories-data.js';
 import blacklistData from '../data/blacklist-data/blacklist-data.js';
 
+/**
+ * Express router to mount quiz related functions on.
+ * @type { object }
+ * @const
+ * @namespace quizesController
+ */
 const quizesController = express.Router();
+
 quizesController.use(authMiddleware, checkTokenMiddleware(usersService)(blacklistData));
 
+/**
+ * Route, which serves searching quizes.
+ * @name get/quizes
+ * @function
+ * @memberof module:routers/quizes~quizesController
+ * @inner
+ * @param { string } path - Express path.
+ * @param { callback } middleware - Express middleware.
+ */
 quizesController.get('/', async (req, res) => {
   const { page, limit, category, teacher } = req.query;
 

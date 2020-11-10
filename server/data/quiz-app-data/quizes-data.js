@@ -1,5 +1,12 @@
 import pool from './pool.js';
-
+/**
+ * Gets quizes, matching the search.
+ * @author Mayya Markova
+ * @async
+ * @param { string|undefined } category Search parameter: the category's name.
+ * @param { string|undefined } teacher Search parameter: the author's name.
+ * @returns { Promise<object> } The matching quizes.
+ */
 const searchBy = async (category, teacher) => {
   let quizesSql = `
     SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
@@ -12,7 +19,7 @@ const searchBy = async (category, teacher) => {
     quizesSql += ` AND c.category LIKE '%${category}%'`;
   }
   if (teacher) {
-    quizesSql += ` 
+    quizesSql += `
       AND u.username LIKE  '%${teacher}%'
       ORDER BY q.id DESC
     `;
@@ -21,8 +28,19 @@ const searchBy = async (category, teacher) => {
   }
 
   return await pool.query(quizesSql);
-};  
+};
 
+/**
+ * Gets quizes on page, matching the search.
+ * @author Mayya Markova
+ * @async
+ * @param { number|undefined } offset Search parameter: the offset number.
+ * @param { number|undefined } limit Search parameter: the number of quizes per page.
+ * @param { string|undefined } category Search parameter: the category's name.
+ * @param { string|undefined } teacher Search parameter: the author's name.
+ * @returns { Promise<object> } The matching quizes and if the page parameter
+ * is defined- page information.
+ */
 const searchByWithPages = async (category, teacher, offset, limit) => {
   let quizesSql = `
     SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
@@ -35,7 +53,7 @@ const searchByWithPages = async (category, teacher, offset, limit) => {
     quizesSql += ` AND c.category LIKE '%${category}%'`;
   }
   if (teacher) {
-    quizesSql += ` 
+    quizesSql += `
       AND u.username LIKE  '%${teacher}%'
       ORDER BY q.id DESC
     `;
@@ -46,7 +64,7 @@ const searchByWithPages = async (category, teacher, offset, limit) => {
   if (offset !== undefined && limit) {
     quizesSql += ` LIMIT ${limit} OFFSET ${offset}`;
   }
-  
+
   return await pool.query(quizesSql);
 };
 
@@ -90,20 +108,20 @@ const getById = async (quizID) => {
 
 const create = async (name, time, teacher, category) => {
   const insertQuiz = `
-      INSERT INTO quizes (name, time, teacherID, categoryID) 
+      INSERT INTO quizes (name, time, teacherID, categoryID)
       VALUES (?, ?, ?, ?);
   `;
-  
+
   try {
       const result = await pool.query(
-          insertQuiz, 
+          insertQuiz,
           [name, time, teacher.id, category.id],
       );
 
       return {
           id: result.insertId,
           name: name,
-          time: time, 
+          time: time,
           teacher: teacher,
           category: category,
       };

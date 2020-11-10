@@ -1,6 +1,23 @@
 import serviceErrors from './service-errors.js';
-
+/**
+ * Returns a function, gets quizes by given search parameters.
+ * @author Mayya Markova
+ * @param { object } quizesData An object with data-layer functions.
+ * @return { function } A function, which accepts search parameters and returns the matching results.
+ */
 const getQuizes = (quizesData) => {
+  /**
+   * Gets quizes, matching the search.
+   * @author Mayya Markova
+   * @async
+   * @function getQuizesInnerFunction
+   * @param { number|undefined } page Search parameter: the page number.
+   * @param { number|undefined } limit Search parameter: the number of quizes per page.
+   * @param { string|undefined } category Search parameter: the category's name.
+   * @param { string|undefined } teacher Search parameter: the author's name.
+   * @returns { Promise<object> } The matching quizes and if the page parameter
+   * is defined- page information.
+   */
   return async (page, limit, category, teacher) => {
     if (page || category || teacher) {
       const settedLimit = limit ? limit : 5;
