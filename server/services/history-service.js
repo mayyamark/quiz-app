@@ -1,6 +1,23 @@
 import serviceErrors from './service-errors.js';
-
+/**
+ * Returns a function, which gets a student's quiz history.
+ * @author Mayya Markova
+ * @param { object } historyData An object with data-layer functions.
+ * @return { function } A function, which accepts search parameters and returns the matching results.
+ */
 const getHistoryByStrudentId = (historyData) => {
+  /**
+   * Gets the history, matching the search.
+   * @author Mayya Markova
+   * @async
+   * @function getHistoryByStrudentIdInnerFunction
+   * @param { string|number } userID Search parameter: the user's ID.
+   * @param { number|undefined } page Search parameter: the page number.
+   * @param { number|undefined } limit Search parameter: the number of results per page.
+   * @param { string|undefined } quiz Search parameter: the quiz's name.
+   * @returns { Promise<object> } The matching results and if the page parameter
+   * is defined- page information.
+   */
   return async (userID, page, limit, quiz) => {
     if (page || quiz) {
       const settedLimit = limit ? limit : 5;
@@ -71,7 +88,7 @@ const isQuizSolvedByStudent = (historyData) => {
  */
 const startSolvingQuiz = (historyData) => {
   /**
-   * Returns the student's result if he/she has already solved the quiz or null-s if not.
+   * Logs that the student has started solving the given quiz.
    * @author Mayya Markova
    * @async
    * @function getQuizByIdInnerFunction

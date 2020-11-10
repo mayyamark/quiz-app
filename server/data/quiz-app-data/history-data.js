@@ -1,5 +1,13 @@
 import pool from './pool.js';
 
+/**
+ * Gets the history, matching the search.
+ * @author Mayya Markova
+ * @async
+ * @param { string|number } userID Search parameter: the user's ID.
+ * @param { string|undefined } quiz Search parameter: the quiz's name.
+ * @returns { Promise<object> } The matching results.
+ */
 const searchBy = async (userID, quiz) => {
   let historySql = `
     SELECT h.id, q.name, c.category, h.started, h.finished, h.score
@@ -18,6 +26,16 @@ const searchBy = async (userID, quiz) => {
   return await pool.query(historySql, [userID]);
 };
 
+/**
+ * Gets the history, matching the search.
+ * @author Mayya Markova
+ * @async
+ * @param { string|number } userID Search parameter: the user's ID.
+ * @param { string|undefined } quiz Search parameter: the quiz's name.
+ * @param { number|undefined } offset Search parameter: the offset number.
+ * @param { number|undefined } limit Search parameter: the number of results per page.
+ * @returns { Promise<object> } The matching results.
+ */
 const searchByWithPages = async (userID, quiz, offset, limit) => {
   let historySql = `
     SELECT h.id, q.name, c.category, h.started, h.finished, h.score
