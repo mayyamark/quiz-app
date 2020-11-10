@@ -68,6 +68,13 @@ const searchByWithPages = async (category, teacher, offset, limit) => {
   return await pool.query(quizesSql);
 };
 
+/**
+ * Gets a quiz by its ID.
+ * @author Mayya Markova
+ * @async
+ * @param { string|number } quizID The ID of the quiz.
+ * @returns { Promise<object> } The quiz with its questions and answers or null.
+ */
 const getById = async (quizID) => {
   const quizSql = `
     SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName

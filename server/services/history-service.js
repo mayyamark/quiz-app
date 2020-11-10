@@ -33,7 +33,22 @@ const getHistoryByStrudentId = (historyData) => {
   };
 };
 
+/**
+ * Returns a function, which checks if the student has solved the given quiz.
+ * @author Mayya Markova
+ * @param { object } historyData An object with data-layer functions.
+ * @return { function } A function, which checks if the student has solved the given quiz.
+ */
 const isQuizSolvedByStudent = (historyData) => {
+  /**
+   * Returns the student's result if he/she has already solved the quiz or null-s if not.
+   * @author Mayya Markova
+   * @async
+   * @function getQuizByIdInnerFunction
+   * @param { string|number } userID The ID of the user.
+   * @param { string|number } quizID The ID of the quiz.
+   * @returns { Promise<object> } The history and an error or null-s.
+   */
   return async (userID, quizID) => {
     const history = await historyData.getSolveInfo(userID, quizID);
 
@@ -48,8 +63,24 @@ const isQuizSolvedByStudent = (historyData) => {
   };
 };
 
-const startSolvingQuiz = (historyData) => async (userID, quizID) =>
-  await historyData.logStartSolving(userID, quizID);
+/**
+ * Returns a function, which logs that the student has started solving the given quiz.
+ * @author Mayya Markova
+ * @param { object } historyData An object with data-layer functions.
+ * @return { function } A function, which logs that the student has started solving the given quiz.
+ */
+const startSolvingQuiz = (historyData) => {
+  /**
+   * Returns the student's result if he/she has already solved the quiz or null-s if not.
+   * @author Mayya Markova
+   * @async
+   * @function getQuizByIdInnerFunction
+   * @param { string|number } userID The ID of the user.
+   * @param { string|number } quizID The ID of the quiz.
+   * @returns { Promise<object> } The start time.
+   */
+  return async (userID, quizID) => await historyData.logStartSolving(userID, quizID);
+};
 
 const finishSolvingQuiz = (historyData, quizesData) =>
   async (user, solvedQuizData) => {

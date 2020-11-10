@@ -56,6 +56,15 @@ quizesController.get('/', async (req, res) => {
   res.status(200).send(quizes);
 });
 
+/**
+ * Route, which serves start solving a quiz.
+ * @name post/quizes/:id
+ * @function
+ * @memberof module:routers/quizes~quizesController
+ * @inner
+ * @param { string } path - Express path.
+ * @param { callback } middleware - Express middleware.
+ */
 quizesController.post('/:id', async (req, res) => {
   const { id } = req.params;
   const user = req.user;

@@ -32,7 +32,7 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
   }
 
   historySql += ' ORDER BY h.finished DESC';
-  
+
   if (offset !== undefined && limit) {
     historySql += ` LIMIT ${limit} OFFSET ${offset}`;
   }
@@ -40,9 +40,17 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
   return await pool.query(historySql, [userID]);
 };
 
+/**
+ * Returns the student's result if he/she has already solved the quiz or null-s if not.
+ * @author Mayya Markova
+ * @async
+ * @param { string|number } userID The ID of the user.
+ * @param { string|number } quizID The ID of the quiz.
+ * @returns { Promise<object> } The history or null.
+ */
 const getSolveInfo = async (userID, quizID) => {
   const historySql = `
-    SELECT * 
+    SELECT *
     FROM history
     WHERE userID = ? AND quizID = ?;
   `;
@@ -51,11 +59,19 @@ const getSolveInfo = async (userID, quizID) => {
   return historyData?.[0];
 };
 
+/**
+ * Logs that the student has started solving the given quiz.
+ * @author Mayya Markova
+ * @async
+ * @param { string|number } userID The ID of the user.
+ * @param { string|number } quizID The ID of the quiz.
+ * @returns { Promise<object> } The start time.
+ */
 const logStartSolving = async (userID, quizID) => {
   const startTime = new Date();
 
   const insertSql = `
-    INSERT INTO history(userID, quizID, started)
+    INSERT INTO history (userID, quizID, started)
     VALUES (?, ?, ?);
   `;
 
@@ -65,7 +81,9 @@ const logStartSolving = async (userID, quizID) => {
 
 const logFinishSolving = async (id, finishTime) => {
   const insertSql = `
-    UPDATE history SET finished = ? WHERE id = ?
+    UPDATE history SET
+     finished = ?
+    WHERE id = ?
   `;
 
   try {
@@ -80,7 +98,9 @@ const logFinishSolving = async (id, finishTime) => {
 
 const logQuizScore = async (id, score) => {
   const insertSql = `
-    UPDATE history SET score = ? WHERE id = ?
+    UPDATE history SET
+     score = ?
+    WHERE id = ?
   `;
 
   try {
@@ -94,30 +114,30 @@ const logQuizScore = async (id, score) => {
 };
 
 const searchByQuizIdPaged = async (quizId, offset, limit) => {
-  const countEntriesSql = 'select count(*) as count';
-  const historySql = 'select users.username, users.firstName, users.lastName, history.started, history.score';
+  const countEntriesSql = 'SELECT count(*) AS count';
+  const historySql = 'SELECT users.username, users.firstName, users.lastName, history.started, history.score';
   const searchBySql = `
-    from quiz.history
-    join quizes on quizes.id = history.quizID
-    join users on users.id = history.userID
-    where history.quizID = ?
+    FROM quiz.history
+    JOIN quizes ON quizes.id = history.quizID
+    JOIN users ON users.id = history.userID
+    WHERE history.quizID = ?
   `;
   let withLimit = '';
 
   if (offset !== undefined && limit) {
-    withLimit = ` limit ${limit} offset ${offset}`;
+    withLimit = ` LIMIT ${limit} OFFSET ${offset}`;
   }
   try {
     const queryResults = await Promise.all([
-      pool.query(historySql + searchBySql + withLimit, [quizId]), 
+      pool.query(historySql + searchBySql + withLimit, [quizId]),
       pool.query(countEntriesSql + searchBySql, [quizId]),
     ]);
-    return { 
+    return {
       history: queryResults[0],
       entriesCount: queryResults[1][0].count,
     };
   }
-  catch(err){
+  catch (err){
     console.log(`db select failed ${err.message}`);
     return null;
   }

@@ -50,7 +50,21 @@ const getQuizes = (quizesData) => {
   };
 };
 
+/**
+ * Returns a function, which gets a quiz by its ID
+ * @author Mayya Markova
+ * @param { object } quizesData An object with data-layer functions.
+ * @return { function } A function, which accepts the ID and returns the quiz or an error.
+ */
 const getQuizById = (quizesData) => {
+  /**
+   * Gets a quiz by its ID.
+   * @author Mayya Markova
+   * @async
+   * @function getQuizByIdInnerFunction
+   * @param { string|number } quizID The ID of the quiz.
+   * @returns { Promise<object> } The quiz or an error.
+   */
   return async (quizID) => {
     const quiz = await quizesData.getById(quizID);
 

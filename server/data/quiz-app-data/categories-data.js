@@ -2,7 +2,8 @@ import pool from './pool.js';
 
 const create = async (name) => {
   const insertCategory = `
-    INSERT INTO categories (category) VALUES (?);
+    INSERT INTO categories (category)
+    VALUES (?);
   `;
 
   try {
@@ -20,7 +21,9 @@ const create = async (name) => {
 
 const getByName = async (name) => {
   const getCategory = `
-    SELECT * FROM categories WHERE category = ?
+    SELECT *
+    FROM categories
+    WHERE category = ?
   `;
 
   try {
@@ -38,7 +41,9 @@ const getByName = async (name) => {
 
 const getById = async (id) => {
   const getCategory = `
-    SELECT * FROM categories WHERE id = ?
+    SELECT *
+    FROM categories
+    WHERE id = ?
   `;
 
   try {
@@ -56,7 +61,8 @@ const getById = async (id) => {
 
 const getAll = async () => {
   const getAllCategories = `
-    SELECT * FROM categories
+    SELECT *
+    FROM categories
   `;
   try {
     const result = await pool.query(getAllCategories);
@@ -67,7 +73,7 @@ const getAll = async () => {
       };
     });
   }
-  catch(err){
+  catch (err){
     console.log(`db insert failed ${err.message}`);
     return null;
   }
