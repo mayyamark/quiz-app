@@ -1,4 +1,5 @@
 import serviceErrors from './service-errors.js';
+
 /**
  * Returns a function, which gets quizes by given search parameters.
  * @author Mayya Markova

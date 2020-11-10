@@ -1,4 +1,4 @@
-/** Express router providing quizes related routes.
+/** Express router providing students related routes.
  * @module routers/students
  */
 

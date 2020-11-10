@@ -1,3 +1,6 @@
+/** Express router providing authentication related routes.
+ * @module routers/auth
+ */
 import express from 'express';
 import createToken from '../auth/create-token.js';
 import authMiddleware from '../middlewares/auth-middleware.js';
@@ -10,8 +13,24 @@ import serviceErrors from '../services/service-errors.js';
 import usersData from '../data/quiz-app-data/users-data.js';
 import blacklistData from '../data/blacklist-data/blacklist-data.js';
 
+/**
+ * Express router to mount authentication related functions on.
+ * @type { object }
+ * @const
+ * @namespace authController
+ */
 const authController = express.Router();
 
+/**
+ * Route, which serves registration form.
+ * @name post/auth/registration
+ * @function
+ * @memberof module:routers/auth~authController
+ * @inner
+ * @param { string } path - Express path.
+ * @param { callback } middleware - Express middleware.
+ * @param { callback } middleware - Express middleware.
+ */
 authController.post(
   '/registration',
   bodyValidator(userRegistrationSchema),
@@ -43,6 +62,16 @@ authController.post(
   },
 );
 
+/**
+ * Route, which serves login form.
+ * @name post/auth/session
+ * @function
+ * @memberof module:routers/auth~authController
+ * @inner
+ * @param { string } path - Express path.
+ * @param { callback } middleware - Express middleware.
+ * @param { callback } middleware - Express middleware.
+ */
 authController.post(
   '/session',
   bodyValidator(userLogInSchema),
@@ -78,6 +107,16 @@ authController.post(
   },
 );
 
+/**
+ * Route, which serves logout.
+ * @name delete/auth/session
+ * @function
+ * @memberof module:routers/auth~authController
+ * @inner
+ * @param { string } path - Express path.
+ * @param { callback } middleware - Express middleware.
+ * @param { callback } middleware - Express middleware.
+ */
 authController.delete('/session', authMiddleware, async (req, res) => {
   const token = req.headers.authorization.split(' ')[1];
 

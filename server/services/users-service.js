@@ -1,7 +1,23 @@
 import serviceErrors from './service-errors.js';
 import bcrypt from 'bcrypt';
 
+/**
+ * Returns a function, which registers a new user.
+ * @author Mayya Markova
+ * @param { object } usersData An object with data-layer functions.
+ * @return { function } A function, which accepts register data and returns the
+ * registrated user.
+ */
 const registerUser = (usersData) => {
+  /**
+   * Registrates a new user.
+   * @author Mayya Markova
+   * @async
+   * @function registerUserInnerFunction
+   * @param { object } registrationData An object, which contains the new user's data:
+   * username, password, first name, last name and avatar.
+   * @returns { Promise<object> } The new user's data or an error.
+   */
   return async (registrationData) => {
     const { username, password, firstName, lastName, avatar } =  registrationData;
 
@@ -20,7 +36,23 @@ const registerUser = (usersData) => {
   };
 };
 
+/**
+ * Returns a function, which returns the logged user.
+ * @author Mayya Markova
+ * @param { object } usersData An object with data-layer functions.
+ * @return { function } A function, which accepts login data and returns the
+ * logged user.
+ */
 const getLoggedUser = (usersData) => {
+  /**
+   * Logs the user in.
+   * @author Mayya Markova
+   * @async
+   * @function getLoggedUserInnerFunction
+   * @param { object } logInData An object, which contains the user's data:
+   * username, password.
+   * @returns { Promise<object> } The logged user's data or an error.
+   */
   return async (logInData) => {
     const { username, password } =  logInData;
 
@@ -47,7 +79,21 @@ const getLoggedUser = (usersData) => {
   };
 };
 
+/**
+ * Returns a function, which invalidates the user's token.
+ * @author Mayya Markova
+ * @param { object } blacklistData An object with data-layer functions.
+ * @return { function } A function, which accepts the user's token and blackists it.
+ */
 const logOutUser = (blacklistData) => {
+  /**
+   * Invalidates the user's token.
+   * @author Mayya Markova
+   * @async
+   * @function logOutUserInnerFunction
+   * @param { string } token The token to invalidate.
+   * @returns { Promise<object> } An error or null.
+   */
   return async (token) => {
     const isTokenBlacklisted = await blacklistData.isTokenBlacklisted(token);
 
@@ -61,7 +107,22 @@ const logOutUser = (blacklistData) => {
   };
 };
 
+/**
+ * Returns a function, which checks if the user's token is blacklisted.
+ * @author Mayya Markova
+ * @param { object } blacklistData An object with data-layer functions.
+ * @return { function } A function, which accepts the user's token and checks
+ * if it is blackisted.
+ */
 const isUserLoggedOut = (blacklistData) => {
+  /**
+   * Checks if the user's token is blacklisted.
+   * @author Mayya Markova
+   * @async
+   * @function isUserLoggedOutInnerFunction
+   * @param { string } token The token to check.
+   * @returns { Promise<object> } A boolean or an error.
+   */
   return async (token) => {
     const isTokenBlacklisted = await blacklistData.isTokenBlacklisted(token);
 

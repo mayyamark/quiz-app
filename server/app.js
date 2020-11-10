@@ -29,6 +29,10 @@ app.all('*', (req, res) =>
   res.status(404).send({ message: 'Resource not found!' }),
 );
 
+app.use((err, req, res, next) =>
+  res.status(500).send({ message: 'An unexpected error occurred!' }),
+);
+
 app.listen(PORT, () =>
   console.log(`Listening for quiz requests on port ${PORT}!`),
 );

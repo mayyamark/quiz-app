@@ -1,5 +1,16 @@
 import pool from './pool.js';
 
+/**
+ * Registrates a new user.
+ * @author Mayya Markova
+ * @async
+ * @param { string } username The new user's username.
+ * @param { string } password The new user's hashed password.
+ * @param { string } firstName The new user's first name.
+ * @param { string } lastName The new user's last name.
+ * @param { string } avatar The new user's avatar.
+ * @returns { object } The new user's data.
+ */
 const createUser = async (username, password, firstName, lastName, avatar) => {
   const insertSql = `
     INSERT INTO users(username, password, firstName, lastName, roleID, registerDate, avatar)
@@ -17,6 +28,13 @@ const createUser = async (username, password, firstName, lastName, avatar) => {
   };
 };
 
+/**
+ * Gets a user by his username.
+ * @author Mayya Markova
+ * @async
+ * @param { string } username The user's username.
+ * @returns { Promise<object> } The user's data.
+ */
 const getByUsername = async (username) => {
   const userSql = `
     SELECT u.id, u.username, u.password, u.firstName, u.lastName, r.role, u.avatar
