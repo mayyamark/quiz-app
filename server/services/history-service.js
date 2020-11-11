@@ -1,7 +1,19 @@
+/** Service layer.
+ * @module services/historyService
+ */
 import serviceErrors from './service-errors.js';
+
+/**
+ * Service layer related on history.
+ * @type { object }
+ * @const
+ * @namespace historyService
+ */
+
 /**
  * Returns a function, which gets a student's quiz history.
  * @author Mayya Markova
+ * @memberof module:services/historyService~historyService
  * @param { object } historyData An object with data-layer functions.
  * @return { function } A function, which accepts search parameters and returns the matching results.
  */
@@ -9,6 +21,7 @@ const getHistoryByStrudentId = (historyData) => {
   /**
    * Gets the history, matching the search.
    * @author Mayya Markova
+   * @memberof module:services/historyService~historyService
    * @async
    * @function getHistoryByStrudentIdInnerFunction
    * @param { string|number } userID Search parameter: the user's ID.
@@ -53,6 +66,7 @@ const getHistoryByStrudentId = (historyData) => {
 /**
  * Returns a function, which checks if the student has solved the given quiz.
  * @author Mayya Markova
+ * @memberof module:services/historyService~historyService
  * @param { object } historyData An object with data-layer functions.
  * @return { function } A function, which checks if the student has solved the given quiz.
  */
@@ -60,6 +74,7 @@ const isQuizSolvedByStudent = (historyData) => {
   /**
    * Returns the student's result if he/she has already solved the quiz or null-s if not.
    * @author Mayya Markova
+   * @memberof module:services/historyService~historyService
    * @async
    * @function isQuizSolvedByStudentInnerFunction
    * @param { string|number } userID The ID of the user.
@@ -83,6 +98,7 @@ const isQuizSolvedByStudent = (historyData) => {
 /**
  * Returns a function, which logs that the student has started solving the given quiz.
  * @author Mayya Markova
+ * @memberof module:services/historyService~historyService
  * @param { object } historyData An object with data-layer functions.
  * @return { function } A function, which logs that the student has started solving the given quiz.
  */
@@ -90,6 +106,7 @@ const startSolvingQuiz = (historyData) => {
   /**
    * Logs that the student has started solving the given quiz.
    * @author Mayya Markova
+   * @memberof module:services/historyService~historyService
    * @async
    * @function startSolvingQuizInnerFunction
    * @param { string|number } userID The ID of the user.

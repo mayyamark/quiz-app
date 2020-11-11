@@ -1,9 +1,21 @@
+/** Service layer.
+ * @module services/usersService
+ */
+
 import serviceErrors from './service-errors.js';
 import bcrypt from 'bcrypt';
 
 /**
+ * Service layer related on users.
+ * @type { object }
+ * @const
+ * @namespace usersService
+ */
+
+/**
  * Returns a function, which registers a new user.
  * @author Mayya Markova
+ * @memberof module:services/usersService~usersService
  * @param { object } usersData An object with data-layer functions.
  * @return { function } A function, which accepts register data and returns the
  * registrated user.
@@ -12,6 +24,7 @@ const registerUser = (usersData) => {
   /**
    * Registrates a new user.
    * @author Mayya Markova
+   * @memberof module:services/usersService~usersService
    * @async
    * @function registerUserInnerFunction
    * @param { object } registrationData An object, which contains the new user's data:
@@ -39,6 +52,7 @@ const registerUser = (usersData) => {
 /**
  * Returns a function, which returns the logged user.
  * @author Mayya Markova
+ * @memberof module:services/usersService~usersService
  * @param { object } usersData An object with data-layer functions.
  * @return { function } A function, which accepts login data and returns the
  * logged user.
@@ -47,6 +61,7 @@ const getLoggedUser = (usersData) => {
   /**
    * Logs the user in.
    * @author Mayya Markova
+   * @memberof module:services/usersService~usersService
    * @async
    * @function getLoggedUserInnerFunction
    * @param { object } logInData An object, which contains the user's data:
@@ -82,6 +97,7 @@ const getLoggedUser = (usersData) => {
 /**
  * Returns a function, which invalidates the user's token.
  * @author Mayya Markova
+ * @memberof module:services/usersService~usersService
  * @param { object } blacklistData An object with data-layer functions.
  * @return { function } A function, which accepts the user's token and blackists it.
  */
@@ -89,6 +105,7 @@ const logOutUser = (blacklistData) => {
   /**
    * Invalidates the user's token.
    * @author Mayya Markova
+   * @memberof module:services/usersService~usersService
    * @async
    * @function logOutUserInnerFunction
    * @param { string } token The token to invalidate.
@@ -110,6 +127,7 @@ const logOutUser = (blacklistData) => {
 /**
  * Returns a function, which checks if the user's token is blacklisted.
  * @author Mayya Markova
+ * @memberof module:services/usersService~usersService
  * @param { object } blacklistData An object with data-layer functions.
  * @return { function } A function, which accepts the user's token and checks
  * if it is blackisted.
@@ -118,6 +136,7 @@ const isUserLoggedOut = (blacklistData) => {
   /**
    * Checks if the user's token is blacklisted.
    * @author Mayya Markova
+   * @memberof module:services/usersService~usersService
    * @async
    * @function isUserLoggedOutInnerFunction
    * @param { string } token The token to check.
@@ -137,6 +156,7 @@ const isUserLoggedOut = (blacklistData) => {
 /**
  * Returns a function, which gets top students.
  * @author Mayya Markova
+ * @memberof module:services/usersService~usersService
  * @param { object } usersData An object with data-layer functions.
  * @return { function } A function, which accepts search parameters and returns the matching users.
  */
@@ -144,6 +164,7 @@ const getTopStudents = (usersData) => {
   /**
    * Gets users, matching the search.
    * @author Mayya Markova
+   * @memberof module:services/usersService~usersService
    * @async
    * @function getTopStudentsInnerFunction
    * @param { number|undefined } page Search parameter: the page number.

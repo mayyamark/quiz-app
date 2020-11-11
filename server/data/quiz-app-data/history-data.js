@@ -1,8 +1,20 @@
+/** Data layer.
+ * @module data/historyData
+ */
+
 import pool from './pool.js';
+
+/**
+ * Data layer related on history.
+ * @type { object }
+ * @const
+ * @namespace historyData
+ */
 
 /**
  * Gets the history, matching the search.
  * @author Mayya Markova
+ * @memberof module:data/historyData~historyData
  * @async
  * @param { string|number } userID Search parameter: the user's ID.
  * @param { string|undefined } quiz Search parameter: the quiz's name.
@@ -29,6 +41,7 @@ const searchBy = async (userID, quiz) => {
 /**
  * Gets the history, matching the search.
  * @author Mayya Markova
+ * @memberof module:data/historyData~historyData
  * @async
  * @param { string|number } userID Search parameter: the user's ID.
  * @param { string|undefined } quiz Search parameter: the quiz's name.
@@ -61,6 +74,7 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
 /**
  * Returns the student's result if he/she has already solved the quiz or null-s if not.
  * @author Mayya Markova
+ * @memberof module:data/historyData~historyData
  * @async
  * @param { string|number } userID The ID of the user.
  * @param { string|number } quizID The ID of the quiz.
@@ -80,6 +94,7 @@ const getSolveInfo = async (userID, quizID) => {
 /**
  * Logs that the student has started solving the given quiz.
  * @author Mayya Markova
+ * @memberof module:data/historyData~historyData
  * @async
  * @param { string|number } userID The ID of the user.
  * @param { string|number } quizID The ID of the quiz.

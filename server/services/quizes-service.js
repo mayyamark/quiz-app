@@ -1,8 +1,20 @@
+/** Service layer.
+ * @module services/quizesService
+ */
+
 import serviceErrors from './service-errors.js';
+
+/**
+ * Service layer related on quizes.
+ * @type { object }
+ * @const
+ * @namespace quizesService
+ */
 
 /**
  * Returns a function, which gets quizes by given search parameters.
  * @author Mayya Markova
+ * @memberof module:services/quizesService~quizesService
  * @param { object } quizesData An object with data-layer functions.
  * @return { function } A function, which accepts search parameters and returns the matching results.
  */
@@ -10,6 +22,7 @@ const getQuizes = (quizesData) => {
   /**
    * Gets quizes, matching the search.
    * @author Mayya Markova
+   * @memberof module:services/quizesService~quizesService
    * @async
    * @function getQuizesInnerFunction
    * @param { number|undefined } page Search parameter: the page number.
@@ -54,6 +67,7 @@ const getQuizes = (quizesData) => {
 /**
  * Returns a function, which gets a quiz by its ID
  * @author Mayya Markova
+ * @memberof module:services/quizesService~quizesService
  * @param { object } quizesData An object with data-layer functions.
  * @return { function } A function, which accepts the ID and returns the quiz or an error.
  */
@@ -61,6 +75,7 @@ const getQuizById = (quizesData) => {
   /**
    * Gets a quiz by its ID.
    * @author Mayya Markova
+   * @memberof module:services/quizesService~quizesService
    * @async
    * @function getQuizByIdInnerFunction
    * @param { string|number } quizID The ID of the quiz.

@@ -1,7 +1,20 @@
+/** Data layer.
+ * @module data/quizesData
+ */
+
 import pool from './pool.js';
+
+/**
+ * Data layer related on quizes.
+ * @type { object }
+ * @const
+ * @namespace quizesData
+ */
+
 /**
  * Gets quizes, matching the search.
  * @author Mayya Markova
+ * @memberof module:data/quizesData~quizesData
  * @async
  * @param { string|undefined } category Search parameter: the category's name.
  * @param { string|undefined } teacher Search parameter: the author's name.
@@ -33,6 +46,7 @@ const searchBy = async (category, teacher) => {
 /**
  * Gets quizes on page, matching the search.
  * @author Mayya Markova
+ * @memberof module:data/quizesData~quizesData
  * @async
  * @param { number|undefined } offset Search parameter: the offset number.
  * @param { number|undefined } limit Search parameter: the number of quizes per page.
@@ -71,6 +85,7 @@ const searchByWithPages = async (category, teacher, offset, limit) => {
 /**
  * Gets a quiz by its ID.
  * @author Mayya Markova
+ * @memberof module:data/quizesData~quizesData
  * @async
  * @param { string|number } quizID The ID of the quiz.
  * @returns { Promise<object> } The quiz with its questions and answers or null.

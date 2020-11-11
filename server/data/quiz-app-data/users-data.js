@@ -1,8 +1,20 @@
+/** Data layer.
+ * @module data/usersData
+ */
+
 import pool from './pool.js';
+
+/**
+ * Data layer related on users.
+ * @type { object }
+ * @const
+ * @namespace usersData
+ */
 
 /**
  * Registrates a new user.
  * @author Mayya Markova
+ * @memberof module:data/usersData~usersData
  * @async
  * @param { string } username The new user's username.
  * @param { string } password The new user's hashed password.
@@ -31,6 +43,7 @@ const createUser = async (username, password, firstName, lastName, avatar) => {
 /**
  * Gets a user by his username.
  * @author Mayya Markova
+ * @memberof module:data/usersData~usersData
  * @async
  * @param { string } username The user's username.
  * @returns { Promise<object> } The user's data.
@@ -50,6 +63,7 @@ const getByUsername = async (username) => {
 /**
  * Gets users, matching the search.
  * @author Mayya Markova
+ * @memberof module:data/usersData~usersData
  * @async
  * @param { string|undefined } username Search parameter: a users's username.
  * @returns { Promise<object> } The matching users.
@@ -74,6 +88,7 @@ const searchBy = async (username) => {
 /**
  * Gets users, matching the search.
  * @author Mayya Markova
+ * @memberof module:data/usersData~usersData
  * @async
  * @param { string|undefined } username Search parameter: a users's username.
  * @param { number|undefined } offset Search parameter: the offset number.

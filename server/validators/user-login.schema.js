@@ -1,4 +1,24 @@
+/** Validation schema.
+ * @module validators/userLogInSchema
+ */
+
+/**
+ * Schema with validations related to login.
+ * @type { object }
+ * @const
+ * @namespace userLogInSchema
+ */
 const userLogInSchema = {
+  /**
+   * Validates the username.
+   * @author Mayya Markova
+   * @name validateUsername
+   * @function
+   * @memberof module:validators/userLogInSchema~userLogInSchema
+   * @inner
+   * @param { string } value The value to check.
+   * @returns { string|null } Null or an error message.
+   */
   username: (value) => {
     if (!value) {
       return 'Username is required!';
@@ -10,6 +30,16 @@ const userLogInSchema = {
 
     return null;
   },
+  /**
+   * Validates the password.
+   * @author Mayya Markova
+   * @name validatePassword
+   * @function
+   * @memberof module:validators/userLogInSchema~userLogInSchema
+   * @inner
+   * @param { string } value The value to check.
+   * @returns { string|null } Null or an error message.
+   */
   password: (value) => {
     if (!value) {
       return 'Password is required!';
