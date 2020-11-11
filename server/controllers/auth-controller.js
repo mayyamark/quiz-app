@@ -7,7 +7,7 @@ import authMiddleware from '../middlewares/auth-middleware.js';
 import bodyValidator from '../middlewares/body-validator.js';
 import userRegistrationSchema from '../validators/user-registration.schema.js';
 import userLogInSchema from '../validators/user-login.schema.js';
-import { USER_ROLES } from '../config.js';
+import { USER_ROLES } from '../constants.js';
 import usersService from '../services/users-service.js';
 import serviceErrors from '../services/service-errors.js';
 import usersData from '../data/quiz-app-data/users-data.js';

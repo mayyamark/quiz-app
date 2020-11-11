@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js",
     "start:dev": "nodemon app.js",
-    "docs": "jsdoc -r ./data ./services ./controllers ./validators ./middlewares"
+    "docs": "jsdoc -r ./controllers ./data ./middlewares ./services ./validators ./config.js ./constants.js"
   },
   "repository": {
     "type": "git",

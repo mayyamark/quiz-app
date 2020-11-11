@@ -6,7 +6,7 @@ import express from 'express';
 import authMiddleware from '../middlewares/auth-middleware.js';
 import checkTokenMiddleware from '../middlewares/check-token-middlware.js';
 import roleMiddleware from '../middlewares/role-middleware.js';
-import { USER_ROLES } from '../config.js';
+import { USER_ROLES } from '../constants.js';
 import usersService from '../services/users-service.js';
 import historyService from '../services/history-service.js';
 import historyData from '../data/quiz-app-data/history-data.js';

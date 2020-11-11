@@ -13,7 +13,7 @@ import serviceErrors from '../services/service-errors.js';
 import historyService from '../services/history-service.js';
 import historyData from '../data/quiz-app-data/history-data.js';
 import roleMiddleware from '../middlewares/role-middleware.js';
-import { USER_ROLES } from '../config.js';
+import { USER_ROLES } from '../constants.js';
 import bodyValidator from '../middlewares/body-validator.js';
 import quizCreateSchema from '../validators/quiz-create-schema.js';
 import quizFinishSchema from '../validators/quiz-finish-schema.js';

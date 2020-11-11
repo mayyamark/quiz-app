@@ -1,5 +1,5 @@
 import express from 'express';
-import { USER_ROLES } from '../config.js';
+import { USER_ROLES } from '../constants.js';
 import authMiddleware from '../middlewares/auth-middleware.js';
 import checkTokenMiddleware from '../middlewares/check-token-middlware.js';
 import roleMiddleware from '../middlewares/role-middleware.js';

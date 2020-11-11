@@ -1,9 +1,37 @@
+/** Config options.
+ * @module config
+ */
 import dotenv from 'dotenv';
 
+/**
+ * Object with config options.
+ * @type { object }
+ * @const
+ * @namespace configOptions
+ */
+
+/**
+ * Object, containing options from .env file.
+ * @const
+ * @type { object }
+ * @memberof module:config~configOptions
+ */
 const config = dotenv.config().parsed;
 
+/**
+ * Server listening port.
+ * @const
+ * @type { number }
+ * @memberof module:config~configOptions
+ */
 const PORT = config.PORT || 5000;
 
+/**
+ * Object, containing options for the database configuration.
+ * @const
+ * @type { object }
+ * @memberof module:config~configOptions
+ */
 const DB_QUIZ_CONFIG = {
   host: 'localhost',
   port: '3306',
@@ -12,6 +40,12 @@ const DB_QUIZ_CONFIG = {
   database: 'quiz',
 };
 
+/**
+ * Object, containing for the database configuration.
+ * @const
+ * @type { object }
+ * @memberof module:config~configOptions
+ */
 const DB_BLACKLIST_CONFIG = {
   host: 'localhost',
   port: '3306',
@@ -20,14 +54,21 @@ const DB_BLACKLIST_CONFIG = {
   database: 'blacklist',
 };
 
+/**
+ * Server's secret key for creating tokens.
+ * @const
+ * @type { string }
+ * @memberof module:config~configOptions
+ */
 const SECRET_KEY = config.SECRET_KEY;
 
-const TOKEN_LIFETIME = 60 * 60; 
-
-const USER_ROLES = {
-  STUDENT: 'student',
-  TEACHER: 'teacher',
-};
+/**
+ * The lifetime of the token.
+ * @const
+ * @type { number }
+ * @memberof module:config~configOptions
+ */
+const TOKEN_LIFETIME = 60 * 60;
 
 export {
   PORT,
@@ -35,6 +76,4 @@ export {
   DB_BLACKLIST_CONFIG,
   SECRET_KEY,
   TOKEN_LIFETIME,
-  USER_ROLES,
 };
-
