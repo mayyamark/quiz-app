@@ -1,11 +1,11 @@
 import serviceErrors from './service-errors.js';
 
-const createCategory = (categories) => async (categoryData) => {
-    const category = await categories.create(categoryData.name.toLowerCase());
-    if (category) {
+const createCategory = (categoriesData) => async (category) => {
+    const cat = await categoriesData.create(category.name.toLowerCase());
+    if (cat) {
         return {
             error: null,
-            category: category,
+            category: cat,
         };
     }
 
@@ -15,8 +15,8 @@ const createCategory = (categories) => async (categoryData) => {
     };
 };
 
-const getAllCategories = (categories) => async () => {
-    const cats = await categories.getAll();
+const getAllCategories = (categoriesData) => async () => {
+    const cats = await categoriesData.getAll();
     if(cats) {
         return {
             error: null,
