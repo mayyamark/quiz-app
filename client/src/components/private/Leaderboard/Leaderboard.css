@@ -1,0 +1,19 @@
+#student-dashboard-leaderboard-container {
+  min-width: 300px;
+  max-width: 300px;
+}
+#student-dashboard-leaderboard-container h1 {
+  text-align: center;
+}
+#student-dashboard-leaderboard-table {
+  min-width: 300px;
+  max-width: 300px;
+}
+#student-dashboard-leaderboard-table .MuiAvatar-root {
+  width: 30px;
+  height: 30px;
+  margin: auto auto;
+}
+#student-dashboard-leaderboard-table .MuiTableCell-root {
+  padding: 3px 0 3px 0;
+}
