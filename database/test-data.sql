@@ -10,9 +10,18 @@ INSERT INTO `roles` (`id`, `role`) VALUES
 
 
 INSERT INTO `users` (`id`, `username`, `password`, `firstName`, `lastName`, `roleID`,  `registerDate`, `avatar`) VALUES
-(1, 'pesho', '$2b$10$4rwzGQjZgL6qjpI88wPmL.AWID3SS05HrTSzpoStxtmyPy/6JY90.', 'Pesho', 'Peshov', 1, '2020-11-04 18:53:45', NULL),
-(2, 'gosho', '$2b$10$T0Sa2etBy9pC4rX69Ahj6OshOzwsM5tQJ0nk3Vjq/iGinXiwkaxi6', 'Gosho', 'Goshov', 2, '2020-11-04 18:50:38', NULL),
-(3, 'tosho', '$2b$10$UINu0b5yEMTMkJe6SzfxuuMGaCAV6JEosFRWF52dFb3qJCSN9.N8i', 'Tosho', 'Toshov', 1, '2020-11-04 18:55:38', NULL);
+(1, 'pesho', '$2b$10$4rwzGQjZgL6qjpI88wPmL.AWID3SS05HrTSzpoStxtmyPy/6JY90.', 'Pesho', 'Peshov', 1, '2020-11-04 18:53:45', '/static/media/5.450c843e.png'),
+(2, 'gosho', '$2b$10$T0Sa2etBy9pC4rX69Ahj6OshOzwsM5tQJ0nk3Vjq/iGinXiwkaxi6', 'Gosho', 'Goshov', 2, '2020-11-04 18:50:38', '/static/media/10.decf6048.png'),
+(3, 'tosho', '$2b$10$UINu0b5yEMTMkJe6SzfxuuMGaCAV6JEosFRWF52dFb3qJCSN9.N8i', 'Tosho', 'Toshov', 1, '2020-11-04 18:55:38', '/static/media/7.9354a63e.png'),
+(5, 'petko', '$2b$10$v2WOb6/CB6optSYlYu3vXekC.vAOUeajHORN3mQKyYM7sEIQJRS4m', 'Petko', 'Petkov', 2, '2020-11-09 14:24:11', '/static/media/9.3e9903d5.png'),
+(6, 'ani', '$2b$10$oNUgcWh3p80cdrA4axrj6.L3Gw7RbcZprzM5rGDFnEpDtyX0uALom', 'Ani', 'Anova', 2, '2020-11-09 14:29:23', '/static/media/10.decf6048.png'),
+(7, 'viki', '$2b$10$XzS1qS3e2LqNSJnFF9u7VOXFa69g3RusCFXVUAfL4jEmKjLzvHmbi', 'Viki', 'Vikov', 2,'2020-11-09 14:36:31', '/static/media/7.9354a63e.png'),
+(8, 'penka', '$2b$10$Z231NxfbLNkT0q6tEgwlaeRtAbyc9dVtmAXqTGK0uzisDAmzHw6L.', 'Penka', 'Penkova', 2, '2020-11-09 14:40:30', '/static/media/10.decf6048.png'),
+(9, 'ivan', '$2b$10$j0g1gwwnFbfoTK/OHJHSkOirPDYjVCg9T0V.QzTMOyYCRwzH/dmWO', 'Ivan', 'Ivanov', 2, '2020-11-09 14:41:16', '/static/media/9.3e9903d5.png'),
+(10, 'kiro', '$2b$10$JjL4F6c16si3HYbFYAOjWOj30wjqo1cwFnCqL1kHe4TmEgGOICspu', 'Kiril', 'Kirilov' , 2, '2020-11-09 14:45:13', '/static/media/9.3e9903d5.png'),
+(11, 'asen', '$2b$10$xXYYwiB6CR17T6kPUfZaluf9BvWSqfgPjI.4Z.n1rO/nLojFWzoy6', 'Asen', 'Asenov', 2, '2020-11-09 14:48:00', '/static/media/8.eafdff08.png'),
+(12, 'hristo', '$2b$10$D2Dscj8vRaJOfI.1jmbcCO9ZwXuA4/vyXDUCRZz9Ijn1OB8pIsnNa', 'Hristo', 'Hristov', 2, '2020-11-09 16:14:42', '/static/media/7.9354a63e.png'),
+(13, 'mario', '$2b$10$6PGrs3vfEfd5qyENoU88WO7UiG6RJcDFBQtfPd0q/1Ffuve.f7Fka', 'Mario', 'Mariov', 2 , '2020-11-09 16:23:03', '/static/media/7.9354a63e.png');
 
 
 
