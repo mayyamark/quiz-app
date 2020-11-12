@@ -34,7 +34,6 @@ const stopLoadingLeaderboard = () => {
 
 const initLeaderboard = () => {
   return dispatch => {
-    console.log('fetch');
     dispatch(startLoadingLeaderboard());
     axios.get('/students?page=1', {
       headers: {
@@ -42,7 +41,6 @@ const initLeaderboard = () => {
       },
     })
     .then(res => {
-      console.log('response', res.data);
       dispatch(setLeaderboard(res.data));
     })
     .catch(err => dispatch(fetchLeaderboardFailed()))

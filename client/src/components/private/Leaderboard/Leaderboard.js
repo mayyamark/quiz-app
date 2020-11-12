@@ -11,8 +11,6 @@ const Leaderboard = memo((props) => {
     onInitLeaderboard();
   }, [onInitLeaderboard]);
 
-  console.log('component', leaderboard.students);
-
     return (
       <>
         {loading ?

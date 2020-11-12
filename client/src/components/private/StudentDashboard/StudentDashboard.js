@@ -1,6 +1,6 @@
 import Logout from '../../../containers/public/Authentication/Logout';
-import { Link } from 'react-router-dom';
 import Leaderboard from '../../../containers/private/Leaderboard/Leaderboard';
+import StudentHistory from '../../../containers/private/StudentHistory/StudentHistory';
 
 const StudentDashboard = () => {
   return (
@@ -9,6 +9,7 @@ const StudentDashboard = () => {
       <Logout />
     </div>
     <Leaderboard />
+    <StudentHistory />
     </>
   );
 };

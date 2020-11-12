@@ -4,7 +4,6 @@ import { initLeaderboard } from '../../../redux-store/actions/Leaderboard.js';
 import Leaderboard from '../../../components/private/Leaderboard/Leaderboard';
 
 const mapStateToProps = state => {
-  console.log('container', state);
   return {
     leaderboard: state.leaderboard.leaderboard,
     error: state.leaderboard.error,

@@ -1,4 +1,9 @@
-import * as actionTypes from '../actions/action-types';
+import {
+  SET_LEADERBOARD,
+  FETCH_LEADERBOARD_FAILED,
+  START_LOADING_LEADERBOARD,
+  STOP_LOADING_LEADERBOARD,
+} from '../actions/action-types';
 
 const initialState = {
   leaderboard: {},
@@ -35,13 +40,13 @@ const stopLoadingLeaderboard = (state, action) => {
 
 const LeaderboardReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SET_LEADERBOARD:
+    case SET_LEADERBOARD:
       return setLeaderboard(state, action);
-    case actionTypes.FETCH_LEADERBOARD_FAILED:
+    case FETCH_LEADERBOARD_FAILED:
       return fetchLeaderboardFailed(state, action);
-    case actionTypes.START_LOADING_LEADERBOARD:
+    case START_LOADING_LEADERBOARD:
       return startLoadingLeaderboard(state, action);
-    case actionTypes.STOP_LOADING_LEADERBOARD:
+    case STOP_LOADING_LEADERBOARD:
       return stopLoadingLeaderboard(state, action);
     default:
       return state;
