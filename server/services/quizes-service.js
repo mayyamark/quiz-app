@@ -100,9 +100,9 @@ const getQuizById = (quizesData) => {
 
 const createQuestion = (questionsData, answersData) => async (quiz, question) => {
   const quizQuestion = await questionsData.create(
-      quiz,
-      question.points,
-      question.text,
+    quiz,
+    question.points,
+    question.text,
   );
   quizQuestion.answers = [];
 

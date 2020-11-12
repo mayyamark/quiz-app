@@ -1,12 +1,11 @@
-import categories from '../data/quiz-app-data/categories-data.js';
 import serviceErrors from './service-errors.js';
 
-const createCategory = async (categoryData) => {
-  const category = await categories.create(categoryData.name.toLowerCase());
-  if (category) {
+const createCategory = (categoriesData) => async (category) => {
+  const cat = await categoriesData.create(category.name.toLowerCase());
+  if (cat) {
     return {
       error: null,
-      category: category,
+      category: cat,
     };
   }
 
@@ -16,9 +15,9 @@ const createCategory = async (categoryData) => {
   };
 };
 
-const getAllCategories = async () => {
-  const cats = await categories.getAll();
-  if (cats) {
+const getAllCategories = (categoriesData) => async () => {
+  const cats = await categoriesData.getAll();
+  if (cats){
     return {
       error: null,
       categories: cats,

@@ -18,6 +18,7 @@ const questionCreateSchema = {
       return 'Question points is required!';
     }
     const pointsAsNumber = Number(value);
+
     if (
       pointsAsNumber === Number.NaN ||
       pointsAsNumber < 1 ||

@@ -159,13 +159,13 @@ const finishSolvingQuiz = (historyData, quizesData) =>
           const markedAsTrue = answered[0].markedTrue.includes(answer.id);
           if (
             // if the answer is true but the user didn't mark it as true
-              (answer.isTrue && !markedAsTrue)
+            (answer.isTrue && !markedAsTrue)
             ||
             // the answer is false but the user marked it as false
               (!answer.isTrue && markedAsTrue)
-            ) {
-              // then the user didn't answer correctly
-              userAnsweredCorrectly = false;
+          ) {
+            // then the user didn't answer correctly
+            userAnsweredCorrectly = false;
           }
         }
         if (userAnsweredCorrectly) {
@@ -181,6 +181,7 @@ const finishSolvingQuiz = (historyData, quizesData) =>
         };
       }
     }
+
     historyData.logQuizScore(quizHistory.id, userScore);
     return {
       error: null,
@@ -189,7 +190,7 @@ const finishSolvingQuiz = (historyData, quizesData) =>
         totalScore: totalScore,
       },
     };
-};
+  };
 
 const getHistoryByQuizId = (historyData) => {
   return async (quizId, page, limit) => {
