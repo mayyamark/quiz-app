@@ -10,29 +10,28 @@ import categoriesService from '../services/category-service.js';
 import categoriesData from '../data/quiz-app-data/categories-data.js';
 
 const categoriesController = express.Router();
-// categoriesController.use(authMiddleware, checkTokenMiddleware(usersService));
+categoriesController.use(authMiddleware, checkTokenMiddleware(usersService));
 
 categoriesController.post('/',
-    roleMiddleware(USER_ROLES.TEACHER),
-    bodyValidator(categoryCreateSchema),  
-    async (req, res) => {
-        const result = await categoriesService.createCategory(categoriesData)(req.body);
-        if(result.error) {
-            res.status(409).send({error: 'Category name must be unique'});
-        } else {
-            res.status(201).send(result.category);
-        }
-});
+  roleMiddleware(USER_ROLES.TEACHER),
+  bodyValidator(categoryCreateSchema),
+  async (req, res) => {
+    const result = await categoriesService.createCategory(categoriesData)(req.body);
+    if (result.error) {
+      res.status(409).send({error: 'Category name must be unique'});
+    } else {
+      res.status(201).send(result.category);
+    }
+  });
 
-
-categoriesController.get('/', 
-    async (req, res) => {
-        const result = await categoriesService.getAllCategories(categoriesData)();
-        if(result.error) {
-            res.status(404).send([]);
-        } else {
-            res.status(200).send(result.categories);
-        }
-});
+categoriesController.get('/',
+  async (req, res) => {
+    const result = await categoriesService.getAllCategories(categoriesData)();
+    if (result.error) {
+      res.status(404).send([]);
+    } else {
+      res.status(200).send(result.categories);
+    }
+  });
 
 export default categoriesController;

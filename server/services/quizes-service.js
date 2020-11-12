@@ -33,14 +33,14 @@ const getQuizById = (quizesData) => {
     const quiz = await quizesData.getById(quizID);
 
     if (!quiz) {
-      return { 
-        quiz: null, 
+      return {
+        quiz: null,
         quizError: serviceErrors.RESOURCE_NOT_FOUND,
       };
     }
 
-    return { 
-      quiz, 
+    return {
+      quiz,
       quizError: null,
     };
   };
@@ -48,20 +48,20 @@ const getQuizById = (quizesData) => {
 
 const createQuestion = (questionsData, answersData) => async (quiz, question) => {
   const quizQuestion = await questionsData.create(
-      quiz, 
-      question.points, 
-      question.text,
+    quiz,
+    question.points,
+    question.text,
   );
   quizQuestion.answers = [];
 
-  for(const answer of question.answers) {
+  for (const answer of question.answers) {
     const questAnswer = await answersData.create(
       quizQuestion,
       answer.text,
       answer.isTrue,
     );
 
-    if(!questAnswer){
+    if (!questAnswer){
       return null;
     }
 
@@ -74,7 +74,7 @@ const createQuestion = (questionsData, answersData) => async (quiz, question) =>
 const createQuiz = (quizesData, questionsData, answersData, categoriesData) =>  async (user, quizData) => {
   const category = await categoriesData.getByName(quizData.category);
 
-  if(!category){
+  if (!category){
     return {
       error: serviceErrors.RESOURCE_NOT_FOUND,
       quiz: null,
@@ -82,13 +82,13 @@ const createQuiz = (quizesData, questionsData, answersData, categoriesData) =>  
   }
 
   const quiz = await quizesData.create(
-    quizData.name, 
-    quizData.timeLimit, 
-    user, 
+    quizData.name,
+    quizData.timeLimit,
+    user,
     category,
   );
 
-  if(!quiz){
+  if (!quiz){
     return {
       error: serviceErrors.BAD_REQUEST,
       quiz: null,
@@ -97,9 +97,9 @@ const createQuiz = (quizesData, questionsData, answersData, categoriesData) =>  
 
   quiz.questions = [];
 
-  for(const question of quizData.questions) {
+  for (const question of quizData.questions) {
     const quizQuestion = await createQuestion(questionsData, answersData)(quiz, question);
-    if(!quizQuestion){
+    if (!quizQuestion){
       return {
         error: serviceErrors.BAD_REQUEST,
         quiz: null,

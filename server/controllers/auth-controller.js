@@ -14,13 +14,13 @@ const authController = express.Router();
 
 authController.post('/registration', bodyValidator(userRegistrationSchema), async (req, res) => {
   const registrationData = req.body;
-  
+
   const { user, userError } = await usersService.registerUser(usersData)(registrationData);
-  
+
   if (userError === serviceErrors.DUPLICATE_RESOURCE) {
     return res.status(401).send({ message: 'The username is already taken!' });
-  } 
-  
+  }
+
   const payload = {
     sub: user.id,
     username: user.username,
@@ -28,24 +28,24 @@ authController.post('/registration', bodyValidator(userRegistrationSchema), asyn
     lastName: user.lastName,
     role: USER_ROLES.STUDENT,
   };
-  
+
   const token = createToken(payload);
-  
+
   res.status(200).send({ token });
 });
 
 authController.post('/session', bodyValidator(userLogInSchema), async (req, res) => {
   const logInData = req.body;
-  
+
   const { user, userError } = await usersService.getLoggedUser(usersData)(logInData);
 
   if (userError === serviceErrors.RESOURCE_NOT_FOUND) {
     return res.status(404).send({ message: 'User is not found!' });
-  }  
+  }
   if (userError === serviceErrors.BAD_REQUEST) {
     return res.status(401).send({ message: 'Invalid credentials!' });
-  } 
-  
+  }
+
   const payload = {
     sub: user.id,
     username: user.username,
@@ -63,7 +63,7 @@ authController.delete('/session', authMiddleware, async (req, res) => {
   const token =  req.headers.authorization.split(' ')[1];
 
   const { tokenError } = await usersService.logOutUser(blacklistData)(token);
-  
+
   if (tokenError === serviceErrors.UNAUTHORIZED) {
     return res.status(403).json({ message: 'User is not logged in!' });
   }
