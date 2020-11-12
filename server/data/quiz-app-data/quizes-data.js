@@ -135,22 +135,22 @@ const create = async (name, time, teacher, category) => {
   `;
 
   try {
-      const result = await pool.query(
-          insertQuiz,
-          [name, time, teacher.id, category.id],
-      );
+    const result = await pool.query(
+      insertQuiz,
+      [name, time, teacher.id, category.id],
+    );
 
-      return {
-          id: result.insertId,
-          name: name,
-          time: time,
-          teacher: teacher,
-          category: category,
-      };
+    return {
+      id: result.insertId,
+      name: name,
+      time: time,
+      teacher: teacher,
+      category: category,
+    };
   }
   catch (err) {
-      console.log(`db insert failed ${err.message}`);
-      return null;
+    console.log(`db insert failed ${err.message}`);
+    return null;
   }
 };
 

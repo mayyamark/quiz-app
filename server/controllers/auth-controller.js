@@ -21,7 +21,6 @@ import blacklistData from '../data/blacklist-data/blacklist-data.js';
  */
 const authController = express.Router();
 
-<<<<<<< HEAD
 /**
  * Route, which serves registration form.
  * @name post/auth/registration
@@ -78,54 +77,6 @@ authController.post(
   bodyValidator(userLogInSchema),
   async (req, res) => {
     const logInData = req.body;
-=======
-authController.post('/registration', bodyValidator(userRegistrationSchema), async (req, res) => {
-  const registrationData = req.body;
-
-  const { user, userError } = await usersService.registerUser(usersData)(registrationData);
-
-  if (userError === serviceErrors.DUPLICATE_RESOURCE) {
-    return res.status(401).send({ message: 'The username is already taken!' });
-  }
-
-  const payload = {
-    sub: user.id,
-    username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    role: USER_ROLES.STUDENT,
-  };
-
-  const token = createToken(payload);
-
-  res.status(200).send({ token });
-});
-
-authController.post('/session', bodyValidator(userLogInSchema), async (req, res) => {
-  const logInData = req.body;
-
-  const { user, userError } = await usersService.getLoggedUser(usersData)(logInData);
-
-  if (userError === serviceErrors.RESOURCE_NOT_FOUND) {
-    return res.status(404).send({ message: 'User is not found!' });
-  }
-  if (userError === serviceErrors.BAD_REQUEST) {
-    return res.status(401).send({ message: 'Invalid credentials!' });
-  }
-
-  const payload = {
-    sub: user.id,
-    username: user.username,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    role: user.role === USER_ROLES.TEACHER ? USER_ROLES.TEACHER : USER_ROLES.STUDENT,
-  };
-
-  const token = createToken(payload);
-
-  res.status(200).send({ token });
-});
->>>>>>> nadya
 
     const { user, userError } = await usersService.getLoggedUser(usersData)(
       logInData,

@@ -92,31 +92,18 @@ quizesController.post('/:id', async (req, res) => {
   res.status(200).send({ quiz, startTime });
 });
 
-<<<<<<< HEAD
-quizesController.put(
-  '/finish',
-=======
-quizesController.put('/finish',
->>>>>>> nadya
-  bodyValidator(quizFinishSchema),
+quizesController.put('/finish', bodyValidator(quizFinishSchema),
   async (req, res) => {
     const user = req.user;
 
     if (user.role === 'student') {
-<<<<<<< HEAD
-      const { historyError } = await historyService.isQuizSolvedByStudent(
-        historyData,
-      )(user.id, req.body.id);
-=======
       const { historyError } = await historyService.isQuizSolvedByStudent(historyData)(user.id, req.body.id);
->>>>>>> nadya
 
       if (historyError === serviceErrors.DUPLICATE_RESOURCE) {
         return res.status(400).send({ message: 'Quiz already solved!' });
       }
     }
 
-<<<<<<< HEAD
     const quizResult = await historyService.finishSolvingQuiz(
       historyData,
       quizesData,
@@ -137,27 +124,11 @@ quizesController.put('/finish',
   },
 );
 
-quizesController.post(
-  '/',
-=======
-    const quizResult = await historyService.finishSolvingQuiz(historyData, quizesData)(user, req.body);
-    if (quizResult.error){
-      if (quizResult.error === serviceErrors.TIMEOUT){
-        return res.status(409).send({ message: 'Out of time!', time:  quizResult.timeout});
-      }
-      return res.status(500).send({ message: 'There was an error processing your quiz!' });
-    }
-
-    return res.status(200).send(quizResult.result);
-  });
-
 quizesController.post('/',
->>>>>>> nadya
   roleMiddleware(USER_ROLES.TEACHER),
   bodyValidator(quizCreateSchema),
   async (req, res) => {
     const user = req.user;
-<<<<<<< HEAD
     const result = await quizesService.createQuiz(
       quizesData,
       questionsData,
@@ -173,42 +144,7 @@ quizesController.post('/',
   },
 );
 
-quizesController.get(
-  '/:id/history',
-  roleMiddleware(USER_ROLES.TEACHER),
-  async (req, res) => {
-    const { id } = req.params;
-    const { page, limit } = req.query;
-
-    if (page && !(Number(page) > 0)) {
-      return res.status(400).send({ message: 'Invalid page number!' });
-    }
-    if (limit && !(Number(limit) > 0)) {
-      return res.status(400).send({ message: 'Invalid limit number!' });
-    }
-    const result = await historyService.getHistoryByQuizId(historyData)(
-      id,
-      page,
-      limit,
-    );
-
-    if (result.error) {
-      return res.status(404).send([]);
-    }
-
-    res.status(200).send(result);
-  },
-);
-=======
-    const result = await quizesService.createQuiz(quizesData, questionsData, answersData, categoriesData)(user, req.body);
-    if (result.error){
-      return res.status(409).send({error: result.error});
-    }
-    res.status(200).send(result.quiz);
-  });
-
-quizesController.get('/:id/history',
-  roleMiddleware(USER_ROLES.TEACHER),
+quizesController.get('/:id/history', roleMiddleware(USER_ROLES.TEACHER),
   async (req, res) => {
     const { id } = req.params;
     const { page, limit } = req.query;
@@ -226,6 +162,5 @@ quizesController.get('/:id/history',
     }
     res.status(200).send(result);
   });
->>>>>>> nadya
 
 export default quizesController;
