@@ -54,10 +54,10 @@ const initStudentHistory = (userId) => {
   };
 };
 
-const getStudentHistoryPage = (userId, page, quiz) => {
+const getStudentHistoryPage = (userId, page, limit, quiz) => {
   return dispatch => {
     dispatch(startLoadingStudentHistory());
-    axios.get(`/students/${userId}/history?page=${page}&quiz=${quiz}`, {
+    axios.get(`/students/${userId}/history?page=${page}&limit=${limit}&quiz=${quiz}`, {
       headers: {
         'Authorization': `Bearer ${getToken()}`,
       },

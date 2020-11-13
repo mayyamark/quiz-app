@@ -1,10 +1,13 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../auth/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import { useQueryParams } from '../../../custom-hooks/useQueryParams.js';
 import {
   getSearchParam,
@@ -24,14 +27,16 @@ const StudentHistoryPage = memo((props) => {
 
   const { user } = useAuth();
   const { page } = useQueryParams();
+  const [limit, setLimit] = useState(5);
+
   const history = useHistory();
 
   useEffect(() => {
-    onGetStudentHistoryPage(user.sub, page, '');
-  }, [onGetStudentHistoryPage, user.sub, page]);
+    onGetStudentHistoryPage(user.sub, page, limit, '');
+  }, [onGetStudentHistoryPage, user.sub, limit, page]);
 
   const handleOnClick = () => {
-    onGetStudentHistoryPage(user.sub, page, getSearchParam());
+    onGetStudentHistoryPage(user.sub, page, limit, getSearchParam());
     history.push(`/history?page=1&quiz=${getSearchParam()}`); // Add search query to path or not??
     removeSearchParam();
   };
@@ -50,7 +55,24 @@ const StudentHistoryPage = memo((props) => {
             variant="outlined"
             onChange={(ev) => setSearchParam(ev.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={handleOnClick}>
+          <FormControl variant="outlined">
+            <InputLabel htmlFor="outlined-age-native-simple">Results</InputLabel>
+            <Select
+              native
+              value={limit}
+              onChange={(ev) => setLimit(ev.target.value)}
+              label="Results"
+              inputProps={{
+                name: 'limit',
+                id: 'outlined-age-native-simple',
+              }}
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={15}>15</option>
+            </Select>
+          </FormControl>
+          <Button variant="contained" size="large" color="primary" onClick={handleOnClick}>
             Search
           </Button>
           <CustomTable
@@ -65,8 +87,7 @@ const StudentHistoryPage = memo((props) => {
             ]}
             tableBody={studentHistoryPage.history.map((history, index) => {
               return {
-                // TODO: Find out how to make a better numeration
-                id: <>{index + 1}</>,
+                id: <>{(studentHistoryPage.currentPage * limit ) - limit + index + 1}</>,
                 quizName: <>{history.name}</>,
                 categoryName: <>{history.category}</>,
                 started: <>{new Date(history.started).toLocaleString('en-GB')}</>,

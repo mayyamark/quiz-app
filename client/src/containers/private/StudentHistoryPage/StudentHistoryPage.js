@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetStudentHistoryPage: (userId, page, quiz) => dispatch(getStudentHistoryPage(userId, page, quiz)),
+    onGetStudentHistoryPage: (userId, page, limit, quiz) => dispatch(getStudentHistoryPage(userId, page, limit, quiz)),
   };
 };
 
