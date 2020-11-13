@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetLeaderboardPage: (page, username) => dispatch(getLeaderboardPage(page, username)),
+    onGetLeaderboardPage: (page, limit, username) => dispatch(getLeaderboardPage(page, limit, username)),
   };
 };
 

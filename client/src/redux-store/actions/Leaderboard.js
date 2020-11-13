@@ -56,11 +56,10 @@ const initLeaderboard = () => {
   };
 };
 
-const getLeaderboardPage = (page, username) => {
-  console.log('fetch');
+const getLeaderboardPage = (page, limit, username) => {
   return dispatch => {
     dispatch(startLoadingLeaderboard());
-    axios.get(`/students?page=${page}&username=${username}`, {
+    axios.get(`/students?page=${page}&limit=${limit}&username=${username}`, {
       headers: {
         'Authorization': `Bearer ${getToken()}`,
       },

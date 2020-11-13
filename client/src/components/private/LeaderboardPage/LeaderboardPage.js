@@ -1,8 +1,11 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { useQueryParams } from '../../../custom-hooks/useQueryParams.js';
@@ -25,12 +28,13 @@ const LeaderboardPage = memo((props) => {
   const { page } = useQueryParams();
   const history = useHistory();
 
+  const [limit, setLimit] = useState(10);
   useEffect(() => {
-    onGetLeaderboardPage(page, '');
-  }, [onGetLeaderboardPage, page]);
+    onGetLeaderboardPage(page, limit, '');
+  }, [onGetLeaderboardPage, page, limit]);
 
   const handleOnClick = () => {
-    onGetLeaderboardPage(page, getSearchParam());
+    onGetLeaderboardPage(page, limit, getSearchParam());
     history.push(`/leaderboard?page=1&username=${getSearchParam()}`); // Add search query to path or not??
     removeSearchParam();
   };
@@ -49,7 +53,24 @@ const LeaderboardPage = memo((props) => {
             variant="outlined"
             onChange={(ev) => setSearchParam(ev.target.value)}
           />
-          <Button variant="contained" color="primary" onClick={handleOnClick}>
+          <FormControl variant="outlined">
+            <InputLabel htmlFor="outlined-age-native-simple">Results</InputLabel>
+            <Select
+              native
+              value={limit}
+              onChange={(ev) => setLimit(ev.target.value)}
+              label="Results"
+              inputProps={{
+                name: 'limit',
+                id: 'outlined-age-native-simple',
+              }}
+            >
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+              <option value={15}>15</option>
+            </Select>
+          </FormControl>
+          <Button variant="contained" size="large" color="primary" onClick={handleOnClick}>
             Search
           </Button>
           <CustomTable
@@ -64,8 +85,7 @@ const LeaderboardPage = memo((props) => {
             ]}
             tableBody={leaderboardPage.students.map((student, index) => {
               return {
-                // TODO: Find out how to make a better numeration
-                id: <>{index + 1}</>,
+                id: <>{(leaderboardPage.currentPage * limit ) - limit + index + 1}</>,
                 avatar: <Avatar src={student.avatar} alt="avatar" />,
                 username: <>{student.username}</>,
                 firstName: <>{student.firstName}</>,
