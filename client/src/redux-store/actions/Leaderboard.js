@@ -56,11 +56,7 @@ const initLeaderboard = () => {
   };
 };
 
-<<<<<<< HEAD
 const getLeaderboardPage = (page, limit, username) => {
-=======
-const getLeaderboardPage = (page, username) => {
->>>>>>> history-page
   return dispatch => {
     dispatch(startLoadingLeaderboard());
     axios.get(`/students?page=${page}&limit=${limit}&username=${username}`, {
