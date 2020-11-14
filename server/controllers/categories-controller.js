@@ -8,9 +8,10 @@ import categoryCreateSchema from '../validators/category-create-schema.js';
 import usersService from '../services/users-service.js';
 import categoriesService from '../services/category-service.js';
 import categoriesData from '../data/quiz-app-data/categories-data.js';
+import blacklistData from '../data/blacklist-data/blacklist-data.js';
 
 const categoriesController = express.Router();
-categoriesController.use(authMiddleware, checkTokenMiddleware(usersService));
+categoriesController.use(authMiddleware,  checkTokenMiddleware(usersService)(blacklistData));
 
 categoriesController.post('/',
   roleMiddleware(USER_ROLES.TEACHER),
