@@ -3,6 +3,7 @@ import { useAuth } from '../../auth/AuthContext';
 import StudentDashboard from './StudentDashboard/StudentDashboard';
 import { useEffect } from 'react';
 import StudentRoute from '../../auth/StudentRoute';
+import Quizes from '../../containers/private/Quizes/Quizes';
 
 const PrivateApp = () => {
   const { user } = useAuth();
@@ -18,6 +19,7 @@ const PrivateApp = () => {
   <BrowserRouter>
     <Switch>
     <StudentRoute path="/dashboard" component={StudentDashboard} />
+    <Route path="/quizzes" component={Quizes} />
     <Route path="*">
       <Redirect to="/dashboard" />
     </Route>

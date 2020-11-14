@@ -8,11 +8,13 @@ import LeaderboardReducer from './redux-store/reducers/LeaderboardReducer.js';
 import StudentHistoryReducer from './redux-store/reducers/StudentHistoryReducer.js';
 import CategoriesReducer from './redux-store/reducers/CategoriesReducer';
 import App from './App';
+import QuizesReducer from './redux-store/reducers/QuizesReducer';
 
 const rootReducer = combineReducers({
   leaderboard: LeaderboardReducer,
   studentHistory: StudentHistoryReducer,
   categories: CategoriesReducer,
+  quizes: QuizesReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

@@ -22,7 +22,7 @@ import pool from './pool.js';
  */
 const searchBy = async (category, teacher) => {
   let quizesSql = `
-    SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
+    SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName
     FROM quizes q
     JOIN users u ON q.teacherID = u.id
     JOIN categories c ON q.categoryID = c.id
@@ -57,7 +57,7 @@ const searchBy = async (category, teacher) => {
  */
 const searchByWithPages = async (category, teacher, offset, limit) => {
   let quizesSql = `
-    SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
+    SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName
     FROM quizes q
     JOIN users u ON q.teacherID = u.id
     JOIN categories c ON q.categoryID = c.id
