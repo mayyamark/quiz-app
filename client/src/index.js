@@ -7,12 +7,14 @@ import thunk from 'redux-thunk';
 import LeaderboardReducer from './redux-store/reducers/LeaderboardReducer.js';
 import StudentHistoryReducer from './redux-store/reducers/StudentHistoryReducer.js';
 import CategoriesReducer from './redux-store/reducers/CategoriesReducer';
+import teacherDashboardReducer from './redux-store/reducers/teacherDashboardReducer';
 import App from './App';
 
 const rootReducer = combineReducers({
   leaderboard: LeaderboardReducer,
   studentHistory: StudentHistoryReducer,
   categories: CategoriesReducer,
+  teacherDash: teacherDashboardReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

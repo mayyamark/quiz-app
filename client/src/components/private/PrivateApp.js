@@ -3,6 +3,9 @@ import { useAuth } from '../../auth/AuthContext';
 import StudentDashboard from './StudentDashboard/StudentDashboard';
 import { useEffect } from 'react';
 import StudentRoute from '../../auth/StudentRoute';
+import TeacherDashboard from '../../containers/private/TeacherDashboard/TeacherDashboard';
+import ViewQuiz from '../../containers/private/ViewQuiz/ViewQuiz';
+import AlternateRoute from '../../auth/AlternateRoute';
 import LeaderboardPage from '../../containers/private/LeaderboardPage/LeaderboardPage';
 import StudentHistoryPage from '../../containers/private/StudentHistoryPage/StudentHistoryPage';
 
@@ -19,7 +22,8 @@ const PrivateApp = () => {
   return (
   <BrowserRouter>
     <Switch>
-    <StudentRoute exact path="/dashboard" component={StudentDashboard} />
+    <Route path="/view-quiz" component={ViewQuiz} />
+    <AlternateRoute exact path="/dashboard" componentA={TeacherDashboard} componentB={StudentDashboard} />
     <StudentRoute exact path="/leaderboard" component={LeaderboardPage} />
     <StudentRoute exact path="/history" component={StudentHistoryPage} />
     <Route path="*">
