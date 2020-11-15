@@ -4,6 +4,8 @@ import StudentDashboard from './StudentDashboard/StudentDashboard';
 import { useEffect } from 'react';
 import StudentRoute from '../../auth/StudentRoute';
 import Quizes from '../../containers/private/Quizes/Quizes';
+import LeaderboardPage from '../../containers/private/LeaderboardPage/LeaderboardPage';
+import StudentHistoryPage from '../../containers/private/StudentHistoryPage/StudentHistoryPage';
 
 const PrivateApp = () => {
   const { user } = useAuth();
@@ -20,6 +22,9 @@ const PrivateApp = () => {
     <Switch>
     <StudentRoute path="/dashboard" component={StudentDashboard} />
     <Route path="/quizzes" component={Quizes} />
+    <StudentRoute exact path="/dashboard" component={StudentDashboard} />
+    <StudentRoute exact path="/leaderboard" component={LeaderboardPage} />
+    <StudentRoute exact path="/history" component={StudentHistoryPage} />
     <Route path="*">
       <Redirect to="/dashboard" />
     </Route>
