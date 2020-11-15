@@ -1,5 +1,6 @@
 import {
   SET_STUDENT_HISTORY,
+  SET_STUDENT_HISTORY_PAGE,
   FETCH_STUDENT_HISTORY_FAILED,
   START_LOADING_STUDENT_HISTORY,
   STOP_LOADING_STUDENT_HISTORY,
@@ -11,6 +12,13 @@ const setStudentHistory = (studentHistory) => {
   return {
     type: SET_STUDENT_HISTORY,
     studentHistory,
+  };
+};
+
+const setStudentHistoryPage = (studentHistoryPage) => {
+  return {
+    type: SET_STUDENT_HISTORY_PAGE,
+    studentHistoryPage,
   };
 };
 
@@ -46,8 +54,23 @@ const initStudentHistory = (userId) => {
   };
 };
 
+const getStudentHistoryPage = (userId, page, limit, quiz) => {
+  return dispatch => {
+    dispatch(startLoadingStudentHistory());
+    axios.get(`/students/${userId}/history?page=${page}&limit=${limit}&quiz=${quiz}`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(res => dispatch(setStudentHistoryPage(res.data)))
+    .catch(err => dispatch(fetchStudentHistoryFailed()))
+    .finally(() => dispatch(stopLoadingStudentHistory()));
+  };
+};
+
 export {
   setStudentHistory,
+  getStudentHistoryPage,
   fetchStudentHistoryFailed,
   startLoadingStudentHistory,
   stopLoadingStudentHistory,

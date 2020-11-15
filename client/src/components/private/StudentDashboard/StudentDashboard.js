@@ -7,6 +7,8 @@ const StudentDashboard = () => {
   return (
     <>
     <div>
+      <Link to='/leaderboard?page=1'>Leaderboard</Link>
+      <Link to='/history?page=1'>History</Link>
       <Logout />
     </div>
     <Categories />
