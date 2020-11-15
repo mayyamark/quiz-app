@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { connect , useDispatch } from 'react-redux';
-import { TextField, Button, Select, MenuItem } from '@material-ui/core';
+import { TextField, Button, Select, MenuItem, List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox } from '@material-ui/core';
 import createQuiz from '../../../redux-store/actions/quizes';
 import getCategories from '../../../redux-store/actions/categories';
 import { makeStyles } from '@material-ui/core/styles';
@@ -42,56 +42,64 @@ const CreateQuiz = (props) => {
     return {
         name: name,
         timeLimit: timeLimit,
-        category: categoriesState.categories.filter(category => category.id === category)[0].name,
-        questions: [{
-                text: 'Which are periodic elements',
-                points: 2,
-                answers: [{
-                        text: 'H',
-                        isTrue: true,
-                    },
-                    {
-                        text: 'C',
-                        isTrue: true,
-                    },
-                ],
-            },
-            {
-                text: 'Which elements are metals',
-                points: 4,
-                answers: [{
-                        text: 'O',
-                        isTrue: false,
-                    },
-                    {
-                        text: 'Hg',
-                        isTrue: true,
-                    },
-                ],
-            },
-        ],
+        category: categoriesState.categories.filter(cat => cat.id === category)[0].name,
+        questions: questions,
     };
   };
 
   const [name, setName] = useState();
   const [timeLimit, setTimeLimit] = useState();
   const [category, setCategory] = useState(0);
+  const [questions, setQuestions] = useState([]);
 
   const handleCategoryChange = (event) => {
     setCategory(event.target.value);
   };
-  const handleNameChange = (event) => {
+  const handleQuizNameChange = (event) => {
     setName(event.target.value);
   };
   const handleTimeLimitChange = (event) => {
     setTimeLimit(event.target.value);
+  };
+  const handleAddQuestion = (event) => {
+    questions.push( {text: '', points: 0});
+    setQuestions([...questions]);
+  };
+  const handlDeleteQuestion = (question) => (event) => {
+    setQuestions(questions.filter(q => q != question));
+  };
+  const handleAddAnswer = (question) => (event) => {
+    if (!question.answers)
+      question.answers = [];
+
+    question.answers.push({text: '', isTrue: false});
+    setQuestions([...questions]);
+  };
+
+  const handleSetAnswerTrue = (answer) => (event) => {
+    answer.isTrue = !answer.isTrue;
+    setQuestions([...questions]);
+  };
+  const handleAnswerChange =  (answer) => (event) => {
+    answer.text = event.target.value;
+    setQuestions([...questions]);
+  };
+
+  const handleQuestionTextChange = (question) => (event) => {
+    question.text = event.target.value;
+    setQuestions([...questions]);
+  };
+
+  const handlePointsChange = (question) => (event) => {
+    question.points = event.target.value;
+    setQuestions([...questions]);
   };
 
   return ((categoriesState.categories && categoriesState.categories.length > 0) ?
     <form className={classes.root} noValidate autoComplete="off">
       {quizesState.error}
       <div>
-        <TextField id="outlined-basic" label="Quiz Name" variant="outlined" onChange={handleNameChange}/>
+        <TextField id="outlined-basic" label="Quiz Name" variant="outlined" onChange={handleQuizNameChange}/>
         <TextField id="outlined-basic" label="Time Limit" type="number" InputProps={{ inputProps: { min: 1, max: 60 } }} variant="outlined" onChange={handleTimeLimitChange}/>
       </div>
       <div>
@@ -100,12 +108,37 @@ const CreateQuiz = (props) => {
         </Select>
       </div>
       <div>
-        <form noValidate autoComplete="off">
-          <TextField id="outlined-basic" label="Question" variant="outlined" onChange={handleNameChange}/>
-          <TextField id="outlined-basic" label="Points" type="number" InputProps={{ inputProps: { min: 1, max: 60 } }} variant="outlined" onChange={handleTimeLimitChange}/>
-        </form>
+        <Button id="outlined-basic" variant="outlined" onClick={handleAddQuestion}>Add question</Button>
+        {questions && questions.length > 0 ?
+          <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
+            {questions.map(question =>
+            <ListItem>
+              <TextField label="Question" value={`${question.text}`} onChange={handleQuestionTextChange(question)}/>
+              <TextField label="Points" value={`${question.points}`} type="number" InputProps={{ inputProps: { min: 1, max: 60 } }} onChange={handlePointsChange(question)}/>
+              {question.answers &&
+              <List component="nav"aria-label="answers">
+              {question.answers.map(answer =>
+                <ListItem>
+                  <TextField label="Answer" value={`${answer.text}`} onChange={handleAnswerChange(answer)}/>
+                <ListItemSecondaryAction>
+                  <Checkbox
+                    edge="end"
+                    onChange={handleSetAnswerTrue(answer)}
+                    checked={answer.isTrue}
+                  />
+                </ListItemSecondaryAction>
+                </ListItem>)
+
+              }
+              </List>
+              }
+              <Button id="outlined-basic" variant="outlined" onClick={handleAddAnswer(question)}>Add answer</Button>
+              <Button id="outlined-basic" variant="outlined" onClick={handlDeleteQuestion(question)}>Delete</Button>
+            </ListItem>)
+            }
+         </List> : <div>There are no questions</div>}
       </div>
-      <Button onClick={createAQuiz}>Create that quiz!</Button>
+      <Button id="outlined-basic" variant="outlined" onClick={createAQuiz}>Create that quiz!</Button>
     </form>
     :
     <div>
