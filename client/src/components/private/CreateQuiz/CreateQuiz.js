@@ -4,6 +4,7 @@ import { TextField, Button, Select, MenuItem, List, ListItem, ListItemText, List
 import createQuiz from '../../../redux-store/actions/quizes';
 import getCategories from '../../../redux-store/actions/categories';
 import { makeStyles } from '@material-ui/core/styles';
+import CreateQuestion from './CreateQuestion';
 
 const mapStateToProps = (state) => {
   return {
@@ -106,30 +107,15 @@ const CreateQuiz = (props) => {
         <Button id="outlined-basic" variant="outlined" onClick={handleAddQuestion} className={classes.selectEmpty}>Add question</Button>
         {questions && questions.length > 0 ?
           <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
-            {questions.map(question =>
-            <ListItem>
-              <TextField label="Question" value={`${question.text}`} onChange={handleQuestionTextChange(question)}/>
-              <TextField label="Points" value={`${question.points}`} type="number" InputProps={{ inputProps: { min: 1, max: 60 } }} onChange={handlePointsChange(question)}/>
-              {question.answers &&
-              <List component="nav"aria-label="answers">
-              {question.answers.map(answer =>
-                <ListItem>
-                  <TextField label="Answer" value={`${answer.text}`} onChange={handleAnswerChange(answer)}/>
-                <ListItemSecondaryAction>
-                  <Checkbox
-                    edge="end"
-                    onChange={handleSetAnswerTrue(answer)}
-                    checked={answer.isTrue}
-                  />
-                </ListItemSecondaryAction>
-                </ListItem>)
-
-              }
-              </List>
-              }
-              <Button id="outlined-basic" variant="outlined" onClick={handleAddAnswer(question)}>Add answer</Button>
-              <Button id="outlined-basic" variant="outlined" onClick={handleDeleteQuestion(question)}>Delete</Button>
-            </ListItem>)
+            {
+            questions.map(question =>
+              <CreateQuestion question={question}
+                              handleQuestionTextChange={handleQuestionTextChange}
+                              handlePointsChange={handlePointsChange}
+                              handleAnswerChange={handleAnswerChange}
+                              handleAddAnswer={handleAddAnswer}
+                              handleDeleteQuestion={handleDeleteQuestion}
+                              handleSetAnswerTrue={handleSetAnswerTrue}/>)
             }
          </List> : <div>There are no questions</div>}
       </div>
