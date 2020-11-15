@@ -11,7 +11,6 @@ const mapStateToProps = (state) => {
       quizesState: state.quizes,
   };
 };
-
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -21,16 +20,15 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
+    margin: theme.spacing(1),
+    width: '25ch',
   },
 }));
 
 const CreateQuiz = (props) => {
   const classes = useStyles();
-  const {categoriesState, quizesState} = props;
-
+  const { categoriesState, quizesState } = props;
   const dispatch = useDispatch();
-
   const createAQuiz = () => {
     dispatch(createQuiz(createQuizData()));
   };
@@ -65,17 +63,16 @@ const CreateQuiz = (props) => {
     questions.push( {text: '', points: 0});
     setQuestions([...questions]);
   };
-  const handlDeleteQuestion = (question) => (event) => {
+  const handleDeleteQuestion = (question) => (event) => {
     setQuestions(questions.filter(q => q != question));
   };
   const handleAddAnswer = (question) => (event) => {
-    if (!question.answers)
+    if (!question.answers) {
       question.answers = [];
-
-    question.answers.push({text: '', isTrue: false});
+    }
+    question.answers.push({ text: '', isTrue: false });
     setQuestions([...questions]);
   };
-
   const handleSetAnswerTrue = (answer) => (event) => {
     answer.isTrue = !answer.isTrue;
     setQuestions([...questions]);
@@ -84,12 +81,10 @@ const CreateQuiz = (props) => {
     answer.text = event.target.value;
     setQuestions([...questions]);
   };
-
   const handleQuestionTextChange = (question) => (event) => {
     question.text = event.target.value;
     setQuestions([...questions]);
   };
-
   const handlePointsChange = (question) => (event) => {
     question.points = event.target.value;
     setQuestions([...questions]);
@@ -108,7 +103,7 @@ const CreateQuiz = (props) => {
         </Select>
       </div>
       <div>
-        <Button id="outlined-basic" variant="outlined" onClick={handleAddQuestion}>Add question</Button>
+        <Button id="outlined-basic" variant="outlined" onClick={handleAddQuestion} className={classes.selectEmpty}>Add question</Button>
         {questions && questions.length > 0 ?
           <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
             {questions.map(question =>
@@ -133,12 +128,12 @@ const CreateQuiz = (props) => {
               </List>
               }
               <Button id="outlined-basic" variant="outlined" onClick={handleAddAnswer(question)}>Add answer</Button>
-              <Button id="outlined-basic" variant="outlined" onClick={handlDeleteQuestion(question)}>Delete</Button>
+              <Button id="outlined-basic" variant="outlined" onClick={handleDeleteQuestion(question)}>Delete</Button>
             </ListItem>)
             }
          </List> : <div>There are no questions</div>}
       </div>
-      <Button id="outlined-basic" variant="outlined" onClick={createAQuiz}>Create that quiz!</Button>
+      <Button id="outlined-basic" variant="outlined" onClick={createAQuiz} className={classes.selectEmpty}>Create that quiz!</Button>
     </form>
     :
     <div>
