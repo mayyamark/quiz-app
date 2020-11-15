@@ -3,8 +3,9 @@ import { connect , useDispatch } from 'react-redux';
 import { TextField, Button, Select, MenuItem, List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox } from '@material-ui/core';
 import createQuiz from '../../../redux-store/actions/quizes';
 import getCategories from '../../../redux-store/actions/categories';
-import { makeStyles } from '@material-ui/core/styles';
+
 import CreateQuestion from '../../../components/private/CreateQuiz/CreateQuestion';
+import CreateQuizComponent from '../../../components/private/CreateQuiz/CreateQuiz';
 
 const mapStateToProps = (state) => {
   return {
@@ -12,22 +13,10 @@ const mapStateToProps = (state) => {
       quizesState: state.quizes,
   };
 };
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-      minWidth: 120,
-    },
-  },
-  selectEmpty: {
-    margin: theme.spacing(1),
-    width: '25ch',
-  },
-}));
+
 
 const CreateQuiz = (props) => {
-  const classes = useStyles();
+
   const { categoriesState, quizesState } = props;
   const dispatch = useDispatch();
   const createAQuiz = () => {
@@ -92,35 +81,22 @@ const CreateQuiz = (props) => {
   };
 
   return ((categoriesState.categories && categoriesState.categories.length > 0) ?
-    <form className={classes.root} noValidate autoComplete="off">
-      {quizesState.error}
-      <div>
-        <TextField id="outlined-basic" label="Quiz Name" variant="outlined" onChange={handleQuizNameChange}/>
-        <TextField id="outlined-basic" label="Time Limit" type="number" InputProps={{ inputProps: { min: 1, max: 60 } }} variant="outlined" onChange={handleTimeLimitChange}/>
-      </div>
-      <div>
-        <Select id="outlined-basic" label="Category" variant="outlined" value={category.id} onChange={handleCategoryChange} className={classes.selectEmpty}>
-          {categoriesState.categories.map(category => <MenuItem value={category.id}>{category.name}</MenuItem>)}
-        </Select>
-      </div>
-      <div>
-        <Button id="outlined-basic" variant="outlined" onClick={handleAddQuestion} className={classes.selectEmpty}>Add question</Button>
-        {questions && questions.length > 0 ?
-          <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
-            {
-            questions.map(question =>
-              <CreateQuestion question={question}
-                              handleQuestionTextChange={handleQuestionTextChange}
-                              handlePointsChange={handlePointsChange}
-                              handleAnswerChange={handleAnswerChange}
-                              handleAddAnswer={handleAddAnswer}
-                              handleDeleteQuestion={handleDeleteQuestion}
-                              handleSetAnswerTrue={handleSetAnswerTrue}/>)
-            }
-         </List> : <div>There are no questions</div>}
-      </div>
-      <Button id="outlined-basic" variant="outlined" onClick={createAQuiz} className={classes.selectEmpty}>Create that quiz!</Button>
-    </form>
+    <CreateQuizComponent
+      category={category}
+      quizesState={quizesState}
+      categoriesState={categoriesState}
+      handleCategoryChange={handleCategoryChange}
+      handleQuizNameChange={handleQuizNameChange}
+      handleTimeLimitChange={handleTimeLimitChange}
+      handleAddQuestion={handleAddQuestion}
+      questions={questions}
+      handleQuestionTextChange={handleQuestionTextChange}
+      handlePointsChange={handlePointsChange}
+      handleAnswerChange={handleAnswerChange}
+      handleAddAnswer={handleAddAnswer}
+      handleDeleteQuestion={handleDeleteQuestion}
+      handleSetAnswerTrue={handleSetAnswerTrue}
+      createAQuiz={createAQuiz}/>
     :
     <div>
       There are no categories!
