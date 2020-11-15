@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { connect , useDispatch } from 'react-redux';
-import { TextField, Button, Select, MenuItem, List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox } from '@material-ui/core';
 import createQuiz from '../../../redux-store/actions/quizes';
 import getCategories from '../../../redux-store/actions/categories';
-
-import CreateQuestion from '../../../components/private/CreateQuiz/CreateQuestion';
 import CreateQuizComponent from '../../../components/private/CreateQuiz/CreateQuiz';
 
 const mapStateToProps = (state) => {
@@ -13,7 +10,6 @@ const mapStateToProps = (state) => {
       quizesState: state.quizes,
   };
 };
-
 
 const CreateQuiz = (props) => {
 
