@@ -1,19 +1,16 @@
 import { useState, useEffect } from 'react';
 import { connect , useDispatch } from 'react-redux';
-import createQuiz from '../../../redux-store/actions/quizes';
-import getCategories from '../../../redux-store/actions/categories';
+import { createQuiz, getCategories } from '../../../redux-store/actions/createQuiz';
 import CreateQuizComponent from '../../../components/private/CreateQuiz/CreateQuiz';
 
 const mapStateToProps = (state) => {
   return {
-      categoriesState: state.categories,
-      quizesState: state.quizes,
+      quizesState: state.createAQuiz,
   };
 };
 
 const CreateQuiz = (props) => {
-
-  const { categoriesState, quizesState } = props;
+  const quizesState = props.quizesState;
   const dispatch = useDispatch();
   const createAQuiz = () => {
     dispatch(createQuiz(createQuizData()));
@@ -26,7 +23,7 @@ const CreateQuiz = (props) => {
     return {
         name: name,
         timeLimit: timeLimit,
-        category: categoriesState.categories.filter(cat => cat.id === category)[0].name,
+        category: quizesState.categories.filter(cat => cat.id === category)[0].name,
         questions: questions,
     };
   };
@@ -76,11 +73,10 @@ const CreateQuiz = (props) => {
     setQuestions([...questions]);
   };
 
-  return ((categoriesState.categories && categoriesState.categories.length > 0) ?
+  return ((quizesState.categories && quizesState.categories.length > 0) ?
     <CreateQuizComponent
       category={category}
       quizesState={quizesState}
-      categoriesState={categoriesState}
       handleCategoryChange={handleCategoryChange}
       handleQuizNameChange={handleQuizNameChange}
       handleTimeLimitChange={handleTimeLimitChange}

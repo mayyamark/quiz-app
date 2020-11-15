@@ -1,7 +1,14 @@
-import * as actionTypes from '../actions/action-types';
+import {
+  SET_LEADERBOARD,
+  SET_LEADERBOARD_PAGE,
+  FETCH_LEADERBOARD_FAILED,
+  START_LOADING_LEADERBOARD,
+  STOP_LOADING_LEADERBOARD,
+} from '../actions/action-types';
 
 const initialState = {
   leaderboard: {},
+  leaderboardPage: {},
   error: false,
   loading: false,
 };
@@ -21,6 +28,21 @@ const setLeaderboard = (state, action) => {
   };
 };
 
+const setLeaderboardPage = (state, action) => {
+  return {
+    ...state,
+    ... {
+      leaderboardPage: {
+        students: action.leaderboardPage.students,
+        currentPage: action.leaderboardPage.currentPage,
+        studentsCount: action.leaderboardPage.studentsCount,
+        hasNextPage: action.leaderboardPage.hasNextPage,
+        hasPreviousPage: action.leaderboardPage.hasPreviousPage,
+      },
+    },
+  };
+};
+
 const fetchLeaderboardFailed = (state, action) => {
   return { ...state, error: true };
 };
@@ -35,13 +57,15 @@ const stopLoadingLeaderboard = (state, action) => {
 
 const LeaderboardReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SET_LEADERBOARD:
+    case SET_LEADERBOARD:
       return setLeaderboard(state, action);
-    case actionTypes.FETCH_LEADERBOARD_FAILED:
+    case SET_LEADERBOARD_PAGE:
+      return setLeaderboardPage(state, action);
+    case FETCH_LEADERBOARD_FAILED:
       return fetchLeaderboardFailed(state, action);
-    case actionTypes.START_LOADING_LEADERBOARD:
+    case START_LOADING_LEADERBOARD:
       return startLoadingLeaderboard(state, action);
-    case actionTypes.STOP_LOADING_LEADERBOARD:
+    case STOP_LOADING_LEADERBOARD:
       return stopLoadingLeaderboard(state, action);
     default:
       return state;

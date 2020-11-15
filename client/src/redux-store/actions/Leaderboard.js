@@ -1,5 +1,6 @@
 import {
   SET_LEADERBOARD,
+  SET_LEADERBOARD_PAGE,
   FETCH_LEADERBOARD_FAILED,
   START_LOADING_LEADERBOARD,
   STOP_LOADING_LEADERBOARD,
@@ -11,6 +12,13 @@ const setLeaderboard = (leaderboard) => {
   return {
     type: SET_LEADERBOARD,
     leaderboard,
+  };
+};
+
+const setLeaderboardPage = (leaderboardPage) => {
+  return {
+    type: SET_LEADERBOARD_PAGE,
+    leaderboardPage,
   };
 };
 
@@ -34,7 +42,6 @@ const stopLoadingLeaderboard = () => {
 
 const initLeaderboard = () => {
   return dispatch => {
-    console.log('fetch');
     dispatch(startLoadingLeaderboard());
     axios.get('/students?page=1', {
       headers: {
@@ -42,7 +49,6 @@ const initLeaderboard = () => {
       },
     })
     .then(res => {
-      console.log('response', res.data);
       dispatch(setLeaderboard(res.data));
     })
     .catch(err => dispatch(fetchLeaderboardFailed()))
@@ -50,10 +56,26 @@ const initLeaderboard = () => {
   };
 };
 
+const getLeaderboardPage = (page, limit, username) => {
+  return dispatch => {
+    dispatch(startLoadingLeaderboard());
+    axios.get(`/students?page=${page}&limit=${limit}&username=${username}`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(res => dispatch(setLeaderboardPage(res.data)))
+    .catch(err => dispatch(fetchLeaderboardFailed()))
+    .finally(() => dispatch(stopLoadingLeaderboard()));
+  };
+};
+
 export {
   setLeaderboard,
+  setLeaderboardPage,
   fetchLeaderboardFailed,
   startLoadingLeaderboard,
   stopLoadingLeaderboard,
   initLeaderboard,
+  getLeaderboardPage,
 };
