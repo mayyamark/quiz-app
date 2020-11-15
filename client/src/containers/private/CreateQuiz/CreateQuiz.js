@@ -4,7 +4,7 @@ import { TextField, Button, Select, MenuItem, List, ListItem, ListItemText, List
 import createQuiz from '../../../redux-store/actions/quizes';
 import getCategories from '../../../redux-store/actions/categories';
 import { makeStyles } from '@material-ui/core/styles';
-import CreateQuestion from './CreateQuestion';
+import CreateQuestion from '../../../components/private/CreateQuiz/CreateQuestion';
 
 const mapStateToProps = (state) => {
   return {

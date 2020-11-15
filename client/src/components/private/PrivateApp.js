@@ -1,7 +1,7 @@
 import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
 import StudentDashboard from './StudentDashboard/StudentDashboard';
-import CreateQuiz from './CreateQuiz/CreateQuiz';
+import CreateQuiz from '../../containers/private/CreateQuiz/CreateQuiz';
 import { useEffect } from 'react';
 import StudentRoute from '../../auth/StudentRoute';
 import TeacherRoute from '../../auth/TeacherRoute';
