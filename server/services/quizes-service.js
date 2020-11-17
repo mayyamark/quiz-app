@@ -29,10 +29,11 @@ const getQuizes = (quizesData) => {
    * @param { number|undefined } limit Search parameter: the number of quizes per page.
    * @param { string|undefined } category Search parameter: the category's name.
    * @param { string|undefined } teacher Search parameter: the author's name.
+   * @param { object } user An object with information about the user.
    * @returns { Promise<object> } The matching quizes and if the page parameter
    * is defined- page information.
    */
-  return async (page, limit, category, teacher) => {
+  return async (page, limit, category, teacher, user) => {
     if (page || category || teacher) {
       const settedLimit = limit ? limit : 5;
       const offset = (page - 1) * settedLimit;
@@ -45,6 +46,7 @@ const getQuizes = (quizesData) => {
           teacher,
           offset,
           settedLimit,
+          user,
         );
 
         return {

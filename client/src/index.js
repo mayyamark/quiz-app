@@ -9,12 +9,14 @@ import StudentHistoryReducer from './redux-store/reducers/StudentHistoryReducer.
 import CategoriesReducer from './redux-store/reducers/CategoriesReducer';
 import teacherDashboardReducer from './redux-store/reducers/teacherDashboardReducer';
 import App from './App';
+import QuizesReducer from './redux-store/reducers/QuizesReducer';
 
 const rootReducer = combineReducers({
   leaderboard: LeaderboardReducer,
   studentHistory: StudentHistoryReducer,
   categories: CategoriesReducer,
   teacherDash: teacherDashboardReducer,
+  quizes: QuizesReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

@@ -22,7 +22,7 @@ import pool from './pool.js';
  */
 const searchBy = async (category, teacher) => {
   let quizesSql = `
-    SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
+    SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName
     FROM quizes q
     JOIN users u ON q.teacherID = u.id
     JOIN categories c ON q.categoryID = c.id
@@ -52,34 +52,59 @@ const searchBy = async (category, teacher) => {
  * @param { number|undefined } limit Search parameter: the number of quizes per page.
  * @param { string|undefined } category Search parameter: the category's name.
  * @param { string|undefined } teacher Search parameter: the author's name.
+ * @param { object } user An object with information about the user.
  * @returns { Promise<object> } The matching quizes and if the page parameter
  * is defined- page information.
  */
-const searchByWithPages = async (category, teacher, offset, limit) => {
-  let quizesSql = `
-    SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
-    FROM quizes q
-    JOIN users u ON q.teacherID = u.id
-    JOIN categories c ON q.categoryID = c.id
-  `;
-
-  if (category) {
-    quizesSql += ` AND c.category LIKE '%${category}%'`;
-  }
-  if (teacher) {
-    quizesSql += `
-      AND u.username LIKE  '%${teacher}%'
-      ORDER BY q.id DESC
+const searchByWithPages = async (category, teacher, offset, limit, user) => {
+  if (user.role === 'teacher') {
+    let quizesSql = `
+      SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName
+      FROM quizes q
+      JOIN users u ON q.teacherID = u.id
+      JOIN categories c ON q.categoryID = c.id
     `;
+
+    if (category) {
+      quizesSql += ` AND c.category LIKE '%${category}%'`;
+    }
+    if (teacher) {
+      quizesSql += `
+        AND u.username LIKE  '%${teacher}%'
+        ORDER BY q.id DESC
+      `;
+    } else {
+      quizesSql += ' ORDER BY q.name ASC';
+    }
+
+    if (offset !== undefined && limit) {
+      quizesSql += ` LIMIT ${limit} OFFSET ${offset}`;
+    }
+
+    return await pool.query(quizesSql);
   } else {
-    quizesSql += ' ORDER BY q.name ASC';
-  }
+    let quizesSql = `
+      SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName, h.finished
+      FROM quizes q
+      JOIN users u ON q.teacherID = u.id
+      JOIN categories c ON q.categoryID = c.id
+      LEFT JOIN history h on h.quizID = q.id
+      AND h.userID = ${user.id}
+    `;
 
-  if (offset !== undefined && limit) {
-    quizesSql += ` LIMIT ${limit} OFFSET ${offset}`;
-  }
+    if (category) {
+      quizesSql += ` WHERE c.category LIKE '%${category}%'`;
+    }
+    quizesSql += `
+      ORDER BY h.finished ASC, q.name ASC
+    `;
 
-  return await pool.query(quizesSql);
+    if (offset !== undefined && limit) {
+      quizesSql += ` LIMIT ${limit} OFFSET ${offset}`;
+    }
+
+    return await pool.query(quizesSql);
+  }
 };
 
 /**
