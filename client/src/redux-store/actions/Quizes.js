@@ -72,21 +72,21 @@ const getQuizes = (page, limit, category) => {
 };
 
 const createQuiz = (quizData) => async (dispatch, getState) => {
-  try {
-    const response = await axios.post('/quizes', quizData, {
+  axios.post('/quizes', quizData, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
       },
+    })
+    .then(response => {
+      if (response.status == 201){
+        dispatch(createQuizCompletedAction(response.data));
+      } else {
+        dispatch(createQuizFailedAction(`${response.statusText} ${response.data.error}`));
+      }
+    })
+    .catch(err => {
+      dispatch(createQuizFailedAction(err.message));
     });
-    if (response.status == 201){
-      dispatch(createQuizCompletedAction(response.data));
-    } else {
-      dispatch(createQuizFailedAction(`${response.statusText} ${response.data.error}`));
-    }
-  }
-  catch (err) {
-    dispatch(createQuizFailedAction(err.message));
-  }
 };
 
 const clearLastCreatedQuiz = () => (dispatch, getState) => {
