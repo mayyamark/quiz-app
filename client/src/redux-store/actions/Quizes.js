@@ -5,6 +5,7 @@ import {
   STOP_LOADING_QUIZES,
   CREATE_QUIZ_COMPLETED,
   CREATE_QUIZ_FAILED,
+  CLEAR_LAST_CREATED_QUIZ,
 } from './action-types';
 import axios from '../../axios-config.js';
 import { getToken } from '../../common/manage-token.js';
@@ -48,6 +49,12 @@ const createQuizFailedAction = (error) => {
   };
 };
 
+const clearLastCreatedQuizAction = () => {
+  return {
+    type: CLEAR_LAST_CREATED_QUIZ,
+  };
+};
+
 const getQuizes = (page, limit, category) => {
   return dispatch => {
     dispatch(startLoadingQuizes());
@@ -82,6 +89,10 @@ const createQuiz = (quizData) => async (dispatch, getState) => {
   }
 };
 
+const clearLastCreatedQuiz = () => (dispatch, getState) => {
+  dispatch(clearLastCreatedQuizAction());
+};
+
 export {
   setQuizes,
   fetchQuizesFailed,
@@ -89,4 +100,5 @@ export {
   stopLoadingQuizes,
   getQuizes,
   createQuiz,
+  clearLastCreatedQuiz,
 };

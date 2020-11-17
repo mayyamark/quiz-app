@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
 import { connect , useDispatch } from 'react-redux';
 import { initCategories } from '../../../redux-store/actions/Categories';
-import { createQuiz } from '../../../redux-store/actions/Quizes';
+import { createQuiz, clearLastCreatedQuiz } from '../../../redux-store/actions/Quizes';
 import CreateQuizComponent from '../../../components/private/CreateQuiz/CreateQuiz';
 
 const mapStateToProps = (state) => {
   const props = {
-      quizesState: state.categories,
+      quizesState: {
+        categories: state.categories.categories,
+        error: state.categories.error,
+      },
   };
+  props.quizesState.lastCreatedQuiz = state.quizes.lastCreatedQuiz;
+
   if (!props.quizesState.error) {
     props.quizesState.error = state.quizes.error;
   }
@@ -15,7 +20,7 @@ const mapStateToProps = (state) => {
 };
 
 const CreateQuiz = (props) => {
-  const quizesState = props.quizesState;
+  const { quizesState } = props;
   const dispatch = useDispatch();
   const createAQuiz = () => {
     dispatch(createQuiz(createQuizData()));
@@ -77,6 +82,13 @@ const CreateQuiz = (props) => {
     question.points = event.target.value;
     setQuestions([...questions]);
   };
+
+  if (quizesState.lastCreatedQuiz){
+    // TODO: navigate to view quiz page from here instead of alerting and clearing with null
+    dispatch(clearLastCreatedQuiz);
+    alert(`Successfully created quiz ${quizesState.lastCreatedQuiz.name} with id ${quizesState.lastCreatedQuiz.id}`);
+    quizesState.lastCreatedQuiz = null;
+  }
 
   return ((quizesState.categories && quizesState.categories.length > 0) ?
     <CreateQuizComponent

@@ -5,6 +5,7 @@ import {
   STOP_LOADING_QUIZES,
   CREATE_QUIZ_FAILED,
   CREATE_QUIZ_COMPLETED,
+  CLEAR_LAST_CREATED_QUIZ,
 } from '../actions/action-types';
 
 const initialState = {
@@ -41,18 +42,25 @@ const stopLoadingQuizes = (state, action) => {
   return { ...state, loading: false };
 };
 
-const addQuizToState = (state, action) => {
+const lastCreatedQuizToState = (state, action) => {
   return {
     ...state,
     lastCreatedQuiz: action.quiz,
   };
 };
 
-const failedQuizState = (state, action) => {
+const createQuizFailedQuizState = (state, action) => {
   return {
     ...state,
     lastCreatedQuiz: null,
     error: action.error,
+  };
+};
+
+const clearLastCreatedQuizState = (state) => {
+  return {
+    ...state,
+    lastCreatedQuiz: null,
   };
 };
 
@@ -67,9 +75,11 @@ const QuizesReducer = (state = initialState, action) => {
     case STOP_LOADING_QUIZES:
       return stopLoadingQuizes(state, action);
     case CREATE_QUIZ_COMPLETED:
-      return addQuizToState(state, action);
+      return lastCreatedQuizToState(state, action);
     case CREATE_QUIZ_FAILED:
-      return failedQuizState(state, action);
+      return createQuizFailedQuizState(state, action);
+    case CLEAR_LAST_CREATED_QUIZ:
+      return clearLastCreatedQuizState(state);
     default:
       return state;
   }
