@@ -41,6 +41,7 @@ quizesController.use(authMiddleware, checkTokenMiddleware(usersService)(blacklis
  */
 quizesController.get('/', async (req, res) => {
   const { page, limit, category, teacher } = req.query;
+  const user = req.user;
 
   if (!page || page < 1) {
     return res.status(400).send({ message: 'Invalid page number!' });
@@ -51,6 +52,7 @@ quizesController.get('/', async (req, res) => {
     +limit,
     category,
     teacher,
+    user,
   );
 
   res.status(200).send(quizes);
