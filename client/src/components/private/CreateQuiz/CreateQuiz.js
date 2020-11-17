@@ -27,7 +27,7 @@ const CreateQuiz = (props) => {
         <TextField id="outlined-basic" label="Time Limit" type="number" InputProps={{ inputProps: { min: 1, max: 60 } }} variant="outlined" onChange={props.handleTimeLimitChange}/>
       </div>
       <div>
-        <Select id="outlined-basic" label="Category" variant="outlined" value={props.category.id} onChange={props.handleCategoryChange} className={classes.selectEmpty}>
+        <Select id="outlined-basic" label="Category" variant="outlined" value={props.category} onChange={props.handleCategoryChange} className={classes.selectEmpty}>
           {props.quizesState.categories.map(category => <MenuItem value={category.id}>{category.name}</MenuItem>)}
         </Select>
       </div>

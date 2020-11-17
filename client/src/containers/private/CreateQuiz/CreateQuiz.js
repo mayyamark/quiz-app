@@ -40,7 +40,7 @@ const CreateQuiz = (props) => {
 
   const [name, setName] = useState();
   const [timeLimit, setTimeLimit] = useState();
-  const [category, setCategory] = useState(0);
+  const [category, setCategory] = useState(1);
   const [questions, setQuestions] = useState([]);
 
   const handleCategoryChange = (event) => {
