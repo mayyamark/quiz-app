@@ -1,6 +1,8 @@
 import {
   SET_STUDENT_HISTORY,
   SET_STUDENT_HISTORY_PAGE,
+  SET_SOLVING_INFO,
+  // SET_FINISH_SOLVING_INFO,
   FETCH_STUDENT_HISTORY_FAILED,
   START_LOADING_STUDENT_HISTORY,
   STOP_LOADING_STUDENT_HISTORY,
@@ -21,6 +23,20 @@ const setStudentHistoryPage = (studentHistoryPage) => {
     studentHistoryPage,
   };
 };
+
+const setSolvingInfo = (solvingInfo) => {
+  return {
+    type: SET_SOLVING_INFO,
+    solvingInfo,
+  };
+};
+
+// const setFinishSolvingInfo = (solvingInfo) => {
+//   return {
+//     type: SET_FINISH_SOLVING_INFO,
+//     solvingInfo,
+//   };
+// };
 
 const fetchStudentHistoryFailed = () => {
   return {
@@ -68,11 +84,47 @@ const getStudentHistoryPage = (userId, page, limit, quiz) => {
   };
 };
 
+const startSolving = (quizId) => {
+  return dispatch => {
+    dispatch(startLoadingStudentHistory());
+    axios.post(`/quizes/${quizId}`, {}, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+      },
+    })
+    .then(res => dispatch(setSolvingInfo(res.data)))
+    .catch(err => dispatch(fetchStudentHistoryFailed()))
+    .finally(() => dispatch(stopLoadingStudentHistory()));
+  };
+};
+
+const finishSolving = (quizId, solveData) => {
+  return dispatch => {
+    dispatch(startLoadingStudentHistory());
+    axios.put(`/quizes/${quizId}`, solveData, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`,
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(res => {
+      // TODO: Add message with score
+      alert(`Your result is: ${res.data.score}/${res.data.totalScore}`);
+      // dispatch(setFinishSolvingInfo(res.data));
+    })
+    .catch(err => dispatch(fetchStudentHistoryFailed()))
+    .finally(() => dispatch(stopLoadingStudentHistory()));
+  };
+};
+
 export {
   setStudentHistory,
   getStudentHistoryPage,
+  setSolvingInfo,
   fetchStudentHistoryFailed,
   startLoadingStudentHistory,
   stopLoadingStudentHistory,
   initStudentHistory,
+  startSolving,
+  finishSolving,
 };

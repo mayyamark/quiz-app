@@ -40,9 +40,7 @@ const getQuizes = (page, limit, category) => {
         'Authorization': `Bearer ${getToken()}`,
       },
     })
-    .then(res => {
-      dispatch(setQuizes(res.data));
-    })
+    .then(res => dispatch(setQuizes(res.data)))
     .catch(err => dispatch(fetchQuizesFailed()))
     .finally(() => dispatch(stopLoadingQuizes()));
   };

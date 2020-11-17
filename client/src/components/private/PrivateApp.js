@@ -6,6 +6,7 @@ import StudentRoute from '../../auth/StudentRoute';
 import Quizes from '../../containers/private/Quizes/Quizes';
 import LeaderboardPage from '../../containers/private/LeaderboardPage/LeaderboardPage';
 import StudentHistoryPage from '../../containers/private/StudentHistoryPage/StudentHistoryPage';
+import SolvePage from '../../containers/private/SolvePage/SolvePage';
 
 const PrivateApp = () => {
   const { user } = useAuth();
@@ -20,8 +21,8 @@ const PrivateApp = () => {
   return (
   <BrowserRouter>
     <Switch>
-    <StudentRoute path="/dashboard" component={StudentDashboard} />
     <Route path="/quizzes" component={Quizes} />
+    <Route path="/solvingQuiz/:id" component={SolvePage} />
     <StudentRoute exact path="/dashboard" component={StudentDashboard} />
     <StudentRoute exact path="/leaderboard" component={LeaderboardPage} />
     <StudentRoute exact path="/history" component={StudentHistoryPage} />

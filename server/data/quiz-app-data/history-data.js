@@ -82,12 +82,35 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
  */
 const getSolveInfo = async (userID, quizID) => {
   const historySql = `
-    SELECT *
-    FROM history
+    SELECT h.id, q.name, c.category, h.started, h.finished, h.score
+    FROM history h
+    JOIN quizes q ON q.id = h.quizID
+    JOIN categories c ON q.categoryID = c.id
     WHERE userID = ? AND quizID = ?;
   `;
 
   const historyData = await pool.query(historySql, [userID, quizID]);
+  return historyData?.[0];
+};
+
+/**
+ * Returns the student's history by the history's ID.
+ * @author Mayya Markova
+ * @memberof module:data/historyData~historyData
+ * @async
+ * @param { string|number } id The ID of the history.
+ * @returns { Promise<object> } The history or null.
+ */
+const getById = async (id) => {
+  const historySql = `
+    SELECT h.id, q.name, c.category, h.started, h.finished, h.score
+    FROM history h
+    JOIN quizes q ON q.id = h.quizID
+    JOIN categories c ON q.categoryID = c.id
+    WHERE h.id = ?;
+  `;
+
+  const historyData = await pool.query(historySql, [id]);
   return historyData?.[0];
 };
 
@@ -180,6 +203,7 @@ export default {
   searchBy,
   searchByWithPages,
   getSolveInfo,
+  getById,
   logStartSolving,
   logFinishSolving,
   logQuizScore,

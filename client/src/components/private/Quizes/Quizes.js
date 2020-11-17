@@ -6,14 +6,15 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../custom-hooks/useQueryParams';
 import { useAuth } from '../../../auth/AuthContext';
 const Quizes = memo((props) => {
   const { quizes, loading, error, onGetQuizes, hasQuizes } = props;
   const { page, category } = useQueryParams();
-
   const { user } = useAuth();
+
+  const history = useHistory();
 
   const [limit, setLimit] = useState(5);
 
@@ -69,7 +70,7 @@ const Quizes = memo((props) => {
                   <>
                     {user.role === 'student' ? (
                       !quiz.finished ? (
-                        <Button variant="contained" color="primary">
+                        <Button onClick={() => history.push(`/solvingQuiz/${quiz.id}`)} variant="contained" color="primary">
                           Solve
                         </Button>
                       ) : (
@@ -82,7 +83,7 @@ const Quizes = memo((props) => {
                       )
                     ) : (
                       <>
-                        <Button variant="contained" color="primary">
+                        <Button onClick={() => history.push(`/solvingQuiz/${quiz.id}`)} variant="contained" color="primary">
                           Solve
                         </Button>
                         <Button variant="contained" color="primary">

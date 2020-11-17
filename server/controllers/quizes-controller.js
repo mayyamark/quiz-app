@@ -94,22 +94,24 @@ quizesController.post('/:id', async (req, res) => {
   res.status(200).send({ quiz, startTime });
 });
 
-quizesController.put('/finish', bodyValidator(quizFinishSchema),
+quizesController.put('/:id', bodyValidator(quizFinishSchema),
   async (req, res) => {
+    const { id } = req.params;
     const user = req.user;
+    const solvedQuizData = { ...req.body, id };
 
     if (user.role === 'student') {
-      const { historyError } = await historyService.isQuizSolvedByStudent(historyData)(user.id, req.body.id);
+      const { history } = await historyService.isQuizSolvedByStudent(historyData)(user.id, id);
 
-      if (historyError === serviceErrors.DUPLICATE_RESOURCE) {
-        return res.status(400).send({ message: 'Quiz already solved!' });
+      if (!history) {
+        return res.status(400).send({ message: 'Quiz is not started!' });
       }
     }
 
     const quizResult = await historyService.finishSolvingQuiz(
       historyData,
       quizesData,
-    )(user, req.body);
+    )(user, solvedQuizData);
 
     if (quizResult.error) {
       if (quizResult.error === serviceErrors.TIMEOUT) {

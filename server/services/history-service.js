@@ -122,7 +122,6 @@ const finishSolvingQuiz = (historyData, quizesData) =>
       historyData.getSolveInfo(user.id, solvedQuizData.id),
       quizesData.getById(solvedQuizData.id),
     ]);
-
     if (!quizHistory || !quiz) {
       return {
         error: serviceErrors.RESOURCE_NOT_FOUND,
@@ -135,6 +134,10 @@ const finishSolvingQuiz = (historyData, quizesData) =>
     if (timeTaken > quiz.time) {
       return {
         error: serviceErrors.TIMEOUT,
+        timeout: {
+          timeTaken: timeTaken,
+          allowedTime: quiz.time,
+        },
       };
     }
 
@@ -182,12 +185,13 @@ const finishSolvingQuiz = (historyData, quizesData) =>
       }
     }
 
-    historyData.logQuizScore(quizHistory.id, userScore);
+    await historyData.logQuizScore(quizHistory.id, userScore);
     return {
       error: null,
       result: {
         score: userScore,
-        totalScore: totalScore,
+        totalScore,
+        history: await historyData.getById(quizHistory.id),
       },
     };
   };

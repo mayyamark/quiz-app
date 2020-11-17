@@ -140,7 +140,7 @@ const getById = async (quizID) => {
 
   await Promise.all(questionsData.map(async el => {
     const answersSql = `
-      SELECT id, text, isTrue
+      SELECT id, questionID as questionId, text, isTrue
       FROM answers
       WHERE questionID = ?
     `;
