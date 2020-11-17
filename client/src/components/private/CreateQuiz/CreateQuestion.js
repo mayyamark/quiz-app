@@ -1,6 +1,7 @@
 import { TextField, Button, List, ListItem, Checkbox, ListItemSecondaryAction } from '@material-ui/core';
 
 const CreateQuestion = (props) => {
+  let dummyKey = 0;
   return (
     <ListItem>
       <TextField label="Question" value={`${props.question.text}`} onChange={props.handleQuestionTextChange(props.question)}/>
@@ -8,7 +9,7 @@ const CreateQuestion = (props) => {
       {props.question.answers &&
       <List component="nav"aria-label="answers">
       {props.question.answers.map(answer =>
-        <ListItem>
+        <ListItem key={dummyKey++}>
           <TextField label="Answer" value={`${answer.text}`} onChange={props.handleAnswerChange(answer)}/>
         <ListItemSecondaryAction>
           <Checkbox

@@ -28,7 +28,7 @@ const CreateQuiz = (props) => {
       </div>
       <div>
         <Select id="outlined-basic" label="Category" variant="outlined" value={props.category} onChange={props.handleCategoryChange} className={classes.selectEmpty}>
-          {props.quizesState.categories.map(category => <MenuItem value={category.id}>{category.name}</MenuItem>)}
+          {props.quizesState.categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)}
         </Select>
       </div>
       <div>
