@@ -1,4 +1,5 @@
-import { TextField, Button, Select, MenuItem, List } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { TextField, List, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ViewQuestion from './ViewQuestion';
 
@@ -18,7 +19,10 @@ const useStyles = makeStyles((theme) => ({
 
 const ViewQuiz = (props) => {
   const classes = useStyles();
-  console.log(props);
+  const history = useHistory();
+  const goToDashboardHandler = () => {
+    history.push('/dashboard');
+  };
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <div>
@@ -38,6 +42,7 @@ const ViewQuiz = (props) => {
          :
           <div>There are no questions</div>}
       </div>
+      <Button variant="contained" color="primary" onClick={goToDashboardHandler}>Dashboard </Button>
     </form>
   );
 };

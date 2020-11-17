@@ -2,7 +2,7 @@ import CustomTable from '../../CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
 
-const Quizzes = props => {
+const TeacherCreatedQuizes = props => {
   const { quizzes, loading } = props;
     return (
       <>
@@ -33,4 +33,4 @@ const Quizzes = props => {
 
 };
 
-export default Quizzes;
+export default TeacherCreatedQuizes;

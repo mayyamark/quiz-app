@@ -2,7 +2,7 @@ import Categories from '../../../containers/private/Categories/Categories';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Button, Grid, TextField } from '@material-ui/core';
-import Quizzes from '../Quizzes/Quizzes';
+import TeacherCreatedQuizes from './TeacherCreatedQuizes';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +25,7 @@ const TeacherDashboard = (props) => {
       <Grid container spacing={3}>
         <Grid item xs={6} container direction="column" justify="center" alignItems="stretch">
           <Paper className={classes.paper}>
-            <Quizzes loading = {props.quizzesLoading} quizzes = {props.quizzes} />
+            <TeacherCreatedQuizes loading = {props.quizzesLoading} quizzes = {props.quizzes} />
             <Link to='/create-a-quiz'>Create a quiz</Link>
           </Paper>
         </Grid>
