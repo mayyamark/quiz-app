@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useAuth } from './AuthContext.js';
 
-const StudentRoute = ({ component: Component, ...rest }) => {
+const TeacherRoute = ({ component: Component, ...rest }) => {
   const { user } = useAuth();
 
   return (
@@ -15,4 +15,4 @@ const StudentRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default StudentRoute;
+export default TeacherRoute;
