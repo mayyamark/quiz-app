@@ -1,8 +1,10 @@
 import { BrowserRouter, Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
 import StudentDashboard from './StudentDashboard/StudentDashboard';
+import CreateQuiz from '../../containers/private/CreateQuiz/CreateQuiz';
 import { useEffect } from 'react';
 import StudentRoute from '../../auth/StudentRoute';
+import TeacherRoute from '../../auth/TeacherRoute';
 import Quizes from '../../containers/private/Quizes/Quizes';
 import LeaderboardPage from '../../containers/private/LeaderboardPage/LeaderboardPage';
 import StudentHistoryPage from '../../containers/private/StudentHistoryPage/StudentHistoryPage';
@@ -20,6 +22,7 @@ const PrivateApp = () => {
   return (
   <BrowserRouter>
     <Switch>
+    <TeacherRoute path="/create-a-quiz" component={CreateQuiz} />
     <StudentRoute path="/dashboard" component={StudentDashboard} />
     <Route path="/quizzes" component={Quizes} />
     <StudentRoute exact path="/dashboard" component={StudentDashboard} />

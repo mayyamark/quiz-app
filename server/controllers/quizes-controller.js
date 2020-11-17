@@ -142,7 +142,7 @@ quizesController.post('/',
       return res.status(409).send({ error: result.error });
     }
 
-    res.status(200).send(result.quiz);
+    res.status(201).send(result.quiz);
   },
 );
 

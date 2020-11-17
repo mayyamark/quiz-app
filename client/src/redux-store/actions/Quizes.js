@@ -3,6 +3,9 @@ import {
   FETCH_QUIZES_FAILED,
   START_LOADING_QUIZES,
   STOP_LOADING_QUIZES,
+  CREATE_QUIZ_COMPLETED,
+  CREATE_QUIZ_FAILED,
+  CLEAR_LAST_CREATED_QUIZ,
 } from './action-types';
 import axios from '../../axios-config.js';
 import { getToken } from '../../common/manage-token.js';
@@ -32,6 +35,26 @@ const stopLoadingQuizes = () => {
   };
 };
 
+const createQuizCompletedAction = (quiz) => {
+  return {
+    type: CREATE_QUIZ_COMPLETED,
+    quiz: quiz,
+  };
+};
+
+const createQuizFailedAction = (error) => {
+  return {
+    type: CREATE_QUIZ_FAILED,
+    error: error,
+  };
+};
+
+const clearLastCreatedQuizAction = () => {
+  return {
+    type: CLEAR_LAST_CREATED_QUIZ,
+  };
+};
+
 const getQuizes = (page, limit, category) => {
   return dispatch => {
     dispatch(startLoadingQuizes());
@@ -48,10 +71,34 @@ const getQuizes = (page, limit, category) => {
   };
 };
 
+const createQuiz = (quizData) => (dispatch, getState) => {
+  axios.post('/quizes', quizData, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then(response => {
+      if (response.status == 201){
+        dispatch(createQuizCompletedAction(response.data));
+      } else {
+        dispatch(createQuizFailedAction(`${response.statusText} ${response.data.error}`));
+      }
+    })
+    .catch(err => {
+      dispatch(createQuizFailedAction(err.message));
+    });
+};
+
+const clearLastCreatedQuiz = () => (dispatch, getState) => {
+  dispatch(clearLastCreatedQuizAction());
+};
+
 export {
   setQuizes,
   fetchQuizesFailed,
   startLoadingQuizes,
   stopLoadingQuizes,
   getQuizes,
+  createQuiz,
+  clearLastCreatedQuiz,
 };
