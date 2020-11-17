@@ -33,8 +33,8 @@ const quizCreateSchema = {
       return 'questions is required!';
     }
 
-    if (!(value instanceof Array) || value.length < 1 || value.length > 50) {
-      return 'questions should be an array of 1 to 50 questions!';
+    if (!(value instanceof Array) || value.length < 2 || value.length > 50) {
+      return 'questions should be an array of 2 to 50 questions!';
     }
 
     const errors = value
