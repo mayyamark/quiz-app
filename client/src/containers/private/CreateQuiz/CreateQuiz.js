@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
 import { connect , useDispatch } from 'react-redux';
-import { createQuiz, getCategories } from '../../../redux-store/actions/createQuiz';
+import { getCategories } from '../../../redux-store/actions/createQuiz';
+import { createQuiz } from '../../../redux-store/actions/Quizes';
 import CreateQuizComponent from '../../../components/private/CreateQuiz/CreateQuiz';
 
 const mapStateToProps = (state) => {
-  return {
+  const props = {
       quizesState: state.createAQuiz,
   };
+  if (!props.quizesState.error) {
+    props.quizesState.error = state.quizes.error;
+  }
+  return props;
 };
 
 const CreateQuiz = (props) => {
