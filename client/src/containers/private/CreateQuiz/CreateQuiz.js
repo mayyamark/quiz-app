@@ -94,6 +94,8 @@ const CreateQuiz = (props) => {
     <CreateQuizComponent
       category={category}
       quizesState={quizesState}
+      quizName={name}
+      quizTimeLimit={timeLimit}
       handleCategoryChange={handleCategoryChange}
       handleQuizNameChange={handleQuizNameChange}
       handleTimeLimitChange={handleTimeLimitChange}

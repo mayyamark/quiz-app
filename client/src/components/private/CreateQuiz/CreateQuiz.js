@@ -19,6 +19,54 @@ const useStyles = makeStyles((theme) => ({
 const CreateQuiz = (props) => {
   const classes = useStyles();
 
+  const invalidQuestionCheck = (question) => {
+    // A question must have text...
+    if (!question.text){
+      return true;
+    }
+
+    //... points have to be set ...
+    if (question.points === 0){
+      return true;
+    }
+
+    //... at least two possible answers...
+    if (!question.answers || question.answers.length < 2){
+      return true;
+    }
+
+    //...each answer should have text...
+    if (question.answers.filter(a => !a.text).length > 0) {
+      return true;
+    }
+
+    //...and at least one answer must be marked as true
+    if (question.answers.filter(a => a.isTrue).length === 0) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const disableCreateQuizValidation = () => {
+    // A quiz must have a name and time limit
+    if (!props.quizName || props.quizTimeLimit === 0){
+      return true;
+    }
+
+    //...contain at least two questions...
+    if (props.questions.length < 2) {
+      return true;
+    }
+
+    //...and the questions must be valid
+    if (props.questions.filter(q => invalidQuestionCheck(q)).length > 0) {
+      return true;
+    }
+
+    return false;
+  };
+  let dummyKey = 0;
   return (
     <form className={classes.root} noValidate autoComplete="off">
       {props.quizesState.error}
@@ -37,7 +85,8 @@ const CreateQuiz = (props) => {
           <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
             {
             props.questions.map(question =>
-              <CreateQuestion question={question}
+              <CreateQuestion key={dummyKey++}
+                              question={question}
                               handleQuestionTextChange={props.handleQuestionTextChange}
                               handlePointsChange={props.handlePointsChange}
                               handleAnswerChange={props.handleAnswerChange}
@@ -49,7 +98,7 @@ const CreateQuiz = (props) => {
          :
           <div>There are no questions</div>}
       </div>
-      <Button id="outlined-basic" variant="outlined" onClick={props.createAQuiz} disabled={props.questions.length < 2} className={classes.selectEmpty}>Create that quiz!</Button>
+      <Button id="outlined-basic" variant="outlined" onClick={props.createAQuiz} disabled={disableCreateQuizValidation()} className={classes.selectEmpty}>Create that quiz!</Button>
     </form>
   );
 };
