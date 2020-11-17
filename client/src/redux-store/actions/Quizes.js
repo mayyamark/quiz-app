@@ -71,7 +71,7 @@ const getQuizes = (page, limit, category) => {
   };
 };
 
-const createQuiz = (quizData) => async (dispatch, getState) => {
+const createQuiz = (quizData) => (dispatch, getState) => {
   axios.post('/quizes', quizData, {
       headers: {
         Authorization: `Bearer ${getToken()}`,
