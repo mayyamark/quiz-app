@@ -49,7 +49,7 @@ const CreateQuiz = (props) => {
          :
           <div>There are no questions</div>}
       </div>
-      <Button id="outlined-basic" variant="outlined" onClick={props.createAQuiz} className={classes.selectEmpty}>Create that quiz!</Button>
+      <Button id="outlined-basic" variant="outlined" onClick={props.createAQuiz} disabled={props.questions.length < 2} className={classes.selectEmpty}>Create that quiz!</Button>
     </form>
   );
 };
