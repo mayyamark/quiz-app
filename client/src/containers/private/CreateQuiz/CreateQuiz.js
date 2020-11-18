@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect , useDispatch } from 'react-redux';
 import { initCategories } from '../../../redux-store/actions/Categories';
 import { createQuiz, clearLastCreatedQuiz } from '../../../redux-store/actions/Quizes';
@@ -37,6 +38,8 @@ const CreateQuiz = (props) => {
         questions: questions,
     };
   };
+
+  const history = useHistory();
 
   const [name, setName] = useState();
   const [timeLimit, setTimeLimit] = useState();
@@ -84,10 +87,8 @@ const CreateQuiz = (props) => {
   };
 
   if (quizesState.lastCreatedQuiz){
-    // TODO: navigate to view quiz page from here instead of alerting and clearing with null
     dispatch(clearLastCreatedQuiz);
-    alert(`Successfully created quiz ${quizesState.lastCreatedQuiz.name} with id ${quizesState.lastCreatedQuiz.id}`);
-    quizesState.lastCreatedQuiz = null;
+    history.push(`/view-quiz?id=${quizesState.lastCreatedQuiz.id}`);
   }
 
   return ((quizesState.categories && quizesState.categories.length > 0) ?

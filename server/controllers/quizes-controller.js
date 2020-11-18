@@ -94,6 +94,18 @@ quizesController.post('/:id', async (req, res) => {
   res.status(200).send({ quiz, startTime });
 });
 
+quizesController.get('/:id', roleMiddleware(USER_ROLES.TEACHER), async (req, res) => {
+  const { id } = req.params;
+  const user = req.user;
+  const { quiz, quizError } = await quizesService.getQuizById(quizesData)(id);
+
+  if (quizError === serviceErrors.RESOURCE_NOT_FOUND) {
+    return res.status(404).send({ message: 'Quiz is not found!' });
+  }
+
+  res.status(200).send({ quiz });
+});
+
 quizesController.put('/finish', bodyValidator(quizFinishSchema),
   async (req, res) => {
     const user = req.user;
