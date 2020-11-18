@@ -2,7 +2,6 @@ import {
   SET_STUDENT_HISTORY,
   SET_STUDENT_HISTORY_PAGE,
   SET_SOLVING_INFO,
-  // SET_FINISH_SOLVING_INFO,
   FETCH_STUDENT_HISTORY_FAILED,
   START_LOADING_STUDENT_HISTORY,
   STOP_LOADING_STUDENT_HISTORY,
@@ -30,13 +29,6 @@ const setSolvingInfo = (solvingInfo) => {
     solvingInfo,
   };
 };
-
-// const setFinishSolvingInfo = (solvingInfo) => {
-//   return {
-//     type: SET_FINISH_SOLVING_INFO,
-//     solvingInfo,
-//   };
-// };
 
 const fetchStudentHistoryFailed = () => {
   return {
@@ -110,7 +102,6 @@ const finishSolving = (quizId, solveData) => {
     .then(res => {
       // TODO: Add message with score
       alert(`Your result is: ${res.data.score}/${res.data.totalScore}`);
-      // dispatch(setFinishSolvingInfo(res.data));
     })
     .catch(err => dispatch(fetchStudentHistoryFailed()))
     .finally(() => dispatch(stopLoadingStudentHistory()));

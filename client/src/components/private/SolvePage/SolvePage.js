@@ -1,5 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import moment from 'moment';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -20,12 +21,19 @@ const SolvePage = memo((props) => {
   const history = useHistory();
 
   const [questionAnswers, setQuestionAnswers] = useState([]);
+  const [duration, setDuration] = useState({});
 
   useEffect(() => {
     onStartSolving(id);
   }, [onStartSolving, id]);
+
   useEffect(() => {
     if (hasQuiz) {
+      const currentTime = new Date();
+      const finishTime = moment(new Date()).add(solvingInfo.quiz.time, 'm').toDate();
+
+      setDuration(moment.duration(finishTime - currentTime, 'milliseconds'));
+
       setQuestionAnswers(
         solvingInfo.quiz.questions.map((question) => {
           return { id: question.id, markedTrue: [] };
@@ -34,8 +42,28 @@ const SolvePage = memo((props) => {
     }
   }, [hasQuiz]);
 
-  const handleSubmit = (ev) => {
-    onFinishSolving(id, { id, questionAnswers });
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDuration(moment.duration(duration - 1000, 'milliseconds'));
+    }, 1000);
+    return () => clearTimeout(timer);
+  });
+
+  useEffect(() => {
+    if (duration._milliseconds === 0) {
+      handleSubmit();
+    }
+  }, [duration]);
+
+  const handleSubmit = () => {
+    const mappedQuestionAnswers = questionAnswers.map((q) => {
+      if (q.markedTrue.length === 0) {
+        q.markedTrue.push(0);
+      }
+      return q;
+    });
+
+    onFinishSolving(id, { id, questionAnswers: mappedQuestionAnswers });
     history.push('/dashboard');
   };
 
@@ -66,15 +94,19 @@ const SolvePage = memo((props) => {
     }
   };
 
+
   return (
     <>
-      {loading ? (
+      {
+        // TODO: Add an error component with link to dashboard
+      error ? <h1>Error! Please, go back!</h1> :
+      (loading ? (
         <CircularProgress />
       ) : hasQuiz ? (
         <FormControl>
           <h1>{solvingInfo.quiz.name}</h1>
-          <p>Started at: {new Date(solvingInfo.startTime).toLocaleString()}</p>
-          <p>Solving time: {solvingInfo.quiz.time}</p>
+          <p>Started at: {moment(new Date(solvingInfo.startTime)).format('lll')}</p>
+          <p>Time left: {`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
           <p>Category: {solvingInfo.quiz.category}</p>
           <p>
             Created by:{' '}
@@ -108,7 +140,7 @@ const SolvePage = memo((props) => {
             SEND
           </Button>
         </FormControl>
-      ) : null}
+      ) : null)}
     </>
   );
 });

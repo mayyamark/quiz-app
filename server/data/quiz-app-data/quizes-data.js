@@ -84,7 +84,7 @@ const searchByWithPages = async (category, teacher, offset, limit, user) => {
     return await pool.query(quizesSql);
   } else {
     let quizesSql = `
-      SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName, h.finished
+      SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName, h.started
       FROM quizes q
       JOIN users u ON q.teacherID = u.id
       JOIN categories c ON q.categoryID = c.id
@@ -96,7 +96,7 @@ const searchByWithPages = async (category, teacher, offset, limit, user) => {
       quizesSql += ` WHERE c.category LIKE '%${category}%'`;
     }
     quizesSql += `
-      ORDER BY h.finished ASC, q.name ASC
+      ORDER BY h.started ASC, q.name ASC
     `;
 
     if (offset !== undefined && limit) {

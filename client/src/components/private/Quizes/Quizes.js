@@ -69,14 +69,14 @@ const Quizes = memo((props) => {
                 buttons: (
                   <>
                     {user.role === 'student' ? (
-                      !quiz.finished ? (
+                      !quiz.started ? (
                         <Button onClick={() => history.push(`/solvingQuiz/${quiz.id}`)} variant="contained" color="primary">
                           Solve
                         </Button>
                       ) : (
                         <>
                           Solved:{' '}
-                          {new Date(quiz.finished)
+                          {new Date(quiz.started)
                             .toLocaleString('en-GB')
                             .slice(0, 10)}
                         </>

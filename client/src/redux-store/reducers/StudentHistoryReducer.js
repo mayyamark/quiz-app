@@ -2,7 +2,6 @@ import {
   SET_STUDENT_HISTORY,
   SET_STUDENT_HISTORY_PAGE,
   SET_SOLVING_INFO,
-  // SET_FINISH_SOLVING_INFO,
   FETCH_STUDENT_HISTORY_FAILED,
   START_LOADING_STUDENT_HISTORY,
   STOP_LOADING_STUDENT_HISTORY,
@@ -58,22 +57,6 @@ const setSolvingInfo = (state, action) => {
   };
 };
 
-// const setFinishSolvingInfo = (state, action) => {
-//   return {
-//     ...state,
-//     ... {
-//       solvingInfo: {
-//         ...solvingInfo,
-//         finishInfo: {
-//           history: action.solvingInfo.history,
-//           userScore: action.solvingInfo.score,
-//           maxScore: action.solvingInfo.totalScore,
-//         },
-//       },
-//     },
-//   };
-// };
-
 const fetchStudentHistoryFailed = (state, action) => {
   return { ...state, error: true };
 };
@@ -94,8 +77,6 @@ const StudentHistoryReducer = (state = initialState, action) => {
       return setStudentHistoryPage(state, action);
     case SET_SOLVING_INFO:
       return setSolvingInfo(state, action);
-    // case SET_FINISH_SOLVING_INFO:
-    //   return setFinishSolvingInfo(state, action);
     case FETCH_STUDENT_HISTORY_FAILED:
       return fetchStudentHistoryFailed(state, action);
     case START_LOADING_STUDENT_HISTORY:
