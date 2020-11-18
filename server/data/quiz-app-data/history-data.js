@@ -3,6 +3,7 @@
  */
 
 import pool from './pool.js';
+import moment from 'moment';
 
 /**
  * Data layer related on history.
@@ -126,12 +127,29 @@ const getById = async (id) => {
 const logStartSolving = async (userID, quizID) => {
   const startTime = new Date();
 
+  const historyControlSql = `
+    SELECT q.id, q.time, h.started, h.finished
+    FROM history h
+    JOIN quizes q ON h.quizID = q.id
+    WHERE h.userID = ? AND h.finished IS NULL
+    ORDER BY h.started DESC;
+  `;
+
+  const historyData = await pool.query(historyControlSql, [userID]);
+
+  if (historyData?.[0]) {
+    if (new Date < moment(new Date(historyData[0].started)).add(historyData[0].time, 'm').toDate()) {
+      return null;
+    }
+  }
+
   const insertSql = `
-    INSERT INTO history (userID, quizID, started)
-    VALUES (?, ?, ?);
+    INSERT INTO history (userID, quizID, started, score)
+    VALUES (?, ?, ?, 0);
   `;
 
   const _ = await pool.query(insertSql, [userID, quizID, startTime]);
+
   return startTime;
 };
 

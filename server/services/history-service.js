@@ -113,7 +113,18 @@ const startSolvingQuiz = (historyData) => {
    * @param { string|number } quizID The ID of the quiz.
    * @returns { Promise<object> } The start time.
    */
-  return async (userID, quizID) => await historyData.logStartSolving(userID, quizID);
+  return async (userID, quizID) => {
+    const startTime = await historyData.logStartSolving(userID, quizID);
+
+    if (!startTime) {
+      return {
+        startError: serviceErrors.BAD_REQUEST,
+        startTime: null,
+      };
+    }
+
+    return { startError: null, startTime };
+  };
 };
 
 const finishSolvingQuiz = (historyData, quizesData) =>

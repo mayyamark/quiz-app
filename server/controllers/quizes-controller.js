@@ -86,10 +86,13 @@ quizesController.post('/:id', async (req, res) => {
     }
   }
 
-  const startTime = await historyService.startSolvingQuiz(historyData)(
+  const { startError, startTime } = await historyService.startSolvingQuiz(historyData)(
     user.id,
     id,
   );
+  if (startError === serviceErrors.BAD_REQUEST) {
+    return res.status(400).send({ message: 'Can\'t solve 2 quizzes at the same time!' });
+  }
 
   res.status(200).send({ quiz, startTime });
 });

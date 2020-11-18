@@ -98,7 +98,7 @@ const SolvePage = memo((props) => {
   return (
     <>
       {
-        // TODO: Add an error component with link to dashboard
+      // TODO: Add an error component with link to dashboard
       error ? <h1>Error! Please, go back!</h1> :
       (loading ? (
         <CircularProgress />
