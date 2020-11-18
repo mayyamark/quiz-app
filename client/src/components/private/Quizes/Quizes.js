@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../custom-hooks/useQueryParams';
 import { useAuth } from '../../../auth/AuthContext';
+import { useHistory } from 'react-router-dom';
 const Quizes = memo((props) => {
   const { quizes, loading, error, onGetQuizes, hasQuizes } = props;
   const { page, category } = useQueryParams();
@@ -17,10 +18,14 @@ const Quizes = memo((props) => {
   const history = useHistory();
 
   const [limit, setLimit] = useState(5);
-
+  const history = useHistory();
   useEffect(() => {
     onGetQuizes(page, limit, category);
   }, [onGetQuizes, page, limit, category]);
+
+  const viewQiuzHandler = (id) => () => {
+    history.push(`/view-quiz?id=${id}`);
+  };
 
   return (
     <>
@@ -86,7 +91,7 @@ const Quizes = memo((props) => {
                         <Button onClick={() => history.push(`/solvingQuiz/${quiz.id}`)} variant="contained" color="primary">
                           Solve
                         </Button>
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="primary" onClick={viewQiuzHandler(quiz.id)}>
                           View
                         </Button>
                       </>
