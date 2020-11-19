@@ -18,7 +18,6 @@ const setQuizzesLoadingToState = (state, action) => {
 };
 
 const setQuizzesToState = (state, action) => {
-  console.log(action.payload);
   return {
     quizzes: action.payload,
     loading: state.loading,

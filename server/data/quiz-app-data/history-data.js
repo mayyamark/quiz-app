@@ -87,7 +87,8 @@ const getSolveInfo = async (userID, quizID) => {
     FROM history h
     JOIN quizes q ON q.id = h.quizID
     JOIN categories c ON q.categoryID = c.id
-    WHERE userID = ? AND quizID = ?;
+    WHERE userID = ? AND quizID = ?
+    ORDER BY h.started DESC;
   `;
 
   const historyData = await pool.query(historySql, [userID, quizID]);

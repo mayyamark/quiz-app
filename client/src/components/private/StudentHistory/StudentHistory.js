@@ -1,4 +1,5 @@
 import { memo, useEffect } from 'react';
+import moment from 'moment';
 import CustomTable from '../../CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './StudentHistory.css';
@@ -21,12 +22,12 @@ const StudentHistory = memo((props) => {
             <h1>My History</h1>
             <CustomTable
               customIdName="student-dashboard-history-table"
-              tableHead={['No', 'Quiz', 'Time, min', 'Score']}
+              tableHead={['No', 'Quiz', 'Solve date', 'Score']}
               tableBody={studentHistory.history.map((history, index) => {
                 return {
                   id: <>{index + 1}</>,
                   quiz: <>{history.name}</>,
-                  time: <>{(new Date(history.finished) - new Date(history.started))/60000}</>,
+                  date: <>{moment(new Date(history.started)).calendar()}</>,
                   score: <>{history.score}</>,
                 };
               })}

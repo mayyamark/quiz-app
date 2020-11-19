@@ -20,9 +20,9 @@ const Categories = memo((props) => {
               <CustomTable
                 customIdName="student-dashboard-categories-table"
                 tableHead={['No', 'Category']}
-                tableBody={categories.map((category) => {
+                tableBody={categories.map((category, index) => {
                   return {
-                    id: <>{category.id}</>,
+                    id: <>{index + 1}</>,
                     category: <Link to ={`/quizzes?page=1&category=${category.name}`}>{category.name}</Link>,
                   };
                 })}
