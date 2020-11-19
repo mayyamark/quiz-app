@@ -1,4 +1,5 @@
 import { memo, useEffect, useState } from 'react';
+import moment from 'moment';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../auth/AuthContext';
@@ -90,8 +91,8 @@ const StudentHistoryPage = memo((props) => {
                 id: <>{(studentHistoryPage.currentPage * limit ) - limit + index + 1}</>,
                 quizName: <>{history.name}</>,
                 categoryName: <>{history.category}</>,
-                started: <>{new Date(history.started).toLocaleString('en-GB')}</>,
-                finished: <>{new Date(history.finished).toLocaleString('en-GB')}</>,
+                started: <>{moment(new Date(history.started)).format('MMM Do YYYY, h:mm:ss a')}</>,
+                finished: <>{moment(new Date(history.finished)).format('MMM Do YYYY, h:mm:ss a')}</>,
                 score: <>{history.score}</>,
               };
             })}

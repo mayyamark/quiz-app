@@ -100,6 +100,7 @@ const finishSolving = (quizId, solveData) => {
       },
     })
     .then(res => {
+      dispatch(setSolvingInfo({}));
       // TODO: Add message with score
       alert(`Your result is: ${res.data.score}/${res.data.totalScore}`);
     })

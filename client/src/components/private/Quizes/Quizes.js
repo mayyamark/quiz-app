@@ -1,4 +1,5 @@
 import { memo, useEffect, useState } from 'react';
+import moment from 'moment';
 import CustomTable from '../../CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../custom-hooks/useQueryParams';
 import { useAuth } from '../../../auth/AuthContext';
-import { useHistory } from 'react-router-dom';
+
 const Quizes = memo((props) => {
   const { quizes, loading, error, onGetQuizes, hasQuizes } = props;
   const { page, category } = useQueryParams();
@@ -18,7 +19,7 @@ const Quizes = memo((props) => {
   const history = useHistory();
 
   const [limit, setLimit] = useState(5);
-  const history = useHistory();
+
   useEffect(() => {
     onGetQuizes(page, limit, category);
   }, [onGetQuizes, page, limit, category]);
@@ -80,10 +81,7 @@ const Quizes = memo((props) => {
                         </Button>
                       ) : (
                         <>
-                          Solved:{' '}
-                          {new Date(quiz.started)
-                            .toLocaleString('en-GB')
-                            .slice(0, 10)}
+                          {`Solved: ${moment(history.started).calendar()}`}
                         </>
                       )
                     ) : (
