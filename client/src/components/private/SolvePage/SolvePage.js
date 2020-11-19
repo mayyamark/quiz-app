@@ -6,6 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import './SolvePage.css';
 
 const SolvePage = memo((props) => {
   const {
@@ -102,43 +103,45 @@ const SolvePage = memo((props) => {
       (loading ? (
         <CircularProgress />
       ) : hasQuiz ? (
-        <FormControl>
-          <h1>{solvingInfo.quiz.name}</h1>
-          <p>Started at: {moment(new Date(solvingInfo.startTime)).format('lll')}</p>
-          <p>Time left: {`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
-          <p>Category: {solvingInfo.quiz.category}</p>
-          <p>
-            Created by:{' '}
-            {`${solvingInfo.quiz.firstName} ${solvingInfo.quiz.lastName}`}
-          </p>
-          {solvingInfo.quiz.questions.map((question, index) => {
-            return (
-              <div value={question.id} key={question.id}>
-                <p>{`${index + 1}. ${question.text}`}</p>
-                {question.answers.map((answer) => {
-                  return (
-                    <FormControlLabel
-                      key={answer.id}
-                      control={
-                        <Checkbox
-                          onChange={handleChange}
-                          question={answer.questionId}
-                          value={answer.id}
-                          name={answer.questionId.toString()}
-                          color="primary"
-                        />
-                      }
-                      label={answer.text}
-                    />
-                  );
-                })}
-              </div>
-            );
-          })}
-          <Button onClick={handleSubmit} variant="contained" color="primary">
-            SEND
-          </Button>
-        </FormControl>
+        <div id="solve-quiz-container">
+          <FormControl>
+            <h1>{solvingInfo.quiz.name}</h1>
+            <p>Started at: {moment(new Date(solvingInfo.startTime)).format('lll')}</p>
+            <p>Time left: {`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
+            <p>Category: {solvingInfo.quiz.category}</p>
+            <p>
+              Created by:{' '}
+              {`${solvingInfo.quiz.firstName} ${solvingInfo.quiz.lastName}`}
+            </p>
+            {solvingInfo.quiz.questions.map((question, index) => {
+              return (
+                <div className="question-container" value={question.id} key={question.id}>
+                  <p>{`${index + 1}. ${question.text}`}</p>
+                  {question.answers.map((answer) => {
+                    return (
+                      <FormControlLabel
+                        key={answer.id}
+                        control={
+                          <Checkbox
+                            onChange={handleChange}
+                            question={answer.questionId}
+                            value={answer.id}
+                            name={answer.questionId.toString()}
+                            color="primary"
+                          />
+                        }
+                        label={answer.text}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+            <Button onClick={handleSubmit} variant="contained" color="primary">
+              SEND
+            </Button>
+          </FormControl>
+        </div>
       ) : null)}
     </>
   );

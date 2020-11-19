@@ -1,0 +1,19 @@
+#solve-quiz-container .MuiFormControl-root {
+  border: 0;
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+  min-width: 0;
+  flex-direction: column;
+  text-align: center;
+}
+.question-container {
+  margin: 3% auto;
+  display: grid;
+  width: 45%;
+}
+.question-container p {
+  text-align: left;
+  font-weight: bold;
+}
