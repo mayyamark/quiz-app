@@ -63,8 +63,7 @@ const SolvePage = memo((props) => {
       return q;
     });
 
-    onFinishSolving(id, { id, questionAnswers: mappedQuestionAnswers });
-    history.push('/dashboard');
+    onFinishSolving(id, { id, questionAnswers: mappedQuestionAnswers }, history);
   };
 
   const handleChange = (ev) => {

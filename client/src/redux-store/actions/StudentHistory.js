@@ -8,6 +8,7 @@ import {
 } from './action-types';
 import axios from '../../axios-config.js';
 import { getToken } from '../../common/manage-token.js';
+import { showConfirmAlert } from '../../components/common/Alerts/Alerts';
 
 const setStudentHistory = (studentHistory) => {
   return {
@@ -90,7 +91,7 @@ const startSolving = (quizId) => {
   };
 };
 
-const finishSolving = (quizId, solveData) => {
+const finishSolving = (quizId, solveData, historyObj) => {
   return dispatch => {
     dispatch(startLoadingStudentHistory());
     axios.put(`/quizes/${quizId}`, solveData, {
@@ -100,8 +101,8 @@ const finishSolving = (quizId, solveData) => {
       },
     })
     .then(res => {
-      // TODO: Add message with score
-      alert(`Your result is: ${res.data.score}/${res.data.totalScore}`);
+      showConfirmAlert(`Result: ${res.data.score}/${res.data.totalScore}`, 'Try another one!', 'success', false, historyObj, '/dashboard');
+      dispatch(setSolvingInfo({}));
     })
     .catch(err => dispatch(fetchStudentHistoryFailed()))
     .finally(() => dispatch(stopLoadingStudentHistory()));

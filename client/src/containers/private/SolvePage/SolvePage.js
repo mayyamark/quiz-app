@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onStartSolving: (quizId) => dispatch(startSolving(quizId)),
-    onFinishSolving: (quizId, solveData) => dispatch(finishSolving(quizId, solveData)),
+    onFinishSolving: (quizId, solveData, historyObj) => dispatch(finishSolving(quizId, solveData, historyObj)),
   };
 };
 
