@@ -12,6 +12,7 @@ import { useQueryParams } from '../../../custom-hooks/useQueryParams';
 import { useAuth } from '../../../auth/AuthContext';
 import { showConfirmAlert } from '../../common/Alerts/Alerts';
 import teachersAvatars from '../../../avatars/teachers/teachers-avatars.js'; // don't remove it!
+import './Quizzes.css';
 
 const Quizes = memo((props) => {
   const { quizes, loading, error, onGetQuizes, hasQuizes } = props;
@@ -40,27 +41,28 @@ const Quizes = memo((props) => {
         <CircularProgress />
       ) : hasQuizes ? (
         <div id="quizzes-container">
-          <h1>Quizzes</h1>
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-age-native-simple">
-              Results
-            </InputLabel>
-            <Select
-              native
-              value={limit}
-              onChange={(ev) => setLimit(ev.target.value)}
-              label="Results"
-              inputProps={{
-                name: 'limit',
-                id: 'outlined-age-native-simple',
-              }}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-            </Select>
-          </FormControl>
-
+          <h1>QUIZZES</h1>
+          <div id="quizzes-options">
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-age-native-simple">
+                Results
+              </InputLabel>
+              <Select
+                native
+                value={limit}
+                onChange={(ev) => setLimit(ev.target.value)}
+                label="Results"
+                inputProps={{
+                  name: 'limit',
+                  id: 'outlined-age-native-simple',
+                }}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+              </Select>
+            </FormControl>
+          </div>
           <CustomTable
             customIdName="quizzes-table"
             tableHead={[
@@ -105,14 +107,14 @@ const Quizes = memo((props) => {
               };
             })}
           />
-          <div>
+          <div id="quizzes-page-links">
             {quizes.hasPreviousPage && (
               <Link
                 to={`/quizzes?page=${
                   quizes.currentPage - 1
                 }&category=${category}`}
               >
-                PREVIOUS
+                {'<<'}
               </Link>
             )}
             {quizes.hasNextPage && (
@@ -121,7 +123,7 @@ const Quizes = memo((props) => {
                   quizes.currentPage + 1
                 }&category=${category}`}
               >
-                NEXT
+                {'>>'}
               </Link>
             )}
           </div>
