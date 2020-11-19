@@ -2,7 +2,7 @@ import { memo, useEffect } from 'react';
 import CustomTable from '../../CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
-
+import './Categories.css';
 const Categories = memo((props) => {
   const { categories, loading, error, onInitCategories, hasCategories } = props;
 
