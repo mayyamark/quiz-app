@@ -1,6 +1,5 @@
 import { memo, useEffect, useState } from 'react';
 import moment from 'moment';
-import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../auth/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -9,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import SearchIcon from '@material-ui/icons/Search';
 import { useQueryParams } from '../../../custom-hooks/useQueryParams.js';
 import {
   getSearchParam,
@@ -16,6 +16,7 @@ import {
   removeSearchParam,
 } from '../../../common/manage-search-param.js';
 import CustomTable from '../../CustomTable';
+import './StudentHistoryPage.css';
 
 const StudentHistoryPage = memo((props) => {
   const {
@@ -30,15 +31,12 @@ const StudentHistoryPage = memo((props) => {
   const { page } = useQueryParams();
   const [limit, setLimit] = useState(5);
 
-  const history = useHistory();
-
   useEffect(() => {
     onGetStudentHistoryPage(user.sub, page, limit, '');
   }, [onGetStudentHistoryPage, user.sub, limit, page]);
 
   const handleOnClick = () => {
     onGetStudentHistoryPage(user.sub, page, limit, getSearchParam());
-    history.push(`/history?page=1&quiz=${getSearchParam()}`); // Add search query to path or not??
     removeSearchParam();
   };
 
@@ -48,34 +46,36 @@ const StudentHistoryPage = memo((props) => {
         <CircularProgress />
       ) : hasStudentHistoryPage ? (
         <div id="student-history-container">
-          <h1>History</h1>
-          <p>Page: {studentHistoryPage.currentPage}</p>
-          <TextField
-            id="outlined-basic"
-            label="Search by quiz name.."
-            variant="outlined"
-            onChange={(ev) => setSearchParam(ev.target.value)}
-          />
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-age-native-simple">Results</InputLabel>
-            <Select
-              native
-              value={limit}
-              onChange={(ev) => setLimit(ev.target.value)}
-              label="Results"
-              inputProps={{
-                name: 'limit',
-                id: 'outlined-age-native-simple',
-              }}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-            </Select>
-          </FormControl>
-          <Button variant="contained" size="large" color="primary" onClick={handleOnClick}>
-            Search
-          </Button>
+          <h1>HISTORY</h1>
+          {/* <p>Page: {studentHistoryPage.currentPage}</p> */}
+          <div id="history-options">
+            <TextField
+              id="outlined-helperText"
+              label="Type a quiz name.."
+              variant="outlined"
+              onChange={(ev) => setSearchParam(ev.target.value)}
+            />
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-age-native-simple">Results</InputLabel>
+              <Select
+                native
+                value={limit}
+                onChange={(ev) => setLimit(ev.target.value)}
+                label="Results"
+                inputProps={{
+                  name: 'limit',
+                  id: 'outlined-age-native-simple',
+                }}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+              </Select>
+            </FormControl>
+            <Button id="search-quizzes" variant="contained" size="large" color="primary" onClick={handleOnClick}>
+              <SearchIcon />
+            </Button>
+          </div>
           <CustomTable
             customIdName="student-history-table"
             tableHead={[
@@ -97,15 +97,15 @@ const StudentHistoryPage = memo((props) => {
               };
             })}
           />
-          <div>
+          <div id="history-page-links">
             {studentHistoryPage.hasPreviousPage && (
               <Link to={`/history?page=${studentHistoryPage.currentPage - 1}`}>
-                PREVIOUS
+                {'<<'}
               </Link>
             )}
             {studentHistoryPage.hasNextPage && (
               <Link to={`/history?page=${studentHistoryPage.currentPage + 1}`}>
-                NEXT
+                {'>>'}
               </Link>
             )}
           </div>
