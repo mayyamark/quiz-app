@@ -1,0 +1,37 @@
+.MuiAvatar-root {
+  margin: auto;
+}
+#leaderboard-options {
+  text-align: center;
+  margin-bottom: 1%;
+  font-family: 'ui-monospace';
+}
+#search-students {
+  padding: 12.4px;
+  font-size: 1rem;
+  font-family: 'ui-monospace';
+}
+#student-leaderboard-container h1, p {
+  text-align: center;
+}
+input#outlined-basic.MuiOutlinedInput-input {
+  padding: 15px;
+  font-family: 'ui-monospace';
+}
+#outlined-basic-label.MuiFormLabel-root {
+  font-family: 'ui-monospace';
+  margin-right: 0.45%;
+}
+select#outlined-age-native-simple {
+  padding-bottom: 12px;
+  font-family: 'ui-monospace';
+}
+label#outlined-age-native-simple {
+  font-family: 'ui-monospace';
+}
+div.MuiInputBase-root {
+  font-family: 'ui-monospace';
+}
+[value="Results"] {
+  font-family: 'ui-monospace';
+}

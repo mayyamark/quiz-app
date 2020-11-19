@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -15,7 +15,8 @@ import {
   removeSearchParam,
 } from '../../../common/manage-search-param.js';
 import CustomTable from '../../CustomTable';
-
+import './LeaderboardPage.css';
+import SearchIcon from '@material-ui/icons/Search';
 const LeaderboardPage = memo((props) => {
   const {
     leaderboardPage,
@@ -25,8 +26,9 @@ const LeaderboardPage = memo((props) => {
     hasLeaderboardPage,
   } = props;
 
+
   const { page } = useQueryParams();
-  const history = useHistory();
+  // const history = useHistory();
 
   const [limit, setLimit] = useState(10);
   useEffect(() => {
@@ -34,8 +36,8 @@ const LeaderboardPage = memo((props) => {
   }, [onGetLeaderboardPage, page, limit]);
 
   const handleOnClick = () => {
-    onGetLeaderboardPage(page, limit, getSearchParam());
-    history.push(`/leaderboard?page=1&username=${getSearchParam()}`); // Add search query to path or not??
+    onGetLeaderboardPage(1, limit, getSearchParam());
+    // history.push(`/leaderboard?page=1&username=${getSearchParam()}`); // ??
     removeSearchParam();
   };
 
@@ -47,32 +49,35 @@ const LeaderboardPage = memo((props) => {
         <div id="student-leaderboard-container">
           <h1>Leaderboard</h1>
           <p>Page: {leaderboardPage.currentPage}</p>
-          <TextField
-            id="outlined-basic"
-            label="Search by username.."
-            variant="outlined"
-            onChange={(ev) => setSearchParam(ev.target.value)}
-          />
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-age-native-simple">Results</InputLabel>
-            <Select
-              native
-              value={limit}
-              onChange={(ev) => setLimit(ev.target.value)}
-              label="Results"
-              inputProps={{
-                name: 'limit',
-                id: 'outlined-age-native-simple',
-              }}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-            </Select>
-          </FormControl>
-          <Button variant="contained" size="large" color="primary" onClick={handleOnClick}>
-            Search
-          </Button>
+          <div id="leaderboard-options">
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-age-native-simple">Results</InputLabel>
+              <Select
+                native
+                value={limit}
+                onChange={(ev) => setLimit(ev.target.value)}
+                label="Results"
+                inputProps={{
+                  name: 'limit',
+                  id: 'outlined-age-native-simple',
+                }}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+                <option value={20}>20</option>
+              </Select>
+            </FormControl>
+              <TextField
+                id="outlined-basic"
+                label="Search by username.."
+                variant="outlined"
+                onChange={(ev) => setSearchParam(ev.target.value)}
+              />
+              <Button id="search-students" variant="contained" size="large" color="primary" onClick={handleOnClick}>
+                <SearchIcon />
+              </Button>
+          </div>
           <CustomTable
             customIdName="student-leaderboard-table"
             tableHead={[
