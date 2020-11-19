@@ -1,5 +1,4 @@
 import { memo, useEffect, useState } from 'react';
-// import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -15,8 +14,9 @@ import {
   removeSearchParam,
 } from '../../../common/manage-search-param.js';
 import CustomTable from '../../CustomTable';
-import './LeaderboardPage.css';
 import SearchIcon from '@material-ui/icons/Search';
+import './LeaderboardPage.css';
+
 const LeaderboardPage = memo((props) => {
   const {
     leaderboardPage,
@@ -28,7 +28,6 @@ const LeaderboardPage = memo((props) => {
 
 
   const { page } = useQueryParams();
-  // const history = useHistory();
 
   const [limit, setLimit] = useState(10);
   useEffect(() => {
@@ -37,7 +36,6 @@ const LeaderboardPage = memo((props) => {
 
   const handleOnClick = () => {
     onGetLeaderboardPage(1, limit, getSearchParam());
-    // history.push(`/leaderboard?page=1&username=${getSearchParam()}`); // ??
     removeSearchParam();
   };
 
@@ -47,9 +45,15 @@ const LeaderboardPage = memo((props) => {
         <CircularProgress />
       ) : hasLeaderboardPage ? (
         <div id="student-leaderboard-container">
-          <h1>Leaderboard</h1>
-          <p>Page: {leaderboardPage.currentPage}</p>
+          <h1>LEADERBOARD</h1>
+          {/* <p>Page: {leaderboardPage.currentPage}</p> */}
           <div id="leaderboard-options">
+              <TextField
+                id="outlined-helperText"
+                label="Type a username.."
+                variant="outlined"
+                onChange={(ev) => setSearchParam(ev.target.value)}
+              />
             <FormControl variant="outlined">
               <InputLabel htmlFor="outlined-age-native-simple">Results</InputLabel>
               <Select
@@ -68,12 +72,6 @@ const LeaderboardPage = memo((props) => {
                 <option value={20}>20</option>
               </Select>
             </FormControl>
-              <TextField
-                id="outlined-basic"
-                label="Search by username.."
-                variant="outlined"
-                onChange={(ev) => setSearchParam(ev.target.value)}
-              />
               <Button id="search-students" variant="contained" size="large" color="primary" onClick={handleOnClick}>
                 <SearchIcon />
               </Button>
@@ -99,15 +97,16 @@ const LeaderboardPage = memo((props) => {
               };
             })}
           />
-          <div>
+          <div id="leaderboard-page-links">
             {leaderboardPage.hasPreviousPage && (
               <Link to={`/leaderboard?page=${leaderboardPage.currentPage - 1}`}>
-                PREVIOUS
+                {'<<'}
               </Link>
             )}
+            {'  '}
             {leaderboardPage.hasNextPage && (
               <Link to={`/leaderboard?page=${leaderboardPage.currentPage + 1}`}>
-                NEXT
+                {'>>'}
               </Link>
             )}
           </div>
