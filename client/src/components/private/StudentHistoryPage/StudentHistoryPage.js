@@ -16,6 +16,7 @@ import {
   removeSearchParam,
 } from '../../../common/manage-search-param.js';
 import CustomTable from '../../CustomTable';
+import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './StudentHistoryPage.css';
 
 const StudentHistoryPage = memo((props) => {
@@ -42,12 +43,13 @@ const StudentHistoryPage = memo((props) => {
 
   return (
     <>
-      {loading ? (
+      {error ? (
+        <ErrorPage />
+      ) : loading ? (
         <CircularProgress />
       ) : hasStudentHistoryPage ? (
         <div id="student-history-container">
           <h1>HISTORY</h1>
-          {/* <p>Page: {studentHistoryPage.currentPage}</p> */}
           <div id="history-options">
             <TextField
               id="outlined-helperText"
@@ -56,7 +58,9 @@ const StudentHistoryPage = memo((props) => {
               onChange={(ev) => setSearchParam(ev.target.value)}
             />
             <FormControl variant="outlined">
-              <InputLabel htmlFor="outlined-age-native-simple">Results</InputLabel>
+              <InputLabel htmlFor="outlined-age-native-simple">
+                Results
+              </InputLabel>
               <Select
                 native
                 value={limit}
@@ -72,7 +76,13 @@ const StudentHistoryPage = memo((props) => {
                 <option value={15}>15</option>
               </Select>
             </FormControl>
-            <Button id="search-quizzes" variant="contained" size="large" color="primary" onClick={handleOnClick}>
+            <Button
+              id="search-quizzes"
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={handleOnClick}
+            >
               <SearchIcon />
             </Button>
           </div>
@@ -88,11 +98,27 @@ const StudentHistoryPage = memo((props) => {
             ]}
             tableBody={studentHistoryPage.history.map((history, index) => {
               return {
-                id: <>{(studentHistoryPage.currentPage * limit ) - limit + index + 1}</>,
+                id: (
+                  <>
+                    {studentHistoryPage.currentPage * limit - limit + index + 1}
+                  </>
+                ),
                 quizName: <>{history.name}</>,
                 categoryName: <>{history.category}</>,
-                started: <>{moment(new Date(history.started)).format('MMM Do YYYY, h:mm:ss a')}</>,
-                finished: <>{moment(new Date(history.finished)).format('MMM Do YYYY, h:mm:ss a')}</>,
+                started: (
+                  <>
+                    {moment(new Date(history.started)).format(
+                      'MMM Do YYYY, h:mm:ss a',
+                    )}
+                  </>
+                ),
+                finished: (
+                  <>
+                    {moment(new Date(history.finished)).format(
+                      'MMM Do YYYY, h:mm:ss a',
+                    )}
+                  </>
+                ),
                 score: <>{history.score}</>,
               };
             })}
@@ -110,10 +136,7 @@ const StudentHistoryPage = memo((props) => {
             )}
           </div>
         </div>
-      ) : (
-        // TODO: Think about better message
-        <p>Nothing to show...</p>
-      )}
+      ) : null}
     </>
   );
 });

@@ -6,6 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './SolvePage.css';
 
 const SolvePage = memo((props) => {
@@ -31,7 +32,9 @@ const SolvePage = memo((props) => {
   useEffect(() => {
     if (hasQuiz) {
       const currentTime = new Date();
-      const finishTime = moment(new Date()).add(solvingInfo.quiz.time, 'm').toDate();
+      const finishTime = moment(new Date())
+        .add(solvingInfo.quiz.time, 'm')
+        .toDate();
 
       setDuration(moment.duration(finishTime - currentTime, 'milliseconds'));
 
@@ -64,7 +67,11 @@ const SolvePage = memo((props) => {
       return q;
     });
 
-    onFinishSolving(id, { id, questionAnswers: mappedQuestionAnswers }, history);
+    onFinishSolving(
+      id,
+      { id, questionAnswers: mappedQuestionAnswers },
+      history,
+    );
   };
 
   const handleChange = (ev) => {
@@ -94,20 +101,24 @@ const SolvePage = memo((props) => {
     }
   };
 
-
   return (
     <>
-      {
-      // TODO: Add an error component with link to dashboard
-      error ? <h1>Error! Please, go back!</h1> :
-      (loading ? (
+      {error ? (
+        <ErrorPage />
+      ) : loading ? (
         <CircularProgress />
       ) : hasQuiz ? (
         <div id="solve-quiz-container">
           <FormControl>
             <h1>{solvingInfo.quiz.name}</h1>
-            <p>Started at: {moment(new Date(solvingInfo.startTime)).format('lll')}</p>
-            <p>Time left: {`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
+            <p>
+              Started at:{' '}
+              {moment(new Date(solvingInfo.startTime)).format('lll')}
+            </p>
+            <p>
+              Time left:{' '}
+              {`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}
+            </p>
             <p>Category: {solvingInfo.quiz.category}</p>
             <p>
               Created by:{' '}
@@ -115,7 +126,11 @@ const SolvePage = memo((props) => {
             </p>
             {solvingInfo.quiz.questions.map((question, index) => {
               return (
-                <div className="question-container" value={question.id} key={question.id}>
+                <div
+                  className="question-container"
+                  value={question.id}
+                  key={question.id}
+                >
                   <p>{`${index + 1}. ${question.text}`}</p>
                   {question.answers.map((answer) => {
                     return (
@@ -142,7 +157,7 @@ const SolvePage = memo((props) => {
             </Button>
           </FormControl>
         </div>
-      ) : null)}
+      ) : null}
     </>
   );
 });

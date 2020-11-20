@@ -1,4 +1,5 @@
-#error-container {
-  text-align: center;
-  margin-top: 20%;
+#error-page {
+  position: absolute;
+  left: 25%;
+  top: 15%;
 }

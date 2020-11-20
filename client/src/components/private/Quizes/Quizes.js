@@ -11,6 +11,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../custom-hooks/useQueryParams';
 import { useAuth } from '../../../auth/AuthContext';
 import { showConfirmAlert } from '../../common/Alerts/Alerts';
+import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import teachersAvatars from '../../../avatars/teachers/teachers-avatars.js'; // don't remove it!
 import './Quizzes.css';
 
@@ -32,12 +33,21 @@ const Quizes = memo((props) => {
   };
 
   const startSovlingHandler = (id) => {
-    showConfirmAlert('Are you sure?', 'You have only one chance!', 'warning', true, history, `/solvingQuiz/${id}`);
+    showConfirmAlert(
+      'Are you sure?',
+      'You have only one chance!',
+      'warning',
+      true,
+      history,
+      `/solvingQuiz/${id}`,
+    );
   };
 
   return (
     <>
-      {loading ? (
+      {error ? (
+        <ErrorPage />
+      ) : loading ? (
         <CircularProgress />
       ) : hasQuizes ? (
         <div id="quizzes-container">
@@ -84,20 +94,30 @@ const Quizes = memo((props) => {
                   <>
                     {user.role === 'student' ? (
                       !quiz.started ? (
-                        <Button onClick={() => startSovlingHandler(quiz.id)} variant="contained" color="primary">
+                        <Button
+                          onClick={() => startSovlingHandler(quiz.id)}
+                          variant="contained"
+                          color="primary"
+                        >
                           Solve
                         </Button>
                       ) : (
-                        <>
-                          {`Solved: ${moment(history.started).calendar()}`}
-                        </>
+                        <>{`Solved: ${moment(history.started).calendar()}`}</>
                       )
                     ) : (
                       <>
-                        <Button onClick={() => startSovlingHandler(quiz.id)} variant="contained" color="primary">
+                        <Button
+                          onClick={() => startSovlingHandler(quiz.id)}
+                          variant="contained"
+                          color="primary"
+                        >
                           Solve
                         </Button>
-                        <Button variant="contained" color="primary" onClick={viewQiuzHandler(quiz.id)}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={viewQiuzHandler(quiz.id)}
+                        >
                           View
                         </Button>
                       </>
