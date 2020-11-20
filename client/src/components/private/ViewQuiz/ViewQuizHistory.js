@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ViewQuizHistory = (props) => {
+  const quizHistory = props.quizHistory.history;
   const classes = useStyles();
   const history = useHistory();
   const goToDashboardHandler = () => {
@@ -26,10 +27,10 @@ const ViewQuizHistory = (props) => {
   return (
     <form className={classes.root} noValidate autoComplete="off">
       <div>
-        {props.quizHistory && props.quizHistory.length > 0 ?
+        {quizHistory && quizHistory.length > 0 ?
           <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
             {
-            props.quizHistory.map(historyItem => <ViewQuizHistoryItem historyItem={historyItem}/>)
+            quizHistory.map(historyItem => <ViewQuizHistoryItem historyItem={historyItem}/>)
             }
           </List>
          :

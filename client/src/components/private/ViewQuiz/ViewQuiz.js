@@ -25,7 +25,7 @@ const ViewQuiz = (props) => {
     history.push('/dashboard');
   };
   const goTQuizHistorydHandler = () => {
-    history.push(`${location.pathname}/11/history`);
+    history.push(`${location.pathname}/${props.quiz.id}/history`);
   };
   return (
     <form className={classes.root} noValidate autoComplete="off">

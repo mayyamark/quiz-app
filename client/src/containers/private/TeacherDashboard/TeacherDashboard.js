@@ -3,6 +3,7 @@ import { connect , useDispatch } from 'react-redux';
 import { createCategory, getQuizzes } from '../../../redux-store/actions/teacherDashboard';
 import TeacherDashboardComponent from '../../../components/private/TeacherDashboard/TeacherDashboard';
 import {useAuth} from '../../../auth/AuthContext';
+import Logout from '../../public/Authentication/Logout';
 
 const mapStateToProps = (state) => {
   return {
@@ -34,12 +35,14 @@ const TeacherDashboard = (props) => {
   }
 
   return (
-
-    <TeacherDashboardComponent
-      quizzesLoading={teacherDash.loading}
-      quizzes={quizes}
-      handleCategoryNameChange={handleCategoryNameChange}
-      handleCreateCategory={handleCreateCategory} />
+    <div>
+      <Logout />
+      <TeacherDashboardComponent
+        quizzesLoading={teacherDash.loading}
+        quizzes={quizes}
+        handleCategoryNameChange={handleCategoryNameChange}
+        handleCreateCategory={handleCreateCategory} />
+    </div>
   );
 };
 
