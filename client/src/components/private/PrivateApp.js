@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import StudentRoute from '../../auth/StudentRoute';
 import TeacherDashboard from '../../containers/private/TeacherDashboard/TeacherDashboard';
 import ViewQuiz from '../../containers/private/ViewQuiz/ViewQuiz';
+import ViewQuizHistory from '../../containers/private/ViewQuiz/ViewQuizHistory';
 import AlternateRoute from '../../auth/AlternateRoute';
 import TeacherRoute from '../../auth/TeacherRoute';
 import Quizes from '../../containers/private/Quizes/Quizes';
@@ -27,7 +28,8 @@ const PrivateApp = () => {
   <BrowserRouter>
     <Switch>
     <Route path="/solvingQuiz/:id" component={SolvePage} />
-    <TeacherRoute path="/view-quiz" component={ViewQuiz} />
+    <TeacherRoute exact path="/view-quiz" component={ViewQuiz} />
+    <TeacherRoute path="/view-quiz/:id/history" component={ViewQuizHistory} />
     <AlternateRoute exact path="/dashboard" componentA={TeacherDashboard} componentB={StudentDashboard} />
     <TeacherRoute path="/create-a-quiz" component={CreateQuiz} />
     <Route path="/quizzes" component={Quizes} />

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import ViewQuizHistoryComponent from '../../../components/private/ViewQuiz/ViewQuizHistoryComponent';
+import { useEffect } from 'react';
+import { withRouter } from 'react-router';
+import ViewQuizHistoryComponent from '../../../components/private/ViewQuiz/ViewQuizHistory';
 import { connect , useDispatch } from 'react-redux';
-import { useQueryParams } from '../../../custom-hooks/useQueryParams';
 import { getQuizTakenHistory } from '../../../redux-store/actions/Quizes';
 
 const mapStateToProps = (state) => {
@@ -12,10 +12,9 @@ const mapStateToProps = (state) => {
 };
 
 const ViewQuizHistory = (props) => {
-  const { id } = useQueryParams();
   const dispatch = useDispatch();
   useEffect(async () => {
-    dispatch(getQuizTakenHistory(id));
+    dispatch(getQuizTakenHistory(props.match.params.id));
   }, []);
 
   return (props.quizHistory ?
@@ -28,4 +27,4 @@ const ViewQuizHistory = (props) => {
     )
   );
 };
-export default connect(mapStateToProps)(ViewQuizHistory);
+export default connect(mapStateToProps)(withRouter(ViewQuizHistory));
