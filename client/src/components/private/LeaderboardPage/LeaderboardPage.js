@@ -1,5 +1,4 @@
 import { memo, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -14,7 +13,10 @@ import {
   setSearchParam,
   removeSearchParam,
 } from '../../../common/manage-search-param.js';
-import CustomTable from '../../CustomTable';
+import CustomTable from '../../common/CustomTable/CustomTable';
+import SearchIcon from '@material-ui/icons/Search';
+import ErrorPage from '../../common/ErrorPage/ErrorPage';
+import './LeaderboardPage.css';
 
 const LeaderboardPage = memo((props) => {
   const {
@@ -26,7 +28,6 @@ const LeaderboardPage = memo((props) => {
   } = props;
 
   const { page } = useQueryParams();
-  const history = useHistory();
 
   const [limit, setLimit] = useState(10);
   useEffect(() => {
@@ -34,45 +35,56 @@ const LeaderboardPage = memo((props) => {
   }, [onGetLeaderboardPage, page, limit]);
 
   const handleOnClick = () => {
-    onGetLeaderboardPage(page, limit, getSearchParam());
-    history.push(`/leaderboard?page=1&username=${getSearchParam()}`); // Add search query to path or not??
+    onGetLeaderboardPage(1, limit, getSearchParam());
     removeSearchParam();
   };
 
   return (
     <>
-      {loading ? (
+      {error ? (
+        <ErrorPage />
+      ) : loading ? (
         <CircularProgress />
       ) : hasLeaderboardPage ? (
         <div id="student-leaderboard-container">
-          <h1>Leaderboard</h1>
-          <p>Page: {leaderboardPage.currentPage}</p>
-          <TextField
-            id="outlined-basic"
-            label="Search by username.."
-            variant="outlined"
-            onChange={(ev) => setSearchParam(ev.target.value)}
-          />
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-age-native-simple">Results</InputLabel>
-            <Select
-              native
-              value={limit}
-              onChange={(ev) => setLimit(ev.target.value)}
-              label="Results"
-              inputProps={{
-                name: 'limit',
-                id: 'outlined-age-native-simple',
-              }}
+          <h1>LEADERBOARD</h1>
+          <div id="leaderboard-options">
+            <TextField
+              id="outlined-helperText"
+              label="Type a username.."
+              variant="outlined"
+              onChange={(ev) => setSearchParam(ev.target.value)}
+            />
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-age-native-simple">
+                Results
+              </InputLabel>
+              <Select
+                native
+                value={limit}
+                onChange={(ev) => setLimit(ev.target.value)}
+                label="Results"
+                inputProps={{
+                  name: 'limit',
+                  id: 'outlined-age-native-simple',
+                }}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+                <option value={20}>20</option>
+              </Select>
+            </FormControl>
+            <Button
+              id="search-students"
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={handleOnClick}
             >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-            </Select>
-          </FormControl>
-          <Button variant="contained" size="large" color="primary" onClick={handleOnClick}>
-            Search
-          </Button>
+              <SearchIcon />
+            </Button>
+          </div>
           <CustomTable
             customIdName="student-leaderboard-table"
             tableHead={[
@@ -85,7 +97,9 @@ const LeaderboardPage = memo((props) => {
             ]}
             tableBody={leaderboardPage.students.map((student, index) => {
               return {
-                id: <>{(leaderboardPage.currentPage * limit ) - limit + index + 1}</>,
+                id: (
+                  <>{leaderboardPage.currentPage * limit - limit + index + 1}</>
+                ),
                 avatar: <Avatar src={student.avatar} alt="avatar" />,
                 username: <>{student.username}</>,
                 firstName: <>{student.firstName}</>,
@@ -94,23 +108,21 @@ const LeaderboardPage = memo((props) => {
               };
             })}
           />
-          <div>
+          <div id="leaderboard-page-links">
             {leaderboardPage.hasPreviousPage && (
               <Link to={`/leaderboard?page=${leaderboardPage.currentPage - 1}`}>
-                PREVIOUS
+                {'<<'}
               </Link>
             )}
+            {'  '}
             {leaderboardPage.hasNextPage && (
               <Link to={`/leaderboard?page=${leaderboardPage.currentPage + 1}`}>
-                NEXT
+                {'>>'}
               </Link>
             )}
           </div>
         </div>
-      ) : (
-        // TODO: Think about better message
-        <p>Nothing to show...</p>
-      )}
+      ) : null}
     </>
   );
 });

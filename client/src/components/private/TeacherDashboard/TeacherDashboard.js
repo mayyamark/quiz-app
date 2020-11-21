@@ -31,8 +31,8 @@ const TeacherDashboard = (props) => {
         </Grid>
         <Grid spacing={3} item xs={6} container direction="column" justify="center" alignItems="stretch">
            <Categories />
-            <TextField id="outlined-basic" label="Category name" variant="outlined" onChange={props.handleCategoryNameChange}/>
-            <Button id="outlined-basic" variant="outlined" onClick={props.handleCreateCategory} className={classes.selectEmpty}>Create category</Button>
+            <TextField id="outlined-basic" label="Category name" variant="outlined" value={props.categoryName} onChange={props.handleCategoryNameChange}/>
+            <Button id="outlined-basic" variant="outlined" onClick={props.handleCreateCategory} disabled={!props.categoryName} className={classes.selectEmpty}>Create category</Button>
         </Grid>
       </Grid>
     </div>

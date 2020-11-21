@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import decode from 'jwt-decode';
-import swal from 'sweetalert';
 import BASE_URL from '../../../common/base-url.js';
 import { setToken } from '../../../common/manage-token.js';
 import { useAuth } from '../../../auth/AuthContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RegisterForm from '../../../components/public/RegisterForm/RegisterForm';
 import PrivateApp from '../../../components/private/PrivateApp';
+import { showInfoAlert } from '../../../components/common/Alerts/Alerts';
 
 const Register = () => {
   const { setUser } = useAuth();
@@ -20,8 +20,8 @@ const Register = () => {
 
     fetch(`${BASE_URL}/auth/registration`, {
       method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json', 
+      headers: {
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(registerData),
     })
@@ -32,25 +32,15 @@ const Register = () => {
         } else {
           setToken(data.token);
           const user = decode(data.token);
-          
+
           setUser(user);
           setFetchSuccess(true);
 
-          swal({
-            title: `Welcome, ${registerData.username}!`,
-            text: 'Have fun!',
-            icon: 'success',
-            button: 'Nice!',
-          });
+          showInfoAlert(`Welcome, ${registerData.username}!`, 'Have fun!', 'success', 'Nice!');
         }
       })
       .catch((err) => {
-        swal({
-          title: 'Attention!',
-          text: `${err.message}`,
-          icon: 'error',
-          button: 'OK :(',
-        });
+        showInfoAlert('Attention!', 'An error has occurred!', 'error', 'OK :(');
 
         setError(true);
       })

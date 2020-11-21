@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const TeacherDashboard = (props) => {
   const {teacherDash} = props;
-  const [categoryName, setcategoryName] = useState();
+  const [categoryName, setCategoryName] = useState();
   const dispatch = useDispatch();
   const auth = useAuth();
   useEffect(() => {
@@ -21,11 +21,12 @@ const TeacherDashboard = (props) => {
   }, []);
 
   const handleCategoryNameChange = (event) => {
-    setcategoryName(event.target.value);
+    setCategoryName(event.target.value);
   };
 
   const handleCreateCategory = (event) => {
     dispatch(createCategory(categoryName));
+    setCategoryName('');
   };
 
   let quizes = null;
@@ -40,6 +41,7 @@ const TeacherDashboard = (props) => {
       <TeacherDashboardComponent
         quizzesLoading={teacherDash.loading}
         quizzes={quizes}
+        categoryName={categoryName}
         handleCategoryNameChange={handleCategoryNameChange}
         handleCreateCategory={handleCreateCategory} />
     </div>

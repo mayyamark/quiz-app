@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import moment from 'moment';
-import CustomTable from '../../CustomTable';
+import CustomTable from '../../common/CustomTable/CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -10,6 +10,10 @@ import Button from '@material-ui/core/Button';
 import { Link, useHistory } from 'react-router-dom';
 import { useQueryParams } from '../../../custom-hooks/useQueryParams';
 import { useAuth } from '../../../auth/AuthContext';
+import { showConfirmAlert } from '../../common/Alerts/Alerts';
+import ErrorPage from '../../common/ErrorPage/ErrorPage';
+import teachersAvatars from '../../../avatars/teachers/teachers-avatars.js'; // don't remove it!
+import './Quizzes.css';
 
 const Quizes = memo((props) => {
   const { quizes, loading, error, onGetQuizes, hasQuizes } = props;
@@ -28,33 +32,47 @@ const Quizes = memo((props) => {
     history.push(`/view-quiz?id=${id}`);
   };
 
+  const startSovlingHandler = (id) => {
+    showConfirmAlert(
+      'Are you sure?',
+      'You have only one chance!',
+      'warning',
+      true,
+      history,
+      `/solvingQuiz/${id}`,
+    );
+  };
+
   return (
     <>
-      {loading ? (
+      {error ? (
+        <ErrorPage />
+      ) : loading ? (
         <CircularProgress />
       ) : hasQuizes ? (
         <div id="quizzes-container">
-          <h1>Quizzes</h1>
-          <FormControl variant="outlined">
-            <InputLabel htmlFor="outlined-age-native-simple">
-              Results
-            </InputLabel>
-            <Select
-              native
-              value={limit}
-              onChange={(ev) => setLimit(ev.target.value)}
-              label="Results"
-              inputProps={{
-                name: 'limit',
-                id: 'outlined-age-native-simple',
-              }}
-            >
-              <option value={5}>5</option>
-              <option value={10}>10</option>
-              <option value={15}>15</option>
-            </Select>
-          </FormControl>
-
+          <h1>QUIZZES</h1>
+          <div id="quizzes-options">
+            <FormControl variant="outlined">
+              <InputLabel htmlFor="outlined-age-native-simple">
+                Results
+              </InputLabel>
+              <Select
+                native
+                value={limit}
+                onChange={(ev) => setLimit(ev.target.value)}
+                label="Results"
+                inputProps={{
+                  name: 'limit',
+                  id: 'outlined-age-native-simple',
+                }}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={15}>15</option>
+              </Select>
+            </FormControl>
+          </div>
           <CustomTable
             customIdName="quizzes-table"
             tableHead={[
@@ -76,20 +94,30 @@ const Quizes = memo((props) => {
                   <>
                     {user.role === 'student' ? (
                       !quiz.started ? (
-                        <Button onClick={() => history.push(`/solvingQuiz/${quiz.id}`)} variant="contained" color="primary">
+                        <Button
+                          onClick={() => startSovlingHandler(quiz.id)}
+                          variant="contained"
+                          color="primary"
+                        >
                           Solve
                         </Button>
                       ) : (
-                        <>
-                          {`Solved: ${moment(history.started).calendar()}`}
-                        </>
+                        <>{`Solved: ${moment(history.started).calendar()}`}</>
                       )
                     ) : (
                       <>
-                        <Button onClick={() => history.push(`/solvingQuiz/${quiz.id}`)} variant="contained" color="primary">
+                        <Button
+                          onClick={() => startSovlingHandler(quiz.id)}
+                          variant="contained"
+                          color="primary"
+                        >
                           Solve
                         </Button>
-                        <Button variant="contained" color="primary" onClick={viewQiuzHandler(quiz.id)}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={viewQiuzHandler(quiz.id)}
+                        >
                           View
                         </Button>
                       </>
@@ -99,14 +127,14 @@ const Quizes = memo((props) => {
               };
             })}
           />
-          <div>
+          <div id="quizzes-page-links">
             {quizes.hasPreviousPage && (
               <Link
                 to={`/quizzes?page=${
                   quizes.currentPage - 1
                 }&category=${category}`}
               >
-                PREVIOUS
+                {'<<'}
               </Link>
             )}
             {quizes.hasNextPage && (
@@ -115,7 +143,7 @@ const Quizes = memo((props) => {
                   quizes.currentPage + 1
                 }&category=${category}`}
               >
-                NEXT
+                {'>>'}
               </Link>
             )}
           </div>

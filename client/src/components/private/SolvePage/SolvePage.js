@@ -6,6 +6,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import ErrorPage from '../../common/ErrorPage/ErrorPage';
+import './SolvePage.css';
 
 const SolvePage = memo((props) => {
   const {
@@ -30,7 +32,9 @@ const SolvePage = memo((props) => {
   useEffect(() => {
     if (hasQuiz) {
       const currentTime = new Date();
-      const finishTime = moment(new Date()).add(solvingInfo.quiz.time, 'm').toDate();
+      const finishTime = moment(new Date())
+        .add(solvingInfo.quiz.time, 'm')
+        .toDate();
 
       setDuration(moment.duration(finishTime - currentTime, 'milliseconds'));
 
@@ -63,8 +67,11 @@ const SolvePage = memo((props) => {
       return q;
     });
 
-    onFinishSolving(id, { id, questionAnswers: mappedQuestionAnswers });
-    history.push('/dashboard');
+    onFinishSolving(
+      id,
+      { id, questionAnswers: mappedQuestionAnswers },
+      history,
+    );
   };
 
   const handleChange = (ev) => {
@@ -94,53 +101,63 @@ const SolvePage = memo((props) => {
     }
   };
 
-
   return (
     <>
-      {
-      // TODO: Add an error component with link to dashboard
-      error ? <h1>Error! Please, go back!</h1> :
-      (loading ? (
+      {error ? (
+        <ErrorPage />
+      ) : loading ? (
         <CircularProgress />
       ) : hasQuiz ? (
-        <FormControl>
-          <h1>{solvingInfo.quiz.name}</h1>
-          <p>Started at: {moment(new Date(solvingInfo.startTime)).format('lll')}</p>
-          <p>Time left: {`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
-          <p>Category: {solvingInfo.quiz.category}</p>
-          <p>
-            Created by:{' '}
-            {`${solvingInfo.quiz.firstName} ${solvingInfo.quiz.lastName}`}
-          </p>
-          {solvingInfo.quiz.questions.map((question, index) => {
-            return (
-              <div value={question.id} key={question.id}>
-                <p>{`${index + 1}. ${question.text}`}</p>
-                {question.answers.map((answer) => {
-                  return (
-                    <FormControlLabel
-                      key={answer.id}
-                      control={
-                        <Checkbox
-                          onChange={handleChange}
-                          question={answer.questionId}
-                          value={answer.id}
-                          name={answer.questionId.toString()}
-                          color="primary"
-                        />
-                      }
-                      label={answer.text}
-                    />
-                  );
-                })}
-              </div>
-            );
-          })}
-          <Button onClick={handleSubmit} variant="contained" color="primary">
-            SEND
-          </Button>
-        </FormControl>
-      ) : null)}
+        <div id="solve-quiz-container">
+          <FormControl>
+            <h1>{solvingInfo.quiz.name}</h1>
+            <p>
+              Started at:{' '}
+              {moment(new Date(solvingInfo.startTime)).format('lll')}
+            </p>
+            <p>
+              Time left:{' '}
+              {`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}
+            </p>
+            <p>Category: {solvingInfo.quiz.category}</p>
+            <p>
+              Created by:{' '}
+              {`${solvingInfo.quiz.firstName} ${solvingInfo.quiz.lastName}`}
+            </p>
+            {solvingInfo.quiz.questions.map((question, index) => {
+              return (
+                <div
+                  className="question-container"
+                  value={question.id}
+                  key={question.id}
+                >
+                  <p>{`${index + 1}. ${question.text}`}</p>
+                  {question.answers.map((answer) => {
+                    return (
+                      <FormControlLabel
+                        key={answer.id}
+                        control={
+                          <Checkbox
+                            onChange={handleChange}
+                            question={answer.questionId}
+                            value={answer.id}
+                            name={answer.questionId.toString()}
+                            color="primary"
+                          />
+                        }
+                        label={answer.text}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+            <Button onClick={handleSubmit} variant="contained" color="primary">
+              SEND
+            </Button>
+          </FormControl>
+        </div>
+      ) : null}
     </>
   );
 });

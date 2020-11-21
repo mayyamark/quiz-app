@@ -40,7 +40,7 @@ const ViewQuiz = (props) => {
         {props.quiz.questions && props.quiz.questions.length > 0 ?
           <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
             {
-            props.quiz.questions.map(question => <ViewQuestion question={question}/>)
+            props.quiz.questions.map(question => <ViewQuestion key={question.id} question={question}/>)
             }
           </List>
          :
