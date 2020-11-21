@@ -8,7 +8,6 @@ import {
   CLEAR_LAST_CREATED_QUIZ,
 } from './action-types';
 import axios from '../../axios-config.js';
-import { getToken } from '../../common/manage-token.js';
 
 const setQuizes = (quizes) => {
   return {
@@ -58,11 +57,7 @@ const clearLastCreatedQuizAction = () => {
 const getQuizes = (page, limit, category) => {
   return dispatch => {
     dispatch(startLoadingQuizes());
-    axios.get(`/quizes?page=${page}&limit=${limit}&category=${category}`, {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`,
-      },
-    })
+    axios.get(`/quizes?page=${page}&limit=${limit}&category=${category}`)
     .then(res => dispatch(setQuizes(res.data)))
     .catch(err => dispatch(fetchQuizesFailed()))
     .finally(() => dispatch(stopLoadingQuizes()));
@@ -70,11 +65,7 @@ const getQuizes = (page, limit, category) => {
 };
 
 const createQuiz = (quizData) => (dispatch, getState) => {
-  axios.post('/quizes', quizData, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    })
+  axios.post('/quizes', quizData)
     .then(response => {
       if (response.status == 201){
         dispatch(createQuizCompletedAction(response.data));

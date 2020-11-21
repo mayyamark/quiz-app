@@ -5,7 +5,6 @@ import {
   STOP_LOADING_CATEGORIES,
 } from './action-types';
 import axios from '../../axios-config.js';
-import { getToken } from '../../common/manage-token.js';
 
 const setCategories = (categories) => {
   return {
@@ -35,11 +34,7 @@ const stopLoadingCategories = () => {
 const initCategories = () => {
   return dispatch => {
     dispatch(startLoadingCategories());
-    axios.get('/categories', {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`,
-      },
-    })
+    axios.get('/categories')
     .then(res => {
       dispatch(setCategories(res.data));
     })

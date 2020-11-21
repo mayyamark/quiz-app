@@ -6,7 +6,6 @@ import {
   STOP_LOADING_LEADERBOARD,
 } from './action-types';
 import axios from '../../axios-config.js';
-import { getToken } from '../../common/manage-token.js';
 
 const setLeaderboard = (leaderboard) => {
   return {
@@ -43,11 +42,7 @@ const stopLoadingLeaderboard = () => {
 const initLeaderboard = () => {
   return dispatch => {
     dispatch(startLoadingLeaderboard());
-    axios.get('/students?page=1', {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`,
-      },
-    })
+    axios.get('/students?page=1')
     .then(res => {
       dispatch(setLeaderboard(res.data));
     })
@@ -59,11 +54,7 @@ const initLeaderboard = () => {
 const getLeaderboardPage = (page, limit, username) => {
   return dispatch => {
     dispatch(startLoadingLeaderboard());
-    axios.get(`/students?page=${page}&limit=${limit}&username=${username}`, {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`,
-      },
-    })
+    axios.get(`/students?page=${page}&limit=${limit}&username=${username}`)
     .then(res => dispatch(setLeaderboardPage(res.data)))
     .catch(err => dispatch(fetchLeaderboardFailed()))
     .finally(() => dispatch(stopLoadingLeaderboard()));
