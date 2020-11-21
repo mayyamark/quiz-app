@@ -26,7 +26,11 @@ const TeacherDashboard = (props) => {
         <Grid item xs={6} container direction="column" justify="center" alignItems="stretch">
           <Paper className={classes.paper}>
             <TeacherCreatedQuizes loading = {props.quizzesLoading} quizzes = {props.quizzes} />
+            {props.categories.length === 0 ?
+            <div>You need to create a category first to be able to create a quiz</div>
+            :
             <Link to='/create-a-quiz'>Create a quiz</Link>
+            }
           </Paper>
         </Grid>
         <Grid spacing={3} item xs={6} container direction="column" justify="center" alignItems="stretch">

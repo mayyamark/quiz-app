@@ -8,12 +8,13 @@ import Logout from '../../public/Authentication/Logout';
 const mapStateToProps = (state) => {
   return {
       teacherDash: state.teacherDash,
+      categories: state.categories.categories,
   };
 };
 
 const TeacherDashboard = (props) => {
-  const {teacherDash} = props;
-  const [categoryName, setCategoryName] = useState();
+  const { teacherDash, categories } = props;
+  const [categoryName, setCategoryName] = useState('');
   const dispatch = useDispatch();
   const auth = useAuth();
   useEffect(() => {
@@ -34,7 +35,6 @@ const TeacherDashboard = (props) => {
   {
     quizes = teacherDash.quizzes.quizes;
   }
-
   return (
     <div>
       <Logout />
@@ -42,6 +42,7 @@ const TeacherDashboard = (props) => {
         quizzesLoading={teacherDash.loading}
         quizzes={quizes}
         categoryName={categoryName}
+        categories={categories}
         handleCategoryNameChange={handleCategoryNameChange}
         handleCreateCategory={handleCreateCategory} />
     </div>
