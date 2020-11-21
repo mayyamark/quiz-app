@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { List, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ViewQuizHistoryItem from './ViewQuizHistoryItem';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +35,7 @@ const ViewQuizHistory = (props) => {
             }
           </List>
          :
-          <div>There is no quiz history data</div>}
+          <Alert severity="warning">There is no quiz history data</Alert>}
       </div>
       <Button variant="contained" color="primary" onClick={goToDashboardHandler}>Dashboard </Button>
     </form>

@@ -27,9 +27,9 @@ const TeacherDashboard = (props) => {
           <Paper className={classes.paper}>
             <TeacherCreatedQuizes loading = {props.quizzesLoading} quizzes = {props.quizzes} />
             {props.categories.length === 0 ?
-            <div>You need to create a category first to be able to create a quiz</div>
+              <Alert severity="warning">You need to create a category first to be able to create a quiz</Alert>
             :
-            <Link to='/create-a-quiz'>Create a quiz</Link>
+              <Link to='/create-a-quiz'>Create a quiz</Link>
             }
           </Paper>
         </Grid>

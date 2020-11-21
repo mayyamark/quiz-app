@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import ViewQuizHistoryComponent from '../../../components/private/ViewQuiz/ViewQuizHistory';
 import { connect , useDispatch } from 'react-redux';
 import { getQuizTakenHistory } from '../../../redux-store/actions/Quizes';
+import { Alert } from '@material-ui/lab';
 
 const mapStateToProps = (state) => {
   return {
@@ -21,9 +22,9 @@ const ViewQuizHistory = (props) => {
     <ViewQuizHistoryComponent quizHistory={props.quizHistory}/>
     :
     (props.error ?
-      <div>{props.error}</div>
+      <Alert severity="warning">{props.error}</Alert>
       :
-      <div>There is no such quiz!!!</div>
+      <Alert severity="warning">There is no such quiz!!!</Alert>
     )
   );
 };
