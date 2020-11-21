@@ -2,6 +2,7 @@ import {
   TEACHER_DASH_GET_QUIZZES_LOADING,
   TEACHER_DASH_GET_QUIZZES_COMPLETED,
   TEACHER_DASH_GET_QUIZZES_FAILED,
+  TEACHER_DASH_CREATE_CATEGORY_COMPLETED,
   TEACHER_DASH_CREATE_CATEGORY_FAILED,
 } from '../actions/action-types';
 
@@ -24,6 +25,13 @@ const setQuizzesToState = (state, action) => {
   };
 };
 
+const setCategoryCreatedToState = (state) => {
+  return {
+    ...state,
+    error: null,
+  };
+};
+
 const failedState = (state, action) => {
   return {
     quizzes: state.quizzes,
@@ -37,6 +45,8 @@ const teacherDashboardReducer = (state = initialState, action) => {
       return setQuizzesLoadingToState(state, action);
     case TEACHER_DASH_GET_QUIZZES_COMPLETED:
       return setQuizzesToState(state, action);
+    case TEACHER_DASH_CREATE_CATEGORY_COMPLETED:
+      return setCategoryCreatedToState(state);
     case TEACHER_DASH_GET_QUIZZES_FAILED:
     case TEACHER_DASH_CREATE_CATEGORY_FAILED:
       return failedState(state, action);

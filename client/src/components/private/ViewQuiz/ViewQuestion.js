@@ -1,4 +1,4 @@
-import { TextField, Button, List, ListItem, Checkbox, ListItemSecondaryAction } from '@material-ui/core';
+import { TextField, List, ListItem, Checkbox, ListItemSecondaryAction } from '@material-ui/core';
 
 const ViewQuestion = (props) => {
   return (

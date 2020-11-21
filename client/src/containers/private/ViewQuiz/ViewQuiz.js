@@ -3,6 +3,7 @@ import ViewQuizComponent from '../../../components/private/ViewQuiz/ViewQuiz';
 import axios from '../../../axios-config';
 import { getToken } from '../../../common/manage-token';
 import { useQueryParams } from '../../../custom-hooks/useQueryParams.js';
+import { Alert } from '@material-ui/lab';
 
 const ViewQuiz = () => {
   const { id } = useQueryParams();
@@ -27,7 +28,6 @@ const ViewQuiz = () => {
     }
   }, []);
 
-  return (quiz ? <ViewQuizComponent quiz={quiz}/> : (error ? <div>{error}</div> : <div>There is no such quiz!!!</div>)
-  );
+  return (quiz ? <ViewQuizComponent quiz={quiz}/> : (error ? <Alert severity="error">{error}</Alert> : <Alert severity="warning">There is no such quiz!!!</Alert>));
 };
 export default ViewQuiz;

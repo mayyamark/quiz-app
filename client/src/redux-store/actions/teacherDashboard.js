@@ -2,6 +2,7 @@ import {
   TEACHER_DASH_GET_QUIZZES_LOADING,
   TEACHER_DASH_GET_QUIZZES_COMPLETED,
   TEACHER_DASH_GET_QUIZZES_FAILED,
+  TEACHER_DASH_CREATE_CATEGORY_COMPLETED,
   TEACHER_DASH_CREATE_CATEGORY_FAILED,
 } from './action-types';
 import axios from '../../axios-config';
@@ -26,6 +27,12 @@ const teacherDashGetQuizzesFailedAction = (error) => {
   return {
     type: TEACHER_DASH_GET_QUIZZES_FAILED,
     payload: error,
+  };
+};
+
+const teacherDashCreateCategoryCompletedAction = () => {
+    return {
+    type: TEACHER_DASH_CREATE_CATEGORY_COMPLETED,
   };
 };
 
@@ -69,6 +76,7 @@ export const createCategory = (categoryName) => async (dispatch, getState) => {
     );
     if (response.status == 201){
       initCategories()(dispatch);
+      dispatch(teacherDashCreateCategoryCompletedAction());
     } else {
       dispatch(teacherDashCreateCategoryFailedAction(`${response.statusText} ${response.data.error}`));
     }

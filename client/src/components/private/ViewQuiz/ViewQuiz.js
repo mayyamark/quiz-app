@@ -2,6 +2,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { TextField, List, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ViewQuestion from './ViewQuestion';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +45,7 @@ const ViewQuiz = (props) => {
             }
           </List>
          :
-          <div>There are no questions</div>}
+          <Alert severity="warning">There are no questions</Alert>}
       </div>
       <Button variant="contained" color="primary" onClick={goToDashboardHandler}>Dashboard </Button>
       <Button variant="contained" color="primary" onClick={goTQuizHistorydHandler}>Quiz history </Button>
