@@ -13,7 +13,7 @@ const ViewQuestion = (props) => {
         <ListItemSecondaryAction>
           <Checkbox
             edge="end"
-            InputProps={{readOnly: true}}
+            inputProps={{readOnly: true}}
             checked={!!answer.isTrue}
           />
         </ListItemSecondaryAction>

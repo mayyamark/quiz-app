@@ -7,9 +7,15 @@ import { Alert } from '@material-ui/lab';
 
 const ViewQuiz = () => {
   const { id } = useQueryParams();
-  const [quiz, setQuiz] = useState();
-  const [error, setError] = useState();
+  const [viewQuizState, setViewQuizState] = useState({
+    quiz: null,
+    error: null,
+    loading: true,
+  });
   useEffect(async () => {
+    let newState = {
+      ...viewQuizState,
+    };
     try {
       const response = await axios.get(`/quizes/${id}`, {
         headers: {
@@ -17,17 +23,19 @@ const ViewQuiz = () => {
         },
       });
       if (response.status == 200) {
-        setQuiz(response.data.quiz);
+        newState.quiz = response.data.quiz;
       }
       else {
-        setError(response.data.error);
+        newState.error = response.data.error;
       }
     }
     catch (err) {
-      setError(err.message);
+      newState.error = err.message;
     }
+    newState.loading = false;
+    setViewQuizState(newState);
   }, []);
 
-  return (quiz ? <ViewQuizComponent quiz={quiz}/> : (error ? <Alert severity="error">{error}</Alert> : <Alert severity="warning">There is no such quiz!!!</Alert>));
+  return (viewQuizState.quiz || viewQuizState.loading ? <ViewQuizComponent loading={viewQuizState.loading} quiz={viewQuizState.quiz}/> : (viewQuizState.error ? <Alert severity="error">{viewQuizState.error}</Alert> : <Alert severity="warning">There is no such quiz!!!</Alert>));
 };
 export default ViewQuiz;

@@ -31,7 +31,7 @@ const ViewQuizHistory = (props) => {
         {quizHistory && quizHistory.length > 0 ?
           <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
             {
-            quizHistory.map(historyItem => <ViewQuizHistoryItem historyItem={historyItem}/>)
+            quizHistory.map(historyItem => <ViewQuizHistoryItem key={historyItem.username} historyItem={historyItem}/>)
             }
           </List>
          :
