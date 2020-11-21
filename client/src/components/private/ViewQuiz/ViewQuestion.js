@@ -8,13 +8,13 @@ const ViewQuestion = (props) => {
       {props.question.answers &&
       <List component="nav"aria-label="answers">
       {props.question.answers.map(answer =>
-        <ListItem>
+        <ListItem key={answer.id}>
           <TextField label="Answer" InputProps={{readOnly: true}} value={`${answer.text}`}/>
         <ListItemSecondaryAction>
           <Checkbox
             edge="end"
             InputProps={{readOnly: true}}
-            checked={answer.isTrue}
+            checked={!!answer.isTrue}
           />
         </ListItemSecondaryAction>
         </ListItem>)

@@ -1,4 +1,4 @@
-import CustomTable from '../../CustomTable';
+import CustomTable from '../../common/CustomTable/CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
 

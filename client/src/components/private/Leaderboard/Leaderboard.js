@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import CustomTable from '../../CustomTable';
+import CustomTable from '../../common/CustomTable/CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './Leaderboard.css';

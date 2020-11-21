@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import moment from 'moment';
-import CustomTable from '../../CustomTable';
+import CustomTable from '../../common/CustomTable/CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';

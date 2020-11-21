@@ -15,7 +15,7 @@ import {
   setSearchParam,
   removeSearchParam,
 } from '../../../common/manage-search-param.js';
-import CustomTable from '../../CustomTable';
+import CustomTable from '../../common/CustomTable/CustomTable';
 import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './StudentHistoryPage.css';
 

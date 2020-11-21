@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
 import moment from 'moment';
-import CustomTable from '../../CustomTable';
+import CustomTable from '../../common/CustomTable/CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useAuth } from '../../../auth/AuthContext';
 import ErrorPage from '../../common/ErrorPage/ErrorPage';

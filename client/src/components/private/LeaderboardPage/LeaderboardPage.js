@@ -13,7 +13,7 @@ import {
   setSearchParam,
   removeSearchParam,
 } from '../../../common/manage-search-param.js';
-import CustomTable from '../../CustomTable';
+import CustomTable from '../../common/CustomTable/CustomTable';
 import SearchIcon from '@material-ui/icons/Search';
 import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './LeaderboardPage.css';
