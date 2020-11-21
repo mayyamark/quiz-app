@@ -27,7 +27,10 @@ const Categories = memo((props) => {
               return {
                 id: <>{index + 1}</>,
                 category: (
-                  <Link to={`/quizzes?page=1&category=${category.name}`}>
+                  <Link
+                    to={`/quizzes?page=1&category=${category.name}`}
+                    id={!category.isActive ? 'disabled' : ''}
+                  >
                     {category.name}
                   </Link>
                 ),
