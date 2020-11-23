@@ -2,10 +2,9 @@ import { memo, useEffect } from 'react';
 import CustomTable from '../../common/CustomTable/CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link } from 'react-router-dom';
-import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './Categories.css';
 const Categories = memo((props) => {
-  const { categories, loading, error, onInitCategories, hasCategories } = props;
+  const { categories, loading, onInitCategories, hasCategories } = props;
 
   useEffect(() => {
     onInitCategories();
@@ -13,9 +12,7 @@ const Categories = memo((props) => {
 
   return (
     <>
-      {error ? (
-        <ErrorPage />
-      ) : loading ? (
+      {loading ? (
         <CircularProgress />
       ) : hasCategories ? (
         <div id="student-dashboard-categories-container">
