@@ -190,7 +190,7 @@ const logQuizScore = async (id, score) => {
 
 const searchByQuizIdPaged = async (quizId, offset, limit) => {
   const countEntriesSql = 'SELECT count(*) AS count';
-  const historySql = 'SELECT users.username, users.firstName, users.lastName, history.started, history.score';
+  const historySql = 'SELECT users.username, users.firstName, users.lastName, users.avatar, history.started, history.score';
   const searchBySql = `
     FROM quiz.history
     JOIN quizes ON quizes.id = history.quizID
