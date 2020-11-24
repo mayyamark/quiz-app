@@ -60,8 +60,8 @@ const ViewQuiz = (props) => {
                     component="nav"
                     aria-label="questions"
                   >
-                    {props.quiz.questions.map((question) => (
-                      <ViewQuestion key={question.id} question={question} />
+                    {props.quiz.questions.map((question, index) => (
+                      <ViewQuestion num={index + 1} key={question.id} question={question} />
                     ))}
                   </List>
                 ) : (

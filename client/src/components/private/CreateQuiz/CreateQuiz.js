@@ -104,8 +104,9 @@ const CreateQuiz = (props) => {
               component="nav"
               aria-label="questions"
             >
-              {props.questions.map((question) => (
+              {props.questions.map((question, index) => (
                 <CreateQuestion
+                  num={index + 1}
                   key={dummyKey++}
                   question={question}
                   handleQuestionTextChange={props.handleQuestionTextChange}

@@ -13,7 +13,7 @@ const ViewQuestion = (props) => {
     <div id="view-question-container">
       <ListItem className="view-question-list-item">
         <TextField
-          label="Question"
+          label={`Question ${props.num}`}
           InputProps={{ readOnly: true }}
           value={`${props.question.text}`}
         />
@@ -25,10 +25,10 @@ const ViewQuestion = (props) => {
         />
         {props.question.answers && (
           <List component="nav" aria-label="answers">
-            {props.question.answers.map((answer) => (
+            {props.question.answers.map((answer, index) => (
               <ListItem key={answer.id}>
                 <TextField
-                  label="Answer"
+                  label={`Answer ${index + 1}`}
                   className="answer-input"
                   InputProps={{ readOnly: true }}
                   value={`${answer.text}`}

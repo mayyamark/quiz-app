@@ -16,7 +16,7 @@ const CreateQuestion = (props) => {
     <div id="create-question-container">
       <ListItem className="question-list-item">
         <TextField
-          label="Question"
+          label={`Question ${props.num}`}
           value={`${props.question.text}`}
           onChange={props.handleQuestionTextChange(props.question)}
         />
@@ -29,11 +29,11 @@ const CreateQuestion = (props) => {
         />
         {props.question.answers && (
           <List component="nav" aria-label="answers">
-            {props.question.answers.map((answer) => (
+            {props.question.answers.map((answer, index) => (
               <ListItem key={dummyKey++}>
                 <TextField
                   className="answer-input"
-                  label="Answer"
+                  label={`Answer ${index + 1}`}
                   value={`${answer.text}`}
                   onChange={props.handleAnswerChange(answer)}
                 />
