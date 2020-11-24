@@ -10,17 +10,8 @@ const ViewQuiz = () => {
   const [error, setError] = useState();
   useEffect(async () => {
     try {
-      const response = await axios.get(`/quizes/${id}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
-      if (response.status == 200) {
-        setQuiz(response.data.quiz);
-      }
-      else {
-        setError(response.data.error);
-      }
+      const response = await axios.get(`/quizes/${id}`);
+      setQuiz(response.data.quiz);
     }
     catch (err) {
       setError(err.message);

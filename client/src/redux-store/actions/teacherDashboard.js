@@ -5,7 +5,7 @@ import {
   TEACHER_DASH_CREATE_CATEGORY_FAILED,
 } from './action-types';
 import axios from '../../axios-config';
-import { getToken } from '../../common/manage-token';
+
 import { initCategories } from './Categories';
 
 const teacherDashGetQuizzesStartedAction = (loading) => {
@@ -39,17 +39,9 @@ const teacherDashCreateCategoryFailedAction = (error) => {
 export const getQuizzes = (forTeacher) => async (dispatch, getState) => {
   dispatch(teacherDashGetQuizzesStartedAction(true));
   try {
-    const response = await axios.get(`/quizes?page=1&limit=5&teacher=${forTeacher}`, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    });
-    if (response.status == 200){
+    const response = await axios.get(`/quizes?page=1&limit=5&teacher=${forTeacher}`);
       dispatch(teacherDashGetQuizzesCompletedAction(response.data));
-    } else {
-      dispatch(teacherDashGetQuizzesFailedAction(`${response.statusText} ${response.data.error}`));
     }
-  }
   catch (err) {
     dispatch(teacherDashGetQuizzesFailedAction(err.message));
   }
@@ -58,20 +50,11 @@ export const getQuizzes = (forTeacher) => async (dispatch, getState) => {
 
 export const createCategory = (categoryName) => async (dispatch, getState) => {
   try {
-    const response = await axios.post('/categories', {
+     await axios.post('/categories', {
         name: categoryName,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      },
-    );
-    if (response.status == 201){
+      });
       initCategories()(dispatch);
-    } else {
-      dispatch(teacherDashCreateCategoryFailedAction(`${response.statusText} ${response.data.error}`));
-    }
+    dispatch(teacherDashCreateCategoryCompletedAction());
   }
   catch (err) {
     dispatch(teacherDashCreateCategoryFailedAction(err.message));
