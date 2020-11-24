@@ -130,12 +130,12 @@ const startSolvingQuiz = (historyData) => {
 const evaluateAnswers = (question, answered) => {
   // the answer is false but the user marked it as true
   let userMarkedFalseAsTrue = question.answers
-    .filter(answer => answered[0].markedTrue.includes(answer.id))
+    .filter(answer => answered.markedTrue.includes(answer.id))
     .filter(answer => !answer.isTrue).length > 0;
 
   // if the answer is true but the user didn't mark it as true
   let userNotMarkedTrueAsTrue = question.answers
-    .filter(answer => !answered[0].markedTrue.includes(answer.id))
+    .filter(answer => !answered.markedTrue.includes(answer.id))
     .filter(answer => answer.isTrue).length > 0;
 
   if (!userMarkedFalseAsTrue && !userNotMarkedTrueAsTrue) {
@@ -190,7 +190,7 @@ const finishSolvingQuiz = (historyData, quizesData) =>
       scores.totalScore += question.points;
       const answered = solvedQuizData.questionAnswers.filter(aQ => aQ.id === question.id);
       if (answered.length === 1) {
-        scores.userScore += evaluateAnswers(question[0], answered);
+        scores.userScore += evaluateAnswers(question, answered[0]);
       }
       else if (answered.length > 1) {
         // This is a bad request, containing multiple answers to the same question,
