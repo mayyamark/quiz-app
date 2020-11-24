@@ -11,6 +11,7 @@ const create = async (name) => {
     return {
       id: result.insertId,
       name: name,
+      isActive: false,
     };
   }
   catch (err) {
@@ -66,12 +67,30 @@ const getAll = async () => {
   `;
   try {
     const result = await pool.query(getAllCategories);
-    return result.map(entity => {
+    const categories = result.map(entity => {
       return {
         id: entity.id,
         name: entity.category,
       };
     });
+
+    return await Promise.all(categories.map(async cat => {
+      const categoryControlSql = `
+        SELECT *
+        FROM quizes
+        WHERE categoryID = ?;
+      `;
+
+      const categoryControlData = await pool.query(categoryControlSql, [cat.id]);
+
+      if (categoryControlData[0]) {
+        cat.isActive = true;
+      } else {
+        cat.isActive = false;
+      }
+
+      return cat;
+    }));
   }
   catch (err){
     console.log(`db insert failed ${err.message}`);

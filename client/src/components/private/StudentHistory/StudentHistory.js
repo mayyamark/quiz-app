@@ -3,14 +3,12 @@ import moment from 'moment';
 import CustomTable from '../../common/CustomTable/CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useAuth } from '../../../auth/AuthContext';
-import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './StudentHistory.css';
 
 const StudentHistory = memo((props) => {
   const {
     studentHistory,
     loading,
-    error,
     onInitStudentHistory,
     hasStudentHistory,
   } = props;
@@ -22,9 +20,7 @@ const StudentHistory = memo((props) => {
 
   return (
     <>
-      {error ? (
-        <ErrorPage />
-      ) : loading ? (
+      { loading ? (
         <CircularProgress />
       ) : hasStudentHistory ? (
         <div id="student-dashboard-history-container">

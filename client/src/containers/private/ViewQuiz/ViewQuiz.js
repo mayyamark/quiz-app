@@ -17,17 +17,8 @@ const ViewQuiz = () => {
       ...viewQuizState,
     };
     try {
-      const response = await axios.get(`/quizes/${id}`, {
-        headers: {
-          Authorization: `Bearer ${getToken()}`,
-        },
-      });
-      if (response.status == 200) {
-        newState.quiz = response.data.quiz;
-      }
-      else {
-        newState.error = response.data.error;
-      }
+      const response = await axios.get(`/quizes/${id}`);
+      setQuiz(response.data.quiz);
     }
     catch (err) {
       newState.error = err.message;

@@ -2,7 +2,6 @@ import { memo, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CustomTable from '../../common/CustomTable/CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './Leaderboard.css';
 
 const Leaderboard = memo((props) => {
@@ -20,9 +19,7 @@ const Leaderboard = memo((props) => {
 
   return (
     <>
-      {error ? (
-        <ErrorPage />
-      ) : loading ? (
+      {loading ? (
         <CircularProgress />
       ) : hasLeaderboard ? (
         <div id="student-dashboard-leaderboard-container">

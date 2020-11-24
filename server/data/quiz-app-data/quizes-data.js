@@ -29,7 +29,7 @@ const searchBy = async (category, teacher) => {
   `;
 
   if (category) {
-    quizesSql += ` AND c.category LIKE '%${category}%'`;
+    quizesSql += ` AND c.category LIKE '${category}'`;
   }
   if (teacher) {
     quizesSql += `
@@ -66,7 +66,7 @@ const searchByWithPages = async (category, teacher, offset, limit, user) => {
     `;
 
     if (category) {
-      quizesSql += ` AND c.category LIKE '%${category}%'`;
+      quizesSql += ` AND c.category LIKE '${category}'`;
     }
     if (teacher) {
       quizesSql += `
@@ -93,7 +93,7 @@ const searchByWithPages = async (category, teacher, offset, limit, user) => {
     `;
 
     if (category) {
-      quizesSql += ` WHERE c.category LIKE '%${category}%'`;
+      quizesSql += ` WHERE c.category LIKE '${category}'`;
     }
     quizesSql += `
       ORDER BY h.started ASC, q.name ASC

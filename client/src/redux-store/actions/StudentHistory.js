@@ -7,7 +7,6 @@ import {
   STOP_LOADING_STUDENT_HISTORY,
 } from './action-types';
 import axios from '../../axios-config.js';
-import { getToken } from '../../common/manage-token.js';
 import { showConfirmAlert } from '../../components/common/Alerts/Alerts';
 
 const setStudentHistory = (studentHistory) => {
@@ -52,11 +51,7 @@ const stopLoadingStudentHistory = () => {
 const initStudentHistory = (userId) => {
   return dispatch => {
     dispatch(startLoadingStudentHistory());
-    axios.get(`/students/${userId}/history?page=1`, {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`,
-      },
-    })
+    axios.get(`/students/${userId}/history?page=1`)
     .then(res => dispatch(setStudentHistory(res.data)))
     .catch(err => dispatch(fetchStudentHistoryFailed()))
     .finally(() => dispatch(stopLoadingStudentHistory()));
@@ -66,11 +61,7 @@ const initStudentHistory = (userId) => {
 const getStudentHistoryPage = (userId, page, limit, quiz) => {
   return dispatch => {
     dispatch(startLoadingStudentHistory());
-    axios.get(`/students/${userId}/history?page=${page}&limit=${limit}&quiz=${quiz}`, {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`,
-      },
-    })
+    axios.get(`/students/${userId}/history?page=${page}&limit=${limit}&quiz=${quiz}`)
     .then(res => dispatch(setStudentHistoryPage(res.data)))
     .catch(err => dispatch(fetchStudentHistoryFailed()))
     .finally(() => dispatch(stopLoadingStudentHistory()));
@@ -80,11 +71,7 @@ const getStudentHistoryPage = (userId, page, limit, quiz) => {
 const startSolving = (quizId) => {
   return dispatch => {
     dispatch(startLoadingStudentHistory());
-    axios.post(`/quizes/${quizId}`, {}, {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`,
-      },
-    })
+    axios.post(`/quizes/${quizId}`)
     .then(res => dispatch(setSolvingInfo(res.data)))
     .catch(err => dispatch(fetchStudentHistoryFailed()))
     .finally(() => dispatch(stopLoadingStudentHistory()));
@@ -94,12 +81,7 @@ const startSolving = (quizId) => {
 const finishSolving = (quizId, solveData, historyObj) => {
   return dispatch => {
     dispatch(startLoadingStudentHistory());
-    axios.put(`/quizes/${quizId}`, solveData, {
-      headers: {
-        'Authorization': `Bearer ${getToken()}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    axios.put(`/quizes/${quizId}`, solveData)
     .then(res => {
       showConfirmAlert(`Result: ${res.data.score}/${res.data.totalScore}`, 'Try another one!', 'success', false, historyObj, '/dashboard');
       dispatch(setSolvingInfo({}));
