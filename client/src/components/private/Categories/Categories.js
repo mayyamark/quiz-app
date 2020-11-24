@@ -17,10 +17,10 @@ const Categories = memo((props) => {
       {loading ? (
         <CircularProgress />
       ) : hasCategories ? (
-        <div id="student-dashboard-categories-container">
+        <div id="dashboard-categories-container">
           <h1>Categories</h1>
           <CustomTable
-            customIdName="student-dashboard-categories-table"
+            customIdName="dashboard-categories-table"
             tableHead={['No', 'Category']}
             tableBody={categories.map((category, index) => {
               return {
