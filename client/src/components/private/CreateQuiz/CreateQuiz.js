@@ -1,19 +1,20 @@
 import { TextField, Button, Select, MenuItem, List } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { Alert } from '@material-ui/lab';
 import NavBar from '../../common/NavBar/NavBar';
 import CreateQuestion from './CreateQuestion';
+import './CreateQuiz.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-      minWidth: 120,
+      // margin: theme.spacing(1),
     },
   },
   selectEmpty: {
-    margin: theme.spacing(1),
-    width: '25ch',
+    // margin: theme.spacing(1),
   },
 }));
 
@@ -71,25 +72,24 @@ const CreateQuiz = (props) => {
   return (
     <>
       <NavBar />
-      <form className={classes.root} noValidate autoComplete="off">
-        {props.quizesState.error}
-        <div>
+      <CssBaseline />
+      <Container id="quiz-form-container" maxWidth="md">
+        <h1>You are about to create a new quiz!</h1>
+        <form
+          id="create-quiz-form"
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+        >
+          {props.quizesState.error}
+        <div id="basic-quiz-info">
           <TextField
             id="outlined-basic"
             label="Quiz Name"
             variant="outlined"
+            className="quiz-name"
             onChange={props.handleQuizNameChange}
           />
-          <TextField
-            id="outlined-basic"
-            label="Time Limit"
-            type="number"
-            InputProps={{ inputProps: { min: 1, max: 60 } }}
-            variant="outlined"
-            onChange={props.handleTimeLimitChange}
-          />
-        </div>
-        <div>
           <Select
             id="outlined-basic"
             label="Category"
@@ -104,16 +104,15 @@ const CreateQuiz = (props) => {
               </MenuItem>
             ))}
           </Select>
-        </div>
-        <div>
-          <Button
+          <TextField
             id="outlined-basic"
+            label="Time"
+            type="number"
+            InputProps={{ inputProps: { min: 1, max: 60 } }}
             variant="outlined"
-            onClick={props.handleAddQuestion}
-            className={classes.selectEmpty}
-          >
-            Add question
-          </Button>
+            onChange={props.handleTimeLimitChange}
+          />
+        </div>
           {props.questions && props.questions.length > 0 ? (
             <List
               id="outlined-basic"
@@ -135,19 +134,32 @@ const CreateQuiz = (props) => {
               ))}
             </List>
           ) : (
-            <div>There are no questions</div>
+            <Alert id="create-quiz-alert" severity="warning">You must add at least 2 questions!</Alert>
           )}
-        </div>
-        <Button
-          id="outlined-basic"
-          variant="outlined"
-          onClick={props.createAQuiz}
-          disabled={disableCreateQuizValidation()}
-          className={classes.selectEmpty}
-        >
-          Create that quiz!
-        </Button>
-      </form>
+          <div id="create-quiz-btn-container" >
+          <Button
+            id="outlined-basic"
+            variant="outlined"
+            onClick={props.handleAddQuestion}
+            className={classes.selectEmpty}
+            className="create-quiz-btn"
+          >
+            Add a question
+          </Button>{' '}
+          <Button
+            id="outlined-basic"
+            variant="contained"
+            color="primary"
+            onClick={props.createAQuiz}
+            disabled={disableCreateQuizValidation()}
+            className={classes.selectEmpty}
+            className="create-quiz-btn"
+          >
+            Create that quiz!
+          </Button>
+          </div>
+        </form>
+      </Container>
     </>
   );
 };
