@@ -1,7 +1,9 @@
 import { memo, useEffect } from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import { Link } from 'react-router-dom';
 import CustomTable from '../../common/CustomTable/CustomTable';
+import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Tooltip from '@material-ui/core/Tooltip';
 import './Leaderboard.css';
 
 const Leaderboard = memo((props) => {
@@ -23,7 +25,9 @@ const Leaderboard = memo((props) => {
         <CircularProgress />
       ) : hasLeaderboard ? (
         <div id="student-dashboard-leaderboard-container">
-          <h1>Leaderboard</h1>
+          <Tooltip arrow title="See the full leaderboard!" placement="top">
+            <Link to='/leaderboard?page=1' id="leaderboard-link" >Leaderboard</Link>
+          </Tooltip>
           <CustomTable
             customIdName="student-dashboard-leaderboard-table"
             tableHead={['No', '', 'Username', 'Score']}
