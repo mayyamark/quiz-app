@@ -18,7 +18,8 @@ const ViewQuiz = () => {
     };
     try {
       const response = await axios.get(`/quizes/${id}`);
-      setQuiz(response.data.quiz);
+      newState.quiz = response.data.quiz;
+      newState.error = null;
     }
     catch (err) {
       newState.error = err.message;

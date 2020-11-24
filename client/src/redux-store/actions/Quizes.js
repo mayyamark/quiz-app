@@ -83,11 +83,7 @@ const getQuizes = (page, limit, category) => {
 const createQuiz = (quizData) => (dispatch, getState) => {
   axios.post('/quizes', quizData)
     .then(response => {
-      if (response.status == 201){
-        dispatch(createQuizCompletedAction(response.data));
-      } else {
-        dispatch(createQuizFailedAction(`${response.statusText} ${response.data.error}`));
-      }
+      dispatch(createQuizCompletedAction(response.data));
     })
     .catch(err => {
       dispatch(createQuizFailedAction(err.message));
@@ -99,21 +95,13 @@ const clearLastCreatedQuiz = () => (dispatch, getState) => {
 };
 
 const getQuizTakenHistory = (quizId) => (dispatch, getState) => {
-  axios.get(`/quizes/${quizId}/history`, {
-      headers: {
-        Authorization: `Bearer ${getToken()}`,
-      },
-    })
-    .then(response => {
-      if (response.status == 200){
-        dispatch(fetchQuizTakenHistoryCompletedAction(response.data));
-      } else {
-        dispatch(fetchQuizTakenHistoryFailedAction(`${response.statusText} ${response.data.error}`));
-      }
-    })
-    .catch(err => {
-      dispatch(fetchQuizTakenHistoryFailedAction(err.message));
-    });
+  axios.get(`/quizes/${quizId}/history`)
+  .then(response => {
+    dispatch(fetchQuizTakenHistoryCompletedAction(response.data));
+  })
+  .catch(err => {
+    dispatch(fetchQuizTakenHistoryFailedAction(err.message));
+  });
 };
 
 export {
