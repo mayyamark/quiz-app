@@ -3,6 +3,7 @@ import { List, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ViewQuizHistoryItem from './ViewQuizHistoryItem';
 import { Alert } from '@material-ui/lab';
+import NavBar from '../../common/NavBar/NavBar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,19 +27,38 @@ const ViewQuizHistory = (props) => {
     history.push('/dashboard');
   };
   return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <div>
-        {quizHistory && quizHistory.length > 0 ?
-          <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
-            {
-            quizHistory.map(historyItem => <ViewQuizHistoryItem key={historyItem.username} historyItem={historyItem}/>)
-            }
-          </List>
-         :
-          <Alert severity="warning">There is no quiz history data</Alert>}
-      </div>
-      <Button variant="contained" color="primary" onClick={goToDashboardHandler}>Dashboard </Button>
-    </form>
+    <>
+      <NavBar />
+
+      <form className={classes.root} noValidate autoComplete="off">
+        <div>
+          {quizHistory && quizHistory.length > 0 ? (
+            <List
+              id="outlined-basic"
+              component="nav"
+              className={classes.root}
+              aria-label="questions"
+            >
+              {quizHistory.map((historyItem) => (
+                <ViewQuizHistoryItem
+                  key={historyItem.username}
+                  historyItem={historyItem}
+                />
+              ))}
+            </List>
+          ) : (
+            <Alert severity="warning">There is no quiz history data</Alert>
+          )}
+        </div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={goToDashboardHandler}
+        >
+          Dashboard{' '}
+        </Button>
+      </form>
+    </>
   );
 };
 

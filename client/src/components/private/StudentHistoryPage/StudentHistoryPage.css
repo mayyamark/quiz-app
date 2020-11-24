@@ -34,6 +34,7 @@ select#outlined-age-native-simple {
 }
 #history-page-links {
   text-align: center;
+  margin-top: 3.5%;
 }
 #history-page-links a {
   color: #3f51b5;
@@ -48,5 +49,5 @@ select#outlined-age-native-simple {
 }
 #history-page-links a:hover {
   background-color: #3f51b5;
-  color: white;
+  color: whitesmoke;
 }

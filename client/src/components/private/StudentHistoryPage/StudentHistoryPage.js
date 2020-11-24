@@ -17,6 +17,7 @@ import {
 } from '../../../common/manage-search-param.js';
 import CustomTable from '../../common/CustomTable/CustomTable';
 import ErrorPage from '../../common/ErrorPage/ErrorPage';
+import NavBar from '../../common/NavBar/NavBar';
 import './StudentHistoryPage.css';
 
 const StudentHistoryPage = memo((props) => {
@@ -48,94 +49,104 @@ const StudentHistoryPage = memo((props) => {
       ) : loading ? (
         <CircularProgress />
       ) : hasStudentHistoryPage ? (
-        <div id="student-history-container">
-          <h1>HISTORY</h1>
-          <div id="history-options">
-            <TextField
-              id="outlined-helperText"
-              label="Type a quiz name.."
-              variant="outlined"
-              onChange={(ev) => setSearchParam(ev.target.value)}
-            />
-            <FormControl variant="outlined">
-              <InputLabel htmlFor="outlined-age-native-simple">
-                Results
-              </InputLabel>
-              <Select
-                native
-                value={limit}
-                onChange={(ev) => setLimit(ev.target.value)}
-                label="Results"
-                inputProps={{
-                  name: 'limit',
-                  id: 'outlined-age-native-simple',
-                }}
+        <>
+          <NavBar />
+          <div id="student-history-container">
+            <h1>HISTORY</h1>
+            <div id="history-options">
+              <TextField
+                id="outlined-helperText"
+                label="Type a quiz name.."
+                variant="outlined"
+                onChange={(ev) => setSearchParam(ev.target.value)}
+              />
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="outlined-age-native-simple">
+                  Results
+                </InputLabel>
+                <Select
+                  native
+                  value={limit}
+                  onChange={(ev) => setLimit(ev.target.value)}
+                  label="Results"
+                  inputProps={{
+                    name: 'limit',
+                    id: 'outlined-age-native-simple',
+                  }}
+                >
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                  <option value={15}>15</option>
+                </Select>
+              </FormControl>
+              <Button
+                id="search-quizzes"
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={handleOnClick}
               >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={15}>15</option>
-              </Select>
-            </FormControl>
-            <Button
-              id="search-quizzes"
-              variant="contained"
-              size="large"
-              color="primary"
-              onClick={handleOnClick}
-            >
-              <SearchIcon />
-            </Button>
+                <SearchIcon />
+              </Button>
+            </div>
+            <CustomTable
+              customIdName="student-history-table"
+              tableHead={[
+                'No',
+                'Quiz',
+                'Category',
+                'Started',
+                'Finished',
+                'Score',
+              ]}
+              tableBody={studentHistoryPage.history.map((history, index) => {
+                return {
+                  id: (
+                    <>
+                      {studentHistoryPage.currentPage * limit -
+                        limit +
+                        index +
+                        1}
+                    </>
+                  ),
+                  quizName: <>{history.name}</>,
+                  categoryName: <>{history.category}</>,
+                  started: (
+                    <>
+                      {moment(new Date(history.started)).format(
+                        'MMM Do YYYY, h:mm:ss a',
+                      )}
+                    </>
+                  ),
+                  finished: (
+                    <>
+                      {moment(new Date(history.finished)).format(
+                        'MMM Do YYYY, h:mm:ss a',
+                      )}
+                    </>
+                  ),
+                  score: <>{history.score}</>,
+                };
+              })}
+            />
+            <div id="history-page-links">
+              {studentHistoryPage.hasPreviousPage && (
+                <Link
+                  to={`/history?page=${studentHistoryPage.currentPage - 1}`}
+                >
+                  {'<<'}
+                </Link>
+              )}
+              {studentHistoryPage.hasNextPage && (
+                <Link
+                  to={`/history?page=${studentHistoryPage.currentPage + 1}`}
+                >
+                  {'>>'}
+                </Link>
+              )}
+            </div>
           </div>
-          <CustomTable
-            customIdName="student-history-table"
-            tableHead={[
-              'No',
-              'Quiz',
-              'Category',
-              'Started',
-              'Finished',
-              'Score',
-            ]}
-            tableBody={studentHistoryPage.history.map((history, index) => {
-              return {
-                id: (
-                  <>
-                    {studentHistoryPage.currentPage * limit - limit + index + 1}
-                  </>
-                ),
-                quizName: <>{history.name}</>,
-                categoryName: <>{history.category}</>,
-                started: (
-                  <>
-                    {moment(new Date(history.started)).format(
-                      'MMM Do YYYY, h:mm:ss a',
-                    )}
-                  </>
-                ),
-                finished: (
-                  <>
-                    {moment(new Date(history.finished)).format(
-                      'MMM Do YYYY, h:mm:ss a',
-                    )}
-                  </>
-                ),
-                score: <>{history.score}</>,
-              };
-            })}
-          />
-          <div id="history-page-links">
-            {studentHistoryPage.hasPreviousPage && (
-              <Link to={`/history?page=${studentHistoryPage.currentPage - 1}`}>
-                {'<<'}
-              </Link>
-            )}
-            {studentHistoryPage.hasNextPage && (
-              <Link to={`/history?page=${studentHistoryPage.currentPage + 1}`}>
-                {'>>'}
-              </Link>
-            )}
-          </div>
-        </div>
+        </>
       ) : null}
     </>
   );

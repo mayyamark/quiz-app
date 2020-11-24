@@ -14,6 +14,7 @@ import { showConfirmAlert } from '../../common/Alerts/Alerts';
 import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import teachersAvatars from '../../../avatars/teachers/teachers-avatars.js'; // don't remove it!
 import './Quizzes.css';
+import NavBar from '../../common/NavBar/NavBar';
 
 const Quizes = memo((props) => {
   const { quizes, loading, error, onGetQuizes, hasQuizes } = props;
@@ -50,104 +51,108 @@ const Quizes = memo((props) => {
       ) : loading ? (
         <CircularProgress />
       ) : hasQuizes ? (
-        <div id="quizzes-container">
-          <h1>QUIZZES</h1>
-          <div id="quizzes-options">
-            <FormControl variant="outlined">
-              <InputLabel htmlFor="outlined-age-native-simple">
-                Results
-              </InputLabel>
-              <Select
-                native
-                value={limit}
-                onChange={(ev) => setLimit(ev.target.value)}
-                label="Results"
-                inputProps={{
-                  name: 'limit',
-                  id: 'outlined-age-native-simple',
-                }}
-              >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={15}>15</option>
-              </Select>
-            </FormControl>
-          </div>
-          <CustomTable
-            customIdName="quizzes-table"
-            tableHead={[
-              'No',
-              'Quiz Name',
-              'Time For Solving',
-              '',
-              'Created By',
-              ' ',
-            ]}
-            tableBody={quizes.quizes.map((quiz, index) => {
-              return {
-                id: <>{quizes.currentPage * limit - limit + index + 1}</>,
-                name: <>{quiz.name}</>,
-                time: <>{quiz.time}</>,
-                avatar: <Avatar src={quiz.avatar} alt="avatar" />,
-                teacher: <>{`${quiz.firstName} ${quiz.lastName}`}</>,
-                buttons: (
-                  <>
-                    {user.role === 'student' ? (
-                      !quiz.started ? (
-                        <Button
-                          onClick={() => startSovlingHandler(quiz.id)}
-                          variant="contained"
-                          color="primary"
-                        >
-                          Solve
-                        </Button>
+        <>
+          <NavBar />
+          <div id="quizzes-container">
+            <h1>QUIZZES</h1>
+            <div id="quizzes-options">
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="outlined-age-native-simple">
+                  Results
+                </InputLabel>
+                <Select
+                  native
+                  value={limit}
+                  onChange={(ev) => setLimit(ev.target.value)}
+                  label="Results"
+                  inputProps={{
+                    name: 'limit',
+                    id: 'outlined-age-native-simple',
+                  }}
+                >
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                  <option value={15}>15</option>
+                </Select>
+              </FormControl>
+            </div>
+            <CustomTable
+              customIdName="quizzes-table"
+              tableHead={[
+                'No',
+                'Quiz Name',
+                'Time For Solving',
+                '',
+                'Created By',
+                ' ',
+              ]}
+              tableBody={quizes.quizes.map((quiz, index) => {
+                return {
+                  id: <>{quizes.currentPage * limit - limit + index + 1}</>,
+                  name: <>{quiz.name}</>,
+                  time: <>{quiz.time}</>,
+                  avatar: <Avatar src={quiz.avatar} alt="avatar" />,
+                  teacher: <>{`${quiz.firstName} ${quiz.lastName}`}</>,
+                  buttons: (
+                    <>
+                      {user.role === 'student' ? (
+                        !quiz.started ? (
+                          <Button
+                            onClick={() => startSovlingHandler(quiz.id)}
+                            variant="contained"
+                            color="primary"
+                          >
+                            Solve
+                          </Button>
+                        ) : (
+                          <>{`Solved: ${moment(history.started).calendar()}`}</>
+                        )
                       ) : (
-                        <>{`Solved: ${moment(history.started).calendar()}`}</>
-                      )
-                    ) : (
-                      <>
-                        <Button
-                          onClick={() => startSovlingHandler(quiz.id)}
-                          variant="contained"
-                          color="primary"
-                        >
-                          Solve
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={viewQiuzHandler(quiz.id)}
-                        >
-                          View
-                        </Button>
-                      </>
-                    )}
-                  </>
-                ),
-              };
-            })}
-          />
-          <div id="quizzes-page-links">
-            {quizes.hasPreviousPage && (
-              <Link
-                to={`/quizzes?page=${
-                  quizes.currentPage - 1
-                }&category=${category}`}
-              >
-                {'<<'}
-              </Link>
-            )}
-            {quizes.hasNextPage && (
-              <Link
-                to={`/quizzes?page=${
-                  quizes.currentPage + 1
-                }&category=${category}`}
-              >
-                {'>>'}
-              </Link>
-            )}
+                        <>
+                          <Button
+                            onClick={() => startSovlingHandler(quiz.id)}
+                            variant="contained"
+                            color="primary"
+                          >
+                            Solve
+                          </Button>
+                          {'  '}
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={viewQiuzHandler(quiz.id)}
+                          >
+                            View
+                          </Button>
+                        </>
+                      )}
+                    </>
+                  ),
+                };
+              })}
+            />
+            <div id="quizzes-page-links">
+              {quizes.hasPreviousPage && (
+                <Link
+                  to={`/quizzes?page=${
+                    quizes.currentPage - 1
+                  }&category=${category}`}
+                >
+                  {'<<'}
+                </Link>
+              )}
+              {quizes.hasNextPage && (
+                <Link
+                  to={`/quizzes?page=${
+                    quizes.currentPage + 1
+                  }&category=${category}`}
+                >
+                  {'>>'}
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       ) : null}
     </>
   );

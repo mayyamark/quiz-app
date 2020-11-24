@@ -37,6 +37,7 @@ select#outlined-age-native-simple {
 }
 #leaderboard-page-links {
   text-align: center;
+  margin-top: 3.5%;
 }
 #leaderboard-page-links a {
   color: #3f51b5;
@@ -51,5 +52,5 @@ select#outlined-age-native-simple {
 }
 #leaderboard-page-links a:hover {
   background-color: #3f51b5;
-  color: white;
+  color: whitesmoke;
 }
