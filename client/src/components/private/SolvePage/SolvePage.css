@@ -16,4 +16,17 @@
 .question-container p {
   text-align: left;
   font-weight: bold;
+  font-size: 14pt;
+}
+#timer {
+  position: fixed;
+  left: 94%;
+  top: 5%;
+  font-size: 14pt;
+  font-weight: bold;
+  min-width: 72px;
+  max-width: 72px;
+}
+#timer p {
+  margin: 0;
 }
