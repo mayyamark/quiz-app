@@ -6,6 +6,8 @@ import {
   CREATE_QUIZ_FAILED,
   CREATE_QUIZ_COMPLETED,
   CLEAR_LAST_CREATED_QUIZ,
+  FETCH_QUIZ_TAKEN_HISTORY_COMPLETED,
+  FETCH_QUIZ_TAKEN_HISTORY_FAILED,
 } from '../actions/action-types';
 
 const initialState = {
@@ -13,6 +15,7 @@ const initialState = {
   error: false,
   loading: false,
   lastCreatedQuiz: null,
+  quizTakenHistory: null,
 };
 
 const setQuizes = (state, action) => {
@@ -64,6 +67,21 @@ const clearLastCreatedQuizState = (state) => {
   };
 };
 
+const fetchQuizTakenHistoryCompleted = (state, action) => {
+    return {
+    ...state,
+    quizTakenHistory: action.quizHistory,
+  };
+};
+
+const fetchQuizTakenHistoryFailed = (state, action) => {
+    return {
+    ...state,
+    quizTakenHistory: null,
+    error: action.error,
+  };
+};
+
 const QuizesReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_QUIZES:
@@ -80,6 +98,10 @@ const QuizesReducer = (state = initialState, action) => {
       return createQuizFailedQuizState(state, action);
     case CLEAR_LAST_CREATED_QUIZ:
       return clearLastCreatedQuizState(state);
+    case FETCH_QUIZ_TAKEN_HISTORY_COMPLETED:
+      return fetchQuizTakenHistoryCompleted(state, action);
+    case FETCH_QUIZ_TAKEN_HISTORY_FAILED:
+      return fetchQuizTakenHistoryFailed(state, action);
     default:
       return state;
   }

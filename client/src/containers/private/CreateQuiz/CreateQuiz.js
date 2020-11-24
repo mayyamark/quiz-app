@@ -4,6 +4,7 @@ import { connect , useDispatch } from 'react-redux';
 import { initCategories } from '../../../redux-store/actions/Categories';
 import { createQuiz, clearLastCreatedQuiz } from '../../../redux-store/actions/Quizes';
 import CreateQuizComponent from '../../../components/private/CreateQuiz/CreateQuiz';
+import { Alert } from '@material-ui/lab';
 
 const mapStateToProps = (state) => {
   const props = {
@@ -110,9 +111,7 @@ const CreateQuiz = (props) => {
       handleSetAnswerTrue={handleSetAnswerTrue}
       createAQuiz={createAQuiz}/>
     :
-    <div>
-      There are no categories!
-    </div>
+    <Alert severity="warning">There are no categories!</Alert>
   );
 };
 export default connect(mapStateToProps)(CreateQuiz);

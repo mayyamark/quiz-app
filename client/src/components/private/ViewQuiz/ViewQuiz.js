@@ -1,8 +1,9 @@
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { TextField, List, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ViewQuestion from './ViewQuestion';
-
+import { Alert } from '@material-ui/lab';
+import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiTextField-root': {
@@ -19,31 +20,43 @@ const useStyles = makeStyles((theme) => ({
 
 const ViewQuiz = (props) => {
   const classes = useStyles();
+  const location = useLocation();
   const history = useHistory();
   const goToDashboardHandler = () => {
     history.push('/dashboard');
   };
+  const goToQuizHistorydHandler = () => {
+    history.push(`${location.pathname}/${props.quiz.id}/history`);
+  };
+  const { loading } = props;
   return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <div>
-        <TextField id="outlined-basic" label="Quiz Name" variant="outlined" InputProps={{readOnly: true}} value={props.quiz.name}/>
-        <TextField id="outlined-basic" label="Time Limit" type="number" variant="outlined" InputProps={{readOnly: true}} value={props.quiz.time}/>
-      </div>
-      <div>
-        <TextField id="outlined-basic" label="Category" variant="outlined" InputProps={{readOnly: true}} value={props.quiz.category}/>
-      </div>
-      <div>
-        {props.quiz.questions && props.quiz.questions.length > 0 ?
-          <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
-            {
-            props.quiz.questions.map(question => <ViewQuestion key={question.id} question={question}/>)
-            }
-          </List>
-         :
-          <div>There are no questions</div>}
-      </div>
-      <Button variant="contained" color="primary" onClick={goToDashboardHandler}>Dashboard </Button>
-    </form>
+    <>
+      {loading ?
+        <CircularProgress />
+        :
+        <form className={classes.root} noValidate autoComplete="off">
+          <div>
+            <TextField id="outlined-basic" label="Quiz Name" variant="outlined" InputProps={{readOnly: true}} value={props.quiz.name}/>
+            <TextField id="outlined-basic" label="Time Limit" type="number" variant="outlined" InputProps={{readOnly: true}} value={props.quiz.time}/>
+          </div>
+          <div>
+            <TextField id="outlined-basic" label="Category" variant="outlined" InputProps={{readOnly: true}} value={props.quiz.category}/>
+          </div>
+          <div>
+            {props.quiz.questions && props.quiz.questions.length > 0 ?
+              <List id="outlined-basic" component="nav" className={classes.root} aria-label="questions">
+                {
+                props.quiz.questions.map(question => <ViewQuestion key={question.id} question={question}/>)
+                }
+              </List>
+              :
+              <Alert severity="warning">There are no questions</Alert>}
+          </div>
+          <Button variant="contained" color="primary" onClick={goToDashboardHandler}>Dashboard </Button>
+          <Button variant="contained" color="primary" onClick={goToQuizHistorydHandler}>Quiz history </Button>
+        </form>
+      }
+    </>
   );
 };
 

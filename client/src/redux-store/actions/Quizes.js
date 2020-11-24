@@ -6,6 +6,8 @@ import {
   CREATE_QUIZ_COMPLETED,
   CREATE_QUIZ_FAILED,
   CLEAR_LAST_CREATED_QUIZ,
+  FETCH_QUIZ_TAKEN_HISTORY_COMPLETED,
+  FETCH_QUIZ_TAKEN_HISTORY_FAILED,
 } from './action-types';
 import axios from '../../axios-config.js';
 
@@ -54,6 +56,20 @@ const clearLastCreatedQuizAction = () => {
   };
 };
 
+const fetchQuizTakenHistoryCompletedAction = (quizHistory) => {
+  return {
+    type: FETCH_QUIZ_TAKEN_HISTORY_COMPLETED,
+    quizHistory: quizHistory,
+  };
+};
+
+const fetchQuizTakenHistoryFailedAction = (error) => {
+  return {
+    type: FETCH_QUIZ_TAKEN_HISTORY_FAILED,
+    error: error,
+  };
+};
+
 const getQuizes = (page, limit, category) => {
   return dispatch => {
     dispatch(startLoadingQuizes());
@@ -67,11 +83,7 @@ const getQuizes = (page, limit, category) => {
 const createQuiz = (quizData) => (dispatch, getState) => {
   axios.post('/quizes', quizData)
     .then(response => {
-      if (response.status == 201){
-        dispatch(createQuizCompletedAction(response.data));
-      } else {
-        dispatch(createQuizFailedAction(`${response.statusText} ${response.data.error}`));
-      }
+      dispatch(createQuizCompletedAction(response.data));
     })
     .catch(err => {
       dispatch(createQuizFailedAction(err.message));
@@ -82,6 +94,16 @@ const clearLastCreatedQuiz = () => (dispatch, getState) => {
   dispatch(clearLastCreatedQuizAction());
 };
 
+const getQuizTakenHistory = (quizId) => (dispatch, getState) => {
+  axios.get(`/quizes/${quizId}/history`)
+  .then(response => {
+    dispatch(fetchQuizTakenHistoryCompletedAction(response.data));
+  })
+  .catch(err => {
+    dispatch(fetchQuizTakenHistoryFailedAction(err.message));
+  });
+};
+
 export {
   setQuizes,
   fetchQuizesFailed,
@@ -90,4 +112,5 @@ export {
   getQuizes,
   createQuiz,
   clearLastCreatedQuiz,
+  getQuizTakenHistory,
 };

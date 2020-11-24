@@ -1,4 +1,4 @@
-import { TextField, Button, List, ListItem, Checkbox, ListItemSecondaryAction } from '@material-ui/core';
+import { TextField, List, ListItem, Checkbox, ListItemSecondaryAction } from '@material-ui/core';
 
 const ViewQuestion = (props) => {
   return (
@@ -13,7 +13,7 @@ const ViewQuestion = (props) => {
         <ListItemSecondaryAction>
           <Checkbox
             edge="end"
-            InputProps={{readOnly: true}}
+            inputProps={{readOnly: true}}
             checked={!!answer.isTrue}
           />
         </ListItemSecondaryAction>
