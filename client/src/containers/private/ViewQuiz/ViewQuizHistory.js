@@ -24,7 +24,7 @@ const ViewQuizHistory = (props) => {
     (props.error ?
       <Alert severity="warning">{props.error}</Alert>
       :
-      <Alert severity="warning">There is no such quiz!!!</Alert>
+      <Alert severity="warning">There is no such quiz!</Alert>
     )
   );
 };

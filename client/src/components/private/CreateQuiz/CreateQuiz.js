@@ -1,5 +1,4 @@
 import { TextField, Button, Select, MenuItem, List } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Alert } from '@material-ui/lab';
@@ -7,19 +6,7 @@ import NavBar from '../../common/NavBar/NavBar';
 import CreateQuestion from './CreateQuestion';
 import './CreateQuiz.css';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      // margin: theme.spacing(1),
-    },
-  },
-  selectEmpty: {
-    // margin: theme.spacing(1),
-  },
-}));
-
 const CreateQuiz = (props) => {
-  const classes = useStyles();
 
   const invalidQuestionCheck = (question) => {
     // A question must have text...
@@ -77,7 +64,6 @@ const CreateQuiz = (props) => {
         <h1>You are about to create a new quiz!</h1>
         <form
           id="create-quiz-form"
-          className={classes.root}
           noValidate
           autoComplete="off"
         >
@@ -96,7 +82,6 @@ const CreateQuiz = (props) => {
             variant="outlined"
             value={props.category}
             onChange={props.handleCategoryChange}
-            className={classes.selectEmpty}
           >
             {props.quizesState.categories.map((category) => (
               <MenuItem key={category.id} value={category.id}>
@@ -117,7 +102,6 @@ const CreateQuiz = (props) => {
             <List
               id="outlined-basic"
               component="nav"
-              className={classes.root}
               aria-label="questions"
             >
               {props.questions.map((question) => (
@@ -141,7 +125,6 @@ const CreateQuiz = (props) => {
             id="outlined-basic"
             variant="outlined"
             onClick={props.handleAddQuestion}
-            className={classes.selectEmpty}
             className="create-quiz-btn"
           >
             Add a question
@@ -152,7 +135,6 @@ const CreateQuiz = (props) => {
             color="primary"
             onClick={props.createAQuiz}
             disabled={disableCreateQuizValidation()}
-            className={classes.selectEmpty}
             className="create-quiz-btn"
           >
             Create that quiz!

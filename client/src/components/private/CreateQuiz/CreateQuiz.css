@@ -4,6 +4,7 @@
 #quiz-form-container h1 {
   text-align: center;
   margin-top: 4%;
+  margin-bottom: 4%;
 }
 button#outlined-basic.MuiButtonBase-root.MuiButton-root.MuiButton-outlined.create-quiz-btn {
   padding: 13px;
