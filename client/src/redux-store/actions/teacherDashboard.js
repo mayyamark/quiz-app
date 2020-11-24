@@ -6,8 +6,8 @@ import {
   TEACHER_DASH_CREATE_CATEGORY_FAILED,
 } from './action-types';
 import axios from '../../axios-config';
-
 import { initCategories } from './Categories';
+import { showInfoAlert } from '../../components/common/Alerts/Alerts';
 
 const teacherDashGetQuizzesStartedAction = (loading) => {
   return {
@@ -31,7 +31,7 @@ const teacherDashGetQuizzesFailedAction = (error) => {
 };
 
 const teacherDashCreateCategoryCompletedAction = () => {
-    return {
+  return {
     type: TEACHER_DASH_CREATE_CATEGORY_COMPLETED,
   };
 };
@@ -46,10 +46,11 @@ const teacherDashCreateCategoryFailedAction = (error) => {
 export const getQuizzes = (forTeacher) => async (dispatch, getState) => {
   dispatch(teacherDashGetQuizzesStartedAction(true));
   try {
-    const response = await axios.get(`/quizes?page=1&limit=5&teacher=${forTeacher}`);
-      dispatch(teacherDashGetQuizzesCompletedAction(response.data));
-    }
-  catch (err) {
+    const response = await axios.get(
+      `/quizes?page=1&limit=5&teacher=${forTeacher}`,
+    );
+    dispatch(teacherDashGetQuizzesCompletedAction(response.data));
+  } catch (err) {
     dispatch(teacherDashGetQuizzesFailedAction(err.message));
   }
   dispatch(teacherDashGetQuizzesStartedAction(false));
@@ -57,13 +58,25 @@ export const getQuizzes = (forTeacher) => async (dispatch, getState) => {
 
 export const createCategory = (categoryName) => async (dispatch, getState) => {
   try {
-     await axios.post('/categories', {
-        name: categoryName,
-      });
-      initCategories()(dispatch);
+    await axios.post('/categories', {
+      name: categoryName,
+    });
+    initCategories()(dispatch);
+    showInfoAlert(
+      'Success!',
+      `Now there is a category '${categoryName}'!`,
+      'success',
+      'Nice!',
+    );
     dispatch(teacherDashCreateCategoryCompletedAction());
-  }
-  catch (err) {
+  } catch (err) {
+    showInfoAlert(
+      'Sorry, there was an error!',
+      `${err.message}`,
+      'error',
+      'OK :(',
+    );
+
     dispatch(teacherDashCreateCategoryFailedAction(err.message));
   }
 };

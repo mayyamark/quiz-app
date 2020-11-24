@@ -10,6 +10,7 @@ import {
   FETCH_QUIZ_TAKEN_HISTORY_FAILED,
 } from './action-types';
 import axios from '../../axios-config.js';
+import { showInfoAlert } from '../../components/common/Alerts/Alerts';
 
 const setQuizes = (quizes) => {
   return {
@@ -83,9 +84,21 @@ const getQuizes = (page, limit, category) => {
 const createQuiz = (quizData) => (dispatch, getState) => {
   axios.post('/quizes', quizData)
     .then(response => {
+      showInfoAlert(
+        'Success!',
+        `Now there is a quiz '${quizData.name}'!`,
+        'success',
+        'Nice!',
+      );
       dispatch(createQuizCompletedAction(response.data));
     })
     .catch(err => {
+      showInfoAlert(
+        'Sorry, there was an error!',
+        `${err.message}`,
+        'error',
+        'OK :(',
+      );
       dispatch(createQuizFailedAction(err.message));
     });
 };
