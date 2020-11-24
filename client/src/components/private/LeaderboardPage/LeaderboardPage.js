@@ -1,5 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Alert } from '@material-ui/lab';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -132,7 +133,9 @@ const LeaderboardPage = memo((props) => {
             </div>
           </div>
         </>
-      ) : null}
+      ) : (
+        <Alert severity="warning">There is no leaderboard data!</Alert>
+      )}
     </>
   );
 });

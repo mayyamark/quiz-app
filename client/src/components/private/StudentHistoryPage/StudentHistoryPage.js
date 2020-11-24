@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../auth/AuthContext';
+import { Alert } from '@material-ui/lab';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -147,7 +148,9 @@ const StudentHistoryPage = memo((props) => {
             </div>
           </div>
         </>
-      ) : null}
+      ) : (
+        <Alert severity="warning">There is no history data!</Alert>
+      )}
     </>
   );
 });

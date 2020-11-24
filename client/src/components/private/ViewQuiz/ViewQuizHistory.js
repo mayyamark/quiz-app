@@ -36,7 +36,7 @@ const ViewQuizHistory = (props) => {
           />
         </div>
       ) : (
-        <Alert severity="warning">There is no quiz history data</Alert>
+        <Alert severity="warning">There is no quiz history data!</Alert>
       )}
     </>
   );
