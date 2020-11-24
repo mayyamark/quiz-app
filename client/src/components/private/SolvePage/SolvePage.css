@@ -30,3 +30,7 @@
 #timer p {
   margin: 0;
 }
+#solve-btn {
+  padding: 13px;
+  font-weight: bold;
+}

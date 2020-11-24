@@ -152,8 +152,8 @@ const SolvePage = memo((props) => {
                 </div>
               );
             })}
-            <Button onClick={handleSubmit} variant="contained" color="primary">
-              SEND
+            <Button id="solve-btn" onClick={handleSubmit} variant="contained" color="primary">
+              I'M READY
             </Button>
           </FormControl>
         </div>
