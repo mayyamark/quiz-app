@@ -1,5 +1,12 @@
 #error-page {
   position: absolute;
   left: 25%;
-  top: 15%;
+  top: 12%;
+}
+#error-btn-container {
+  text-align: center;
+}
+#error-btn {
+  padding: 13px;
+  font-weight: bold;
 }
