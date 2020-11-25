@@ -12,10 +12,12 @@
   margin: 3% auto;
   display: grid;
   width: 45%;
+  padding: 18px;
+  border: 1px solid silver;
+  border-radius: 4px;
 }
 .question-container p {
   text-align: left;
-  font-weight: bold;
   font-size: 14pt;
 }
 #timer {
@@ -33,4 +35,16 @@
 #solve-btn {
   padding: 13px;
   font-weight: bold;
+}
+.question-text {
+  color: #3f51b5;
+  font-weight: bold;
+}
+.question-text-container {
+  display: grid;
+  grid-template-columns: 5% auto;
+}
+.marked-answer {
+  color: #3f51b5;
+  font-weight: 200;
 }

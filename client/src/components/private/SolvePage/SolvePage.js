@@ -112,7 +112,9 @@ const SolvePage = memo((props) => {
         <div id="solve-quiz-container">
           <FormControl>
             <h1>{solvingInfo.quiz.name}</h1>
-            <p>Category: <b>{solvingInfo.quiz.category}</b></p>
+            <p>
+              Category: <b>{solvingInfo.quiz.category}</b>
+            </p>
             <p>
               Created by:{' '}
               <b>{`${solvingInfo.quiz.firstName} ${solvingInfo.quiz.lastName}`}</b>
@@ -121,7 +123,8 @@ const SolvePage = memo((props) => {
               Started at:{' '}
               <b>{moment(new Date(solvingInfo.startTime)).format('lll')}</b>
             </p>
-            <div id="timer"><AccessTimeIcon />
+            <div id="timer">
+              <AccessTimeIcon />
               <p>{`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
             </div>
             {solvingInfo.quiz.questions.map((question, index) => {
@@ -131,7 +134,10 @@ const SolvePage = memo((props) => {
                   value={question.id}
                   key={question.id}
                 >
-                  <p>{`${index + 1}. ${question.text}`}</p>
+                  <div className="question-text-container">
+                    <p>{`${index + 1}.`} </p>
+                    <p className="question-text">{question.text}</p>
+                  </div>
                   {question.answers.map((answer) => {
                     return (
                       <FormControlLabel
@@ -152,7 +158,12 @@ const SolvePage = memo((props) => {
                 </div>
               );
             })}
-            <Button id="solve-btn" onClick={handleSubmit} variant="contained" color="primary">
+            <Button
+              id="solve-btn"
+              onClick={handleSubmit}
+              variant="contained"
+              color="primary"
+            >
               I'M READY
             </Button>
           </FormControl>
