@@ -43,40 +43,35 @@ const teacherDashCreateCategoryFailedAction = (error) => {
   };
 };
 
-export const getQuizzes = (forTeacher) => async (dispatch, getState) => {
+export const getQuizzes = (forTeacher) => (dispatch, getState) => {
   dispatch(teacherDashGetQuizzesStartedAction(true));
-  try {
-    const response = await axios.get(
-      `/quizes?page=1&limit=5&teacher=${forTeacher}`,
-    );
-    dispatch(teacherDashGetQuizzesCompletedAction(response.data));
-  } catch (err) {
-    dispatch(teacherDashGetQuizzesFailedAction(err.message));
-  }
-  dispatch(teacherDashGetQuizzesStartedAction(false));
+  axios.get(`/quizes?page=1&limit=5&teacher=${forTeacher}`)
+    .then (response => dispatch(teacherDashGetQuizzesCompletedAction(response.data)))
+    .catch (err => dispatch(teacherDashGetQuizzesFailedAction(err.message)))
+    .finally (() => dispatch(teacherDashGetQuizzesStartedAction(false)));
 };
 
-export const createCategory = (categoryName) => async (dispatch, getState) => {
-  try {
-    await axios.post('/categories', {
-      name: categoryName,
-    });
+export const createCategory = (categoryName) => (dispatch, getState) => {
+  axios.post('/categories', {
+    name: categoryName,
+  })
+  .then (() => {
     initCategories()(dispatch);
+    dispatch(teacherDashCreateCategoryCompletedAction());
     showInfoAlert(
       'Success!',
       `Now there is a category '${categoryName}'!`,
       'success',
       'Nice!',
     );
-    dispatch(teacherDashCreateCategoryCompletedAction());
-  } catch (err) {
+  })
+  .catch (err => {
+    dispatch(teacherDashCreateCategoryFailedAction(err.message));
     showInfoAlert(
       'Sorry, there was an error!',
       `${err.message}`,
       'error',
       'OK :(',
     );
-
-    dispatch(teacherDashCreateCategoryFailedAction(err.message));
-  }
+  });
 };

@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 
 const ViewQuizHistory = (props) => {
   const dispatch = useDispatch();
-  useEffect(async () => {
+  useEffect(() => {
     dispatch(getQuizTakenHistory(props.match.params.id));
   }, []);
 

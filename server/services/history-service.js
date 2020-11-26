@@ -127,6 +127,24 @@ const startSolvingQuiz = (historyData) => {
   };
 };
 
+const evaluateAnswers = (question, answered) => {
+  // the answer is false but the user marked it as true
+  let userMarkedFalseAsTrue = question.answers
+    .filter(answer => answered.markedTrue.includes(answer.id))
+    .filter(answer => !answer.isTrue).length > 0;
+
+  // if the answer is true but the user didn't mark it as true
+  let userNotMarkedTrueAsTrue = question.answers
+    .filter(answer => !answered.markedTrue.includes(answer.id))
+    .filter(answer => answer.isTrue).length > 0;
+
+  if (!userMarkedFalseAsTrue && !userNotMarkedTrueAsTrue) {
+    return question.points;
+  }
+
+  return 0;
+};
+
 const finishSolvingQuiz = (historyData, quizesData) =>
   async (user, solvedQuizData) => {
     const [quizHistory, quiz] = await Promise.all([
@@ -162,49 +180,49 @@ const finishSolvingQuiz = (historyData, quizesData) =>
       };
     }
 
-    let totalScore = 0;
-    let userScore = 0;
-    for (let question of quiz.questions){
-      totalScore += question.points;
+    let scores = quiz.questions.reduce((scores, question) => {
+      // We've detect a cheat attempt, just return the -1 in the
+      // accumulator object and don't do further calculations
+      if (scores.totalScore === -1){
+        return scores;
+      }
+
+      scores.totalScore += question.points;
       const answered = solvedQuizData.questionAnswers.filter(aQ => aQ.id === question.id);
       if (answered.length === 1) {
-        let userAnsweredCorrectly = true;
-        for (let answer of question.answers) {
-          const markedAsTrue = answered[0].markedTrue.includes(answer.id);
-          if (
-            // if the answer is true but the user didn't mark it as true
-            (answer.isTrue && !markedAsTrue)
-            ||
-            // the answer is false but the user marked it as false
-              (!answer.isTrue && markedAsTrue)
-          ) {
-            // then the user didn't answer correctly
-            userAnsweredCorrectly = false;
-          }
-        }
-        if (userAnsweredCorrectly) {
-          userScore += question.points;
-        }
+        scores.userScore += evaluateAnswers(question, answered[0]);
       }
       else if (answered.length > 1) {
         // This is a bad request, containing multiple answers to the same question,
         // coult be an attempt to cheat so invalidate the quiz
-        historyData.logQuizScore(quizHistory.id, 0);
-        return {
-          error: serviceErrors.BAD_REQUEST,
-        };
+        scores.totalScore = -1;
+        scores.userScore = -1;
       }
-    }
+      return scores;
+    }, {
+      totalScore: 0,
+      userScore: 0,
+    });
 
-    await historyData.logQuizScore(quizHistory.id, userScore);
-    return {
-      error: null,
-      result: {
-        score: userScore,
-        totalScore,
-        history: await historyData.getById(quizHistory.id),
-      },
-    };
+    // We've detect a cheat attempt,
+    // score quiz with 0 and return bad request
+    if (scores.totalScore === -1) {
+      historyData.logQuizScore(quizHistory.id, 0);
+      return {
+        error: serviceErrors.BAD_REQUEST,
+      };
+    }
+    else {
+      await historyData.logQuizScore(quizHistory.id, scores.userScore);
+      return {
+        error: null,
+        result: {
+          score: scores.userScore,
+          totalScore: scores.totalScore,
+          history: await historyData.getById(quizHistory.id),
+        },
+      };
+    }
   };
 
 const getHistoryByQuizId = (historyData) => {
