@@ -19,7 +19,7 @@ categoriesController.post('/',
   async (req, res) => {
     const result = await categoriesService.createCategory(categoriesData)(req.body);
     if (result.error) {
-      res.status(409).send({error: 'Category name must be unique'});
+      res.status(409).send({error: 'Categories must be unique!'});
     } else {
       res.status(201).send(result.category);
     }

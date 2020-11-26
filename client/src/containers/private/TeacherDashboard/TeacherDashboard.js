@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { connect , useDispatch } from 'react-redux';
 import { createCategory, getQuizzes } from '../../../redux-store/actions/teacherDashboard';
 import TeacherDashboardComponent from '../../../components/private/TeacherDashboard/TeacherDashboard';
-import Logout from '../../public/Authentication/Logout';
+import NavBar from '../../../components/common/NavBar/NavBar';
 import { useAuth } from '../../../auth/AuthContext';
 import { Alert } from '@material-ui/lab';
 
@@ -38,7 +38,7 @@ const TeacherDashboard = (props) => {
   }
   return (
     <div>
-      <Logout />
+      <NavBar />
       {teacherDash && teacherDash.error && <Alert severity="warning">{teacherDash.error}</Alert>}
       <TeacherDashboardComponent
         quizzesLoading={teacherDash.loading}

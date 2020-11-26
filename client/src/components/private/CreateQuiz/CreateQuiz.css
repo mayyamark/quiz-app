@@ -1,0 +1,27 @@
+#create-quiz-form {
+  margin: 4% auto;
+}
+#quiz-form-container h1 {
+  text-align: center;
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+button#outlined-basic.MuiButtonBase-root.MuiButton-root.MuiButton-outlined.create-quiz-btn {
+  padding: 13px;
+  font-weight: bold;
+}
+button#outlined-basic.MuiButtonBase-root.MuiButton-root.MuiButton-contained.create-quiz-btn {
+  padding: 13px;
+  font-weight: bold;
+}
+#create-quiz-btn-container {
+  text-align: center;
+  margin-top: 3.5%;
+}
+#basic-quiz-info {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 68% 20% 10%;
+  grid-column-gap: 1%;
+  margin-bottom: 1%;
+}

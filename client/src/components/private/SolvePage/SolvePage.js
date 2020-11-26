@@ -6,6 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './SolvePage.css';
 
@@ -112,18 +113,20 @@ const SolvePage = memo((props) => {
           <FormControl>
             <h1>{solvingInfo.quiz.name}</h1>
             <p>
-              Started at:{' '}
-              {moment(new Date(solvingInfo.startTime)).format('lll')}
+              Category: <b>{solvingInfo.quiz.category}</b>
             </p>
-            <p>
-              Time left:{' '}
-              {`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}
-            </p>
-            <p>Category: {solvingInfo.quiz.category}</p>
             <p>
               Created by:{' '}
-              {`${solvingInfo.quiz.firstName} ${solvingInfo.quiz.lastName}`}
+              <b>{`${solvingInfo.quiz.firstName} ${solvingInfo.quiz.lastName}`}</b>
             </p>
+            <p>
+              Started at:{' '}
+              <b>{moment(new Date(solvingInfo.startTime)).format('lll')}</b>
+            </p>
+            <div id="timer">
+              <AccessTimeIcon />
+              <p>{`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
+            </div>
             {solvingInfo.quiz.questions.map((question, index) => {
               return (
                 <div
@@ -131,7 +134,10 @@ const SolvePage = memo((props) => {
                   value={question.id}
                   key={question.id}
                 >
-                  <p>{`${index + 1}. ${question.text}`}</p>
+                  <div className="question-text-container">
+                    <p>{`${index + 1}.`} </p>
+                    <p className="question-text">{question.text}</p>
+                  </div>
                   {question.answers.map((answer) => {
                     return (
                       <FormControlLabel
@@ -152,8 +158,13 @@ const SolvePage = memo((props) => {
                 </div>
               );
             })}
-            <Button onClick={handleSubmit} variant="contained" color="primary">
-              SEND
+            <Button
+              id="solve-btn"
+              onClick={handleSubmit}
+              variant="contained"
+              color="primary"
+            >
+              I'M READY
             </Button>
           </FormControl>
         </div>

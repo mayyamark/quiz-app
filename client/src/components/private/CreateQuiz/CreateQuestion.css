@@ -1,0 +1,23 @@
+#create-question-container {
+  padding: 7px;
+  border: 1px solid silver;
+  border-radius: 4px;
+  margin-bottom: 2%;
+}
+#create-question-btns {
+  display: grid;
+  margin-left: 3%;
+  min-width: 84px;
+  max-width: 84px;
+  grid-row-gap: 5%;
+}
+li.MuiListItem-root.question-list-item.MuiListItem-gutters {
+  padding-left: 16px;
+  padding-right: 16px;
+  display: grid;
+  grid-template-columns: 35% 7% 45% 10%;
+  grid-column-gap: 1%;
+}
+div.MuiFormControl-root.MuiTextField-root.answer-input {
+  width: 300px;
+}

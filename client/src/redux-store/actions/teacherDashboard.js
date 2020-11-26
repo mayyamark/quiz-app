@@ -6,8 +6,8 @@ import {
   TEACHER_DASH_CREATE_CATEGORY_FAILED,
 } from './action-types';
 import axios from '../../axios-config';
-
 import { initCategories } from './Categories';
+import { showInfoAlert } from '../../components/common/Alerts/Alerts';
 
 const teacherDashGetQuizzesStartedAction = (loading) => {
   return {
@@ -31,7 +31,7 @@ const teacherDashGetQuizzesFailedAction = (error) => {
 };
 
 const teacherDashCreateCategoryCompletedAction = () => {
-    return {
+  return {
     type: TEACHER_DASH_CREATE_CATEGORY_COMPLETED,
   };
 };
@@ -58,6 +58,20 @@ export const createCategory = (categoryName) => (dispatch, getState) => {
   .then (() => {
     initCategories()(dispatch);
     dispatch(teacherDashCreateCategoryCompletedAction());
+    showInfoAlert(
+      'Success!',
+      `Now there is a category '${categoryName}'!`,
+      'success',
+      'Nice!',
+    );
   })
-  .catch (err => dispatch(teacherDashCreateCategoryFailedAction(err.message)));
+  .catch (err => {
+    dispatch(teacherDashCreateCategoryFailedAction(err.message));
+    showInfoAlert(
+      'Sorry, there was an error!',
+      `${err.message}`,
+      'error',
+      'OK :(',
+    );
+  });
 };

@@ -1,5 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Alert } from '@material-ui/lab';
 import Avatar from '@material-ui/core/Avatar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -17,6 +18,7 @@ import CustomTable from '../../common/CustomTable/CustomTable';
 import SearchIcon from '@material-ui/icons/Search';
 import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './LeaderboardPage.css';
+import NavBar from '../../common/NavBar/NavBar.js';
 
 const LeaderboardPage = memo((props) => {
   const {
@@ -46,83 +48,94 @@ const LeaderboardPage = memo((props) => {
       ) : loading ? (
         <CircularProgress />
       ) : hasLeaderboardPage ? (
-        <div id="student-leaderboard-container">
-          <h1>LEADERBOARD</h1>
-          <div id="leaderboard-options">
-            <TextField
-              id="outlined-helperText"
-              label="Type a username.."
-              variant="outlined"
-              onChange={(ev) => setSearchParam(ev.target.value)}
-            />
-            <FormControl variant="outlined">
-              <InputLabel htmlFor="outlined-age-native-simple">
-                Results
-              </InputLabel>
-              <Select
-                native
-                value={limit}
-                onChange={(ev) => setLimit(ev.target.value)}
-                label="Results"
-                inputProps={{
-                  name: 'limit',
-                  id: 'outlined-age-native-simple',
-                }}
+        <>
+          <NavBar />
+          <div id="student-leaderboard-container">
+            <h1>LEADERBOARD</h1>
+            <div id="leaderboard-options">
+              <TextField
+                id="outlined-helperText"
+                label="Type a username.."
+                variant="outlined"
+                onChange={(ev) => setSearchParam(ev.target.value)}
+              />
+              <FormControl variant="outlined">
+                <InputLabel htmlFor="outlined-age-native-simple">
+                  Results
+                </InputLabel>
+                <Select
+                  native
+                  value={limit}
+                  onChange={(ev) => setLimit(ev.target.value)}
+                  label="Results"
+                  inputProps={{
+                    name: 'limit',
+                    id: 'outlined-age-native-simple',
+                  }}
+                >
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                  <option value={15}>15</option>
+                  <option value={20}>20</option>
+                </Select>
+              </FormControl>
+              <Button
+                id="search-students"
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={handleOnClick}
               >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={15}>15</option>
-                <option value={20}>20</option>
-              </Select>
-            </FormControl>
-            <Button
-              id="search-students"
-              variant="contained"
-              size="large"
-              color="primary"
-              onClick={handleOnClick}
-            >
-              <SearchIcon />
-            </Button>
+                <SearchIcon />
+              </Button>
+            </div>
+            <CustomTable
+              customIdName="student-leaderboard-table"
+              tableHead={[
+                'No',
+                '',
+                'Username',
+                'First name',
+                'Last name',
+                'Score',
+              ]}
+              tableBody={leaderboardPage.students.map((student, index) => {
+                return {
+                  id: (
+                    <>
+                      {leaderboardPage.currentPage * limit - limit + index + 1}
+                    </>
+                  ),
+                  avatar: <Avatar src={student.avatar} alt="avatar" />,
+                  username: <>{student.username}</>,
+                  firstName: <>{student.firstName}</>,
+                  lastName: <>{student.lastName}</>,
+                  totalScore: <>{student.totalScore}</>,
+                };
+              })}
+            />
+            <div id="leaderboard-page-links">
+              {leaderboardPage.hasPreviousPage && (
+                <Link
+                  to={`/leaderboard?page=${leaderboardPage.currentPage - 1}`}
+                >
+                  {'<<'}
+                </Link>
+              )}
+              {'  '}
+              {leaderboardPage.hasNextPage && (
+                <Link
+                  to={`/leaderboard?page=${leaderboardPage.currentPage + 1}`}
+                >
+                  {'>>'}
+                </Link>
+              )}
+            </div>
           </div>
-          <CustomTable
-            customIdName="student-leaderboard-table"
-            tableHead={[
-              'No',
-              '',
-              'Username',
-              'First name',
-              'Last name',
-              'Score',
-            ]}
-            tableBody={leaderboardPage.students.map((student, index) => {
-              return {
-                id: (
-                  <>{leaderboardPage.currentPage * limit - limit + index + 1}</>
-                ),
-                avatar: <Avatar src={student.avatar} alt="avatar" />,
-                username: <>{student.username}</>,
-                firstName: <>{student.firstName}</>,
-                lastName: <>{student.lastName}</>,
-                totalScore: <>{student.totalScore}</>,
-              };
-            })}
-          />
-          <div id="leaderboard-page-links">
-            {leaderboardPage.hasPreviousPage && (
-              <Link to={`/leaderboard?page=${leaderboardPage.currentPage - 1}`}>
-                {'<<'}
-              </Link>
-            )}
-            {'  '}
-            {leaderboardPage.hasNextPage && (
-              <Link to={`/leaderboard?page=${leaderboardPage.currentPage + 1}`}>
-                {'>>'}
-              </Link>
-            )}
-          </div>
-        </div>
-      ) : null}
+        </>
+      ) : (
+        <Alert severity="warning">There is no leaderboard data!</Alert>
+      )}
     </>
   );
 });

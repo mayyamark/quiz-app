@@ -1,0 +1,52 @@
+#teacher-dashboard-container {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+#create-cat input#outlined-basic {
+  border: 0;
+  margin: 0;
+  display: inline-flex;
+  position: relative;
+  flex-direction: column;
+  vertical-align: top;
+  min-width: 253px;
+  max-width: 253px;
+  padding: 15px;
+}
+#create-cat {
+  min-width: 280px;
+  max-width: 280px;
+  margin: 2% auto;
+}
+#teacher-dashboard-container button#outlined-basic {
+  padding: 15px;
+  min-width: 283px;
+  max-width: 283px;
+}
+#create-quiz-btn {
+  padding: 15px 0px 15px 0px;
+  min-width: 600px;
+  max-width: 600px;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  line-height: 1.75;
+  border-radius: 4px;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: 0;
+  align-items: center;
+  user-select: none;
+  vertical-align: middle;
+  justify-content: center;
+  text-decoration: none;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0 auto;
+  display: grid;
+}

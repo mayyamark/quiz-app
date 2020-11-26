@@ -1,0 +1,19 @@
+#dashboard-link {
+  color: whitesmoke;
+  font-size: 20pt;
+  font-weight: bold;
+}
+.MuiToolbar-gutters button {
+  font-weight: bold;
+  border: 1px solid whitesmoke;
+  margin-left: 79%;
+  margin-left: 78%;
+  background-color: black;
+}
+.MuiToolbar-gutters button:hover {
+  font-weight: bold;
+  margin-left: 79%;
+  margin-left: 78%;
+  background-color: whitesmoke;
+  color: black;
+}

@@ -1,8 +1,10 @@
 import { memo, useEffect } from 'react';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../../auth/AuthContext';
 import CustomTable from '../../common/CustomTable/CustomTable';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { useAuth } from '../../../auth/AuthContext';
+import Tooltip from '@material-ui/core/Tooltip';
 import './StudentHistory.css';
 
 const StudentHistory = memo((props) => {
@@ -24,7 +26,9 @@ const StudentHistory = memo((props) => {
         <CircularProgress />
       ) : hasStudentHistory ? (
         <div id="student-dashboard-history-container">
-          <h1>My History</h1>
+          <Tooltip arrow title="See your full history!" placement="top">
+            <Link id="history-link" to='/history?page=1'>My History</Link>
+          </Tooltip>
           <CustomTable
             customIdName="student-dashboard-history-table"
             tableHead={['No', 'Quiz', 'Solve date', 'Score']}
