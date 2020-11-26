@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router-dom';
 import { TextField, Button, Select, MenuItem, List } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,6 +8,12 @@ import CreateQuestion from './CreateQuestion';
 import './CreateQuiz.css';
 
 const CreateQuiz = (props) => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    props.createAQuiz();
+    history.push('/dashboard');
+  };
 
   const invalidQuestionCheck = (question) => {
     // A question must have text...
@@ -134,7 +141,7 @@ const CreateQuiz = (props) => {
             id="outlined-basic"
             variant="contained"
             color="primary"
-            onClick={props.createAQuiz}
+            onClick={handleClick}
             disabled={disableCreateQuizValidation()}
             className="create-quiz-btn"
           >

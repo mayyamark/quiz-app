@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { connect , useDispatch } from 'react-redux';
 import { initCategories } from '../../../redux-store/actions/Categories';
-import { createQuiz, clearLastCreatedQuiz } from '../../../redux-store/actions/Quizes';
+import { createQuiz } from '../../../redux-store/actions/Quizes';
 import CreateQuizComponent from '../../../components/private/CreateQuiz/CreateQuiz';
 import { Alert } from '@material-ui/lab';
 
@@ -40,7 +39,6 @@ const CreateQuiz = (props) => {
     };
   };
 
-  const history = useHistory();
 
   const [name, setName] = useState();
   const [timeLimit, setTimeLimit] = useState();
@@ -86,11 +84,6 @@ const CreateQuiz = (props) => {
     question.points = event.target.value;
     setQuestions([...questions]);
   };
-
-  if (quizesState.lastCreatedQuiz){
-    dispatch(clearLastCreatedQuiz);
-    history.push(`/view-quiz?id=${quizesState.lastCreatedQuiz.id}`);
-  }
 
   return ((quizesState.categories && quizesState.categories.length > 0) ?
     <CreateQuizComponent
