@@ -17,7 +17,7 @@ import './Quizzes.css';
 import NavBar from '../../common/NavBar/NavBar';
 
 const Quizes = memo((props) => {
-  const { quizes, loading, error, onGetQuizes, hasQuizes } = props;
+  const { quizes, loading, error, onGetQuizes, hasQuizes, onSetSolvingInfo } = props;
   const { page, category } = useQueryParams();
   const { user } = useAuth();
 
@@ -27,7 +27,8 @@ const Quizes = memo((props) => {
 
   useEffect(() => {
     onGetQuizes(page, limit, category);
-  }, [onGetQuizes, page, limit, category]);
+    onSetSolvingInfo();
+  }, [onGetQuizes, page, limit, category, onSetSolvingInfo]);
 
   const viewQiuzHandler = (id) => () => {
     history.push(`/view-quiz?id=${id}`);

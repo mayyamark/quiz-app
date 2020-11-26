@@ -54,6 +54,7 @@ const setSolvingInfo = (state, action) => {
         startTime: action.solvingInfo.startTime,
       },
     },
+    error: false,
   };
 };
 

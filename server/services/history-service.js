@@ -113,8 +113,8 @@ const startSolvingQuiz = (historyData) => {
    * @param { string|number } quizID The ID of the quiz.
    * @returns { Promise<object> } The start time.
    */
-  return async (userID, quizID) => {
-    const startTime = await historyData.logStartSolving(userID, quizID);
+  return async (user, quizID) => {
+    const startTime = await historyData.logStartSolving(user, quizID);
 
     if (!startTime) {
       return {

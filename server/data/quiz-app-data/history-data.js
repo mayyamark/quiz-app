@@ -125,7 +125,7 @@ const getById = async (id) => {
  * @param { string|number } quizID The ID of the quiz.
  * @returns { Promise<object> } The start time.
  */
-const logStartSolving = async (userID, quizID) => {
+const logStartSolving = async (user, quizID) => {
   const startTime = new Date();
 
   const historyControlSql = `
@@ -136,9 +136,9 @@ const logStartSolving = async (userID, quizID) => {
     ORDER BY h.started DESC;
   `;
 
-  const historyData = await pool.query(historyControlSql, [userID]);
+  const historyData = await pool.query(historyControlSql, [user.id]);
 
-  if (historyData?.[0]) {
+  if (historyData?.[0] && user.role === 'student') {
     if (new Date < moment(new Date(historyData[0].started)).add(historyData[0].time, 'm').toDate()) {
       return null;
     }
@@ -149,7 +149,7 @@ const logStartSolving = async (userID, quizID) => {
     VALUES (?, ?, ?, 0);
   `;
 
-  const _ = await pool.query(insertSql, [userID, quizID, startTime]);
+  const _ = await pool.query(insertSql, [user.id, quizID, startTime]);
 
   return startTime;
 };

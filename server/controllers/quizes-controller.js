@@ -87,7 +87,7 @@ quizesController.post('/:id', async (req, res) => {
   }
 
   const { startError, startTime } = await historyService.startSolvingQuiz(historyData)(
-    user.id,
+    user,
     id,
   );
   if (startError === serviceErrors.BAD_REQUEST) {
