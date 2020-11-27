@@ -24,7 +24,22 @@ const showConfirmAlert = (title, additionalText, iconType, boolean, historyObjec
   });
 };
 
+const showRedirectAlert = (title, additionalText, iconType, historyObject, urlPath) => {
+  swal({
+    title: `${title}`,
+    text: `${additionalText}`,
+    icon: `${iconType}`,
+  })
+  .then((confirm) => {
+    if (confirm) {
+      historyObject.push(urlPath);
+    }
+  });
+};
+
+
 export {
   showInfoAlert,
   showConfirmAlert,
+  showRedirectAlert,
 };

@@ -7,7 +7,7 @@ import {
   STOP_LOADING_STUDENT_HISTORY,
 } from './action-types';
 import axios from '../../axios-config.js';
-import { showConfirmAlert } from '../../components/common/Alerts/Alerts';
+import { showRedirectAlert } from '../../components/common/Alerts/Alerts';
 
 const setStudentHistory = (studentHistory) => {
   return {
@@ -83,7 +83,7 @@ const finishSolving = (quizId, solveData, historyObj) => {
     dispatch(startLoadingStudentHistory());
     axios.put(`/quizes/${quizId}`, solveData)
     .then(res => {
-      showConfirmAlert(`Result: ${res.data.score}/${res.data.totalScore}`, 'Try another one!', 'success', false, historyObj, '/dashboard');
+      showRedirectAlert(`Result: ${res.data.score}/${res.data.totalScore}`, 'Try another one!', 'success', historyObj, '/dashboard');
       dispatch(setSolvingInfo({}));
     })
     .catch(err => dispatch(fetchStudentHistoryFailed()))
