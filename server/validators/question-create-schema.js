@@ -34,8 +34,8 @@ const questionCreateSchema = {
       return 'answers is required!';
     }
 
-    if (!Array.isArray(value) || value.length < 1 || value.length > 4) {
-      return 'answers should be an array of 1 to 4 answers!';
+    if (!Array.isArray(value) || value.length < 1 || value.length > 8) {
+      return 'answers should be an array of 1 to 8 answers!';
     }
 
     const errors = value

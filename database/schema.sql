@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `quiz`.`questions` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `quizID` INT NOT NULL,
   `points` INT NOT NULL,
-  `text` VARCHAR(100) NOT NULL,
+  `text` VARCHAR(250) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_questions_quizes1_idx` (`quizID` ASC),
   CONSTRAINT `fk_questions_quizes1`
@@ -123,7 +123,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `quiz`.`answers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `questionID` INT NOT NULL,
-  `text` VARCHAR(45) NOT NULL,
+  `text` VARCHAR(150) NOT NULL,
   `isTrue` TINYINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_answers_questions1_idx` (`questionID` ASC),

@@ -4,8 +4,8 @@ const answerCreateSchema = {
       return 'Answer text is required!';
     }
 
-    if (typeof value !== 'string' || value.length < 1 || value.length > 75) {
-      return 'Answer text name should be a string in range [1..75]!';
+    if (typeof value !== 'string' || value.length < 1 || value.length > 150) {
+      return 'Answer text name should be a string in range [1..150]!';
     }
 
     return null;
