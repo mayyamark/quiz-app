@@ -54,12 +54,6 @@ const SolvePage = memo((props) => {
     return () => clearTimeout(timer);
   });
 
-  useEffect(() => {
-    if (duration._milliseconds === 0) {
-      handleSubmit();
-    }
-  }, [duration]);
-
   const handleSubmit = () => {
     const mappedQuestionAnswers = questionAnswers.map((q) => {
       if (q.markedTrue.length === 0) {
@@ -74,6 +68,12 @@ const SolvePage = memo((props) => {
       history,
     );
   };
+
+  useEffect(() => {
+    if (duration._milliseconds === 5000) {
+      handleSubmit();
+    }
+  }, [duration]);
 
   const handleChange = (ev) => {
     const { value: answerId, checked, name: questionId } = ev.target;

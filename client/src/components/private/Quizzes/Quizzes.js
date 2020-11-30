@@ -142,6 +142,7 @@ const Quizzes = memo((props) => {
                   {'<<'}
                 </Link>
               )}
+              {'  '}
               {quizzes.hasNextPage && (
                 <Link
                   to={`/quizzes?page=${
