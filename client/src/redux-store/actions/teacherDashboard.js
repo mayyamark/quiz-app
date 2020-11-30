@@ -45,7 +45,7 @@ const teacherDashCreateCategoryFailedAction = (error) => {
 
 export const getQuizzes = (forTeacher) => (dispatch, getState) => {
   dispatch(teacherDashGetQuizzesStartedAction(true));
-  axios.get(`/quizes?page=1&limit=5&teacher=${forTeacher}`)
+  axios.get(`/quizzes?page=1&limit=5&teacher=${forTeacher}`)
     .then (response => dispatch(teacherDashGetQuizzesCompletedAction(response.data)))
     .catch (err => dispatch(teacherDashGetQuizzesFailedAction(err.message)))
     .finally (() => dispatch(teacherDashGetQuizzesStartedAction(false)));

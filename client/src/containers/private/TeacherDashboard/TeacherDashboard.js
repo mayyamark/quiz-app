@@ -31,10 +31,10 @@ const TeacherDashboard = (props) => {
     setCategoryName('');
   };
 
-  let quizes = null;
+  let quizzes = null;
   if (teacherDash.quizzes)
   {
-    quizes = teacherDash.quizzes.quizes;
+    quizzes = teacherDash.quizzes.quizzes;
   }
   return (
     <div>
@@ -42,7 +42,7 @@ const TeacherDashboard = (props) => {
       {teacherDash && teacherDash.error && <Alert severity="warning">{teacherDash.error}</Alert>}
       <TeacherDashboardComponent
         quizzesLoading={teacherDash.loading}
-        quizzes={quizes}
+        quizzes={quizzes}
         categoryName={categoryName}
         categories={categories}
         handleCategoryNameChange={handleCategoryNameChange}

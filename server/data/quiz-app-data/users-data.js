@@ -92,7 +92,7 @@ const searchBy = async (username) => {
  * @async
  * @param { string|undefined } username Search parameter: a users's username.
  * @param { number|undefined } offset Search parameter: the offset number.
- * @param { number|undefined } limit Search parameter: the number of quizes per page.
+ * @param { number|undefined } limit Search parameter: the number of quizzes per page.
  * @returns { Promise<object> } The matching users.
  */
 const searchByWithPages = async (username, offset, limit) => {

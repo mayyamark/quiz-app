@@ -77,7 +77,7 @@ const getAll = async () => {
     return await Promise.all(categories.map(async cat => {
       const categoryControlSql = `
         SELECT *
-        FROM quizes
+        FROM quizzes
         WHERE categoryID = ?;
       `;
 

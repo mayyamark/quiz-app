@@ -1,4 +1,4 @@
-/** Express router providing quizes related routes.
+/** Express router providing quizzes related routes.
  * @module middlewares/bodyValidator
  */
 import { schemaValidator } from '../validators/schema-validator.js';

@@ -1,27 +1,27 @@
 import { useState, useEffect } from 'react';
 import { connect , useDispatch } from 'react-redux';
 import { initCategories } from '../../../redux-store/actions/Categories';
-import { createQuiz } from '../../../redux-store/actions/Quizes';
+import { createQuiz } from '../../../redux-store/actions/Quizzes';
 import CreateQuizComponent from '../../../components/private/CreateQuiz/CreateQuiz';
 import { Alert } from '@material-ui/lab';
 
 const mapStateToProps = (state) => {
   const props = {
-      quizesState: {
+      quizzesState: {
         categories: state.categories.categories,
         error: state.categories.error,
       },
   };
-  props.quizesState.lastCreatedQuiz = state.quizes.lastCreatedQuiz;
+  props.quizzesState.lastCreatedQuiz = state.quizzes.lastCreatedQuiz;
 
-  if (!props.quizesState.error) {
-    props.quizesState.error = state.quizes.error;
+  if (!props.quizzesState.error) {
+    props.quizzesState.error = state.quizzes.error;
   }
   return props;
 };
 
 const CreateQuiz = (props) => {
-  const { quizesState } = props;
+  const { quizzesState } = props;
   const dispatch = useDispatch();
   const createAQuiz = () => {
     dispatch(createQuiz(createQuizData()));
@@ -34,7 +34,7 @@ const CreateQuiz = (props) => {
     return {
         name: name,
         timeLimit: timeLimit,
-        category: quizesState.categories.filter(cat => cat.id === category)[0].name,
+        category: quizzesState.categories.filter(cat => cat.id === category)[0].name,
         questions: questions,
     };
   };
@@ -85,10 +85,10 @@ const CreateQuiz = (props) => {
     setQuestions([...questions]);
   };
 
-  return ((quizesState.categories && quizesState.categories.length > 0) ?
+  return ((quizzesState.categories && quizzesState.categories.length > 0) ?
     <CreateQuizComponent
       category={category}
-      quizesState={quizesState}
+      quizzesState={quizzesState}
       quizName={name}
       quizTimeLimit={timeLimit}
       handleCategoryChange={handleCategoryChange}

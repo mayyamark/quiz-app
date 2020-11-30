@@ -1,8 +1,8 @@
 import {
-  SET_QUIZES,
-  FETCH_QUIZES_FAILED,
-  START_LOADING_QUIZES,
-  STOP_LOADING_QUIZES,
+  SET_QUIZZES,
+  FETCH_QUIZZES_FAILED,
+  START_LOADING_QUIZZES,
+  STOP_LOADING_QUIZZES,
   CREATE_QUIZ_FAILED,
   CREATE_QUIZ_COMPLETED,
   CLEAR_LAST_CREATED_QUIZ,
@@ -11,37 +11,37 @@ import {
 } from '../actions/action-types';
 
 const initialState = {
-  quizes: {},
+  quizzes: {},
   error: false,
   loading: false,
   lastCreatedQuiz: null,
   quizTakenHistory: null,
 };
 
-const setQuizes = (state, action) => {
+const setQuizzes = (state, action) => {
   return {
     ...state,
     ... {
-      quizes: {
-        quizes: action.quizes.quizes,
-        currentPage: action.quizes.currentPage,
-        quizesCount: action.quizes.quizesCount,
-        hasNextPage: action.quizes.hasNextPage,
-        hasPreviousPage: action.quizes.hasPreviousPage,
+      quizzes: {
+        quizzes: action.quizzes.quizzes,
+        currentPage: action.quizzes.currentPage,
+        quizzesCount: action.quizzes.quizzesCount,
+        hasNextPage: action.quizzes.hasNextPage,
+        hasPreviousPage: action.quizzes.hasPreviousPage,
       },
     },
   };
 };
 
-const fetchQuizesFailed = (state, action) => {
+const fetchQuizzesFailed = (state, action) => {
   return { ...state, error: true };
 };
 
-const startLoadingQuizes = (state, action) => {
+const startLoadingQuizzes = (state, action) => {
   return { ...state, loading: true };
 };
 
-const stopLoadingQuizes = (state, action) => {
+const stopLoadingQuizzes = (state, action) => {
   return { ...state, loading: false };
 };
 
@@ -82,16 +82,16 @@ const fetchQuizTakenHistoryFailed = (state, action) => {
   };
 };
 
-const QuizesReducer = (state = initialState, action) => {
+const QuizzesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_QUIZES:
-      return setQuizes(state, action);
-    case FETCH_QUIZES_FAILED:
-      return fetchQuizesFailed(state, action);
-    case START_LOADING_QUIZES:
-      return startLoadingQuizes(state, action);
-    case STOP_LOADING_QUIZES:
-      return stopLoadingQuizes(state, action);
+    case SET_QUIZZES:
+      return setQuizzes(state, action);
+    case FETCH_QUIZZES_FAILED:
+      return fetchQuizzesFailed(state, action);
+    case START_LOADING_QUIZZES:
+      return startLoadingQuizzes(state, action);
+    case STOP_LOADING_QUIZZES:
+      return stopLoadingQuizzes(state, action);
     case CREATE_QUIZ_COMPLETED:
       return lastCreatedQuizToState(state, action);
     case CREATE_QUIZ_FAILED:
@@ -107,4 +107,4 @@ const QuizesReducer = (state = initialState, action) => {
   }
 };
 
-export default QuizesReducer;
+export default QuizzesReducer;

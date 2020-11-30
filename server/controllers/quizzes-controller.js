@@ -1,12 +1,12 @@
-/** Express router providing quizes related routes.
- * @module routers/quizes
+/** Express router providing quizzes related routes.
+ * @module routers/quizzes
  */
 import express from 'express';
 import authMiddleware from '../middlewares/auth-middleware.js';
 import checkTokenMiddleware from '../middlewares/check-token-middlware.js';
 import usersService from '../services/users-service.js';
-import quizesService from '../services/quizes-service.js';
-import quizesData from '../data/quiz-app-data/quizes-data.js';
+import quizzesService from '../services/quizzes-service.js';
+import quizzesData from '../data/quiz-app-data/quizzes-data.js';
 import questionsData from '../data/quiz-app-data/questions-data.js';
 import answersData from '../data/quiz-app-data/answers-data.js';
 import serviceErrors from '../services/service-errors.js';
@@ -24,22 +24,22 @@ import blacklistData from '../data/blacklist-data/blacklist-data.js';
  * Express router to mount quiz related functions on.
  * @type { object }
  * @const
- * @namespace quizesController
+ * @namespace quizzesController
  */
-const quizesController = express.Router();
+const quizzesController = express.Router();
 
-quizesController.use(authMiddleware, checkTokenMiddleware(usersService)(blacklistData));
+quizzesController.use(authMiddleware, checkTokenMiddleware(usersService)(blacklistData));
 
 /**
- * Route, which serves searching quizes.
- * @name get/quizes
+ * Route, which serves searching quizzes.
+ * @name get/quizzes
  * @function
- * @memberof module:routers/quizes~quizesController
+ * @memberof module:routers/quizzes~quizzesController
  * @inner
  * @param { string } path - Express path.
  * @param { callback } middleware - Express middleware.
  */
-quizesController.get('/', async (req, res) => {
+quizzesController.get('/', async (req, res) => {
   const { page, limit, category, teacher } = req.query;
   const user = req.user;
 
@@ -47,7 +47,7 @@ quizesController.get('/', async (req, res) => {
     return res.status(400).send({ message: 'Invalid page number!' });
   }
 
-  const quizes = await quizesService.getQuizes(quizesData)(
+  const quizzes = await quizzesService.getQuizzes(quizzesData)(
     +page,
     +limit,
     category,
@@ -55,22 +55,22 @@ quizesController.get('/', async (req, res) => {
     user,
   );
 
-  res.status(200).send(quizes);
+  res.status(200).send(quizzes);
 });
 
 /**
  * Route, which serves start solving a quiz.
- * @name post/quizes/:id
+ * @name post/quizzes/:id
  * @function
- * @memberof module:routers/quizes~quizesController
+ * @memberof module:routers/quizzes~quizzesController
  * @inner
  * @param { string } path - Express path.
  * @param { callback } middleware - Express middleware.
  */
-quizesController.post('/:id', async (req, res) => {
+quizzesController.post('/:id', async (req, res) => {
   const { id } = req.params;
   const user = req.user;
-  const { quiz, quizError } = await quizesService.getQuizById(quizesData)(id);
+  const { quiz, quizError } = await quizzesService.getQuizById(quizzesData)(id);
 
   if (quizError === serviceErrors.RESOURCE_NOT_FOUND) {
     return res.status(404).send({ message: 'Quiz is not found!' });
@@ -97,7 +97,7 @@ quizesController.post('/:id', async (req, res) => {
   res.status(200).send({ quiz, startTime });
 });
 
-quizesController.put('/:id', bodyValidator(quizFinishSchema),
+quizzesController.put('/:id', bodyValidator(quizFinishSchema),
   async (req, res) => {
     const { id } = req.params;
     const user = req.user;
@@ -113,7 +113,7 @@ quizesController.put('/:id', bodyValidator(quizFinishSchema),
 
     const quizResult = await historyService.finishSolvingQuiz(
       historyData,
-      quizesData,
+      quizzesData,
     )(user, solvedQuizData);
 
     if (quizResult.error) {
@@ -131,13 +131,13 @@ quizesController.put('/:id', bodyValidator(quizFinishSchema),
   },
 );
 
-quizesController.post('/',
+quizzesController.post('/',
   roleMiddleware(USER_ROLES.TEACHER),
   bodyValidator(quizCreateSchema),
   async (req, res) => {
     const user = req.user;
-    const result = await quizesService.createQuiz(
-      quizesData,
+    const result = await quizzesService.createQuiz(
+      quizzesData,
       questionsData,
       answersData,
       categoriesData,
@@ -151,7 +151,7 @@ quizesController.post('/',
   },
 );
 
-quizesController.get('/:id/history', roleMiddleware(USER_ROLES.TEACHER),
+quizzesController.get('/:id/history', roleMiddleware(USER_ROLES.TEACHER),
   async (req, res) => {
     const { id } = req.params;
     const { page, limit } = req.query;
@@ -170,10 +170,10 @@ quizesController.get('/:id/history', roleMiddleware(USER_ROLES.TEACHER),
     res.status(200).send(result);
   });
 
-quizesController.get('/:id', roleMiddleware(USER_ROLES.TEACHER), async (req, res) => {
+quizzesController.get('/:id', roleMiddleware(USER_ROLES.TEACHER), async (req, res) => {
   const { id } = req.params;
   const user = req.user;
-  const { quiz, quizError } = await quizesService.getQuizById(quizesData)(id);
+  const { quiz, quizError } = await quizzesService.getQuizById(quizzesData)(id);
 
   if (quizError === serviceErrors.RESOURCE_NOT_FOUND) {
     return res.status(404).send({ message: 'Quiz is not found!' });
@@ -182,4 +182,4 @@ quizesController.get('/:id', roleMiddleware(USER_ROLES.TEACHER), async (req, res
   res.status(200).send({ quiz });
 });
 
-export default quizesController;
+export default quizzesController;

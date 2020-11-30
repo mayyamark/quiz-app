@@ -25,7 +25,7 @@ const searchBy = async (userID, quiz) => {
   let historySql = `
     SELECT h.id, q.name, c.category, h.started, h.finished, h.score
     FROM history h
-    JOIN quizes q ON q.id = h.quizID
+    JOIN quizzes q ON q.id = h.quizID
     JOIN categories c ON q.categoryID = c.id
     WHERE h.userID = ?
   `;
@@ -54,7 +54,7 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
   let historySql = `
     SELECT h.id, q.name, c.category, h.started, h.finished, h.score
     FROM history h
-    JOIN quizes q ON q.id = h.quizID
+    JOIN quizzes q ON q.id = h.quizID
     JOIN categories c ON q.categoryID = c.id
     WHERE h.userID = ?
   `;
@@ -85,7 +85,7 @@ const getSolveInfo = async (userID, quizID) => {
   const historySql = `
     SELECT h.id, q.name, c.category, h.started, h.finished, h.score
     FROM history h
-    JOIN quizes q ON q.id = h.quizID
+    JOIN quizzes q ON q.id = h.quizID
     JOIN categories c ON q.categoryID = c.id
     WHERE userID = ? AND quizID = ?
     ORDER BY h.started DESC;
@@ -107,7 +107,7 @@ const getById = async (id) => {
   const historySql = `
     SELECT h.id, q.name, c.category, h.started, h.finished, h.score
     FROM history h
-    JOIN quizes q ON q.id = h.quizID
+    JOIN quizzes q ON q.id = h.quizID
     JOIN categories c ON q.categoryID = c.id
     WHERE h.id = ?;
   `;
@@ -131,7 +131,7 @@ const logStartSolving = async (user, quizID) => {
   const historyControlSql = `
     SELECT q.id, q.time, h.started, h.finished
     FROM history h
-    JOIN quizes q ON h.quizID = q.id
+    JOIN quizzes q ON h.quizID = q.id
     WHERE h.userID = ? AND h.finished IS NULL
     ORDER BY h.started DESC;
   `;
@@ -193,7 +193,7 @@ const searchByQuizIdPaged = async (quizId, offset, limit) => {
   const historySql = 'SELECT users.username, users.firstName, users.lastName, users.avatar, history.started, history.score';
   const searchBySql = `
     FROM quiz.history
-    JOIN quizes ON quizes.id = history.quizID
+    JOIN quizzes ON quizzes.id = history.quizID
     JOIN users ON users.id = history.userID
     WHERE history.quizID = ?
   `;

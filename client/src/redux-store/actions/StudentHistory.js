@@ -71,7 +71,7 @@ const getStudentHistoryPage = (userId, page, limit, quiz) => {
 const startSolving = (quizId) => {
   return dispatch => {
     dispatch(startLoadingStudentHistory());
-    axios.post(`/quizes/${quizId}`)
+    axios.post(`/quizzes/${quizId}`)
     .then(res => dispatch(setSolvingInfo(res.data)))
     .catch(err => dispatch(fetchStudentHistoryFailed()))
     .finally(() => dispatch(stopLoadingStudentHistory()));
@@ -81,7 +81,7 @@ const startSolving = (quizId) => {
 const finishSolving = (quizId, solveData, historyObj) => {
   return dispatch => {
     dispatch(startLoadingStudentHistory());
-    axios.put(`/quizes/${quizId}`, solveData)
+    axios.put(`/quizzes/${quizId}`, solveData)
     .then(res => {
       showRedirectAlert(`Result: ${res.data.score}/${res.data.totalScore}`, 'Try another one!', 'success', historyObj, '/dashboard');
       dispatch(setSolvingInfo({}));

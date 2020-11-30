@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField } from '@material-ui/core';
-import TeacherCreatedQuizes from './TeacherCreatedQuizes';
+import TeacherCreatedQuizzes from './TeacherCreatedQuizzes';
 import './TeacherDashboard.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,12 +40,12 @@ const TeacherDashboard = (props) => {
           disabled={!props.categoryName}
           className={classes.selectEmpty}
         >
-          Create newcategory
+          Create new category
         </Button>
       </div>
       </div>
       <div>
-        <TeacherCreatedQuizes
+        <TeacherCreatedQuizzes
           loading={props.quizzesLoading}
           quizzes={props.quizzes}
         />
@@ -54,7 +54,7 @@ const TeacherDashboard = (props) => {
             You need to create a category first to be able to create a quiz
           </Alert>
         ) : (
-          <Link id="create-quiz-btn" to="/create-a-quiz">Create new quiz</Link>
+          <Link id="create-quiz-btn" to="/createQuiz">Create new quiz</Link>
         )}
       </div>
     </div>

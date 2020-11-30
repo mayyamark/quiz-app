@@ -16,7 +16,7 @@ const ViewQuiz = () => {
     let newState = {
       ...viewQuizState,
     };
-    axios.get(`/quizes/${id}`)
+    axios.get(`/quizzes/${id}`)
       .then ((response) => {
         newState.quiz = response.data.quiz;
         newState.error = null;

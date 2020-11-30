@@ -145,11 +145,11 @@ const evaluateAnswers = (question, answered) => {
   return 0;
 };
 
-const finishSolvingQuiz = (historyData, quizesData) =>
+const finishSolvingQuiz = (historyData, quizzesData) =>
   async (user, solvedQuizData) => {
     const [quizHistory, quiz] = await Promise.all([
       historyData.getSolveInfo(user.id, solvedQuizData.id),
-      quizesData.getById(solvedQuizData.id),
+      quizzesData.getById(solvedQuizData.id),
     ]);
     if (!quizHistory || !quiz) {
       return {

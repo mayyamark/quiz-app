@@ -2,9 +2,9 @@ import CustomTable from '../../common/CustomTable/CustomTable';
 import { Link } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Alert } from '@material-ui/lab';
-import './TeacherCreatedQuizes.css';
+import './TeacherCreatedQuizzes.css';
 
-const TeacherCreatedQuizes = props => {
+const TeacherCreatedQuizzes = props => {
   const { quizzes, loading } = props;
 
   return (
@@ -22,7 +22,7 @@ const TeacherCreatedQuizes = props => {
                 return {
                   id: <>{index + 1}</>,
                   category: <>{quiz.category}</>,
-                  quiz: <Link to ={`/view-quiz?id=${quiz.id}`}>{quiz.name}</Link>,
+                  quiz: <Link to ={`/viewQuiz?id=${quiz.id}`}>{quiz.name}</Link>,
                   time: <>{quiz.time}</>,
                 };
               })}
@@ -38,4 +38,4 @@ const TeacherCreatedQuizes = props => {
 
 };
 
-export default TeacherCreatedQuizes;
+export default TeacherCreatedQuizzes;

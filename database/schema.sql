@@ -59,21 +59,21 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `quiz`.`quizes`
+-- Table `quiz`.`quizzes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `quiz`.`quizes` (
+CREATE TABLE IF NOT EXISTS `quiz`.`quizzes` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
   `time` INT NULL,
   `teacherID` INT NOT NULL,
   `categoryID` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_quizes_users1_idx` (`teacherID` ASC),
-  INDEX `fk_quizes_categories1_idx` (`categoryID` ASC),
-  CONSTRAINT `fk_quizes_users1`
+  INDEX `fk_quizzes_users1_idx` (`teacherID` ASC),
+  INDEX `fk_quizzes_categories1_idx` (`categoryID` ASC),
+  CONSTRAINT `fk_quizzes_users1`
     FOREIGN KEY (`teacherID`)
     REFERENCES `quiz`.`users` (`id`),
-  CONSTRAINT `fk_quizes_categories1`
+  CONSTRAINT `fk_quizzes_categories1`
     FOREIGN KEY (`categoryID`)
     REFERENCES `quiz`.`categories` (`id`))
 ENGINE = InnoDB;
@@ -91,13 +91,13 @@ CREATE TABLE IF NOT EXISTS `quiz`.`history` (
   `score` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_history_users1_idx` (`userID` ASC),
-  INDEX `fk_history_quizes1_idx` (`quizID` ASC),
+  INDEX `fk_history_quizzes1_idx` (`quizID` ASC),
   CONSTRAINT `fk_history_users1`
     FOREIGN KEY (`userID`)
     REFERENCES `quiz`.`users` (`id`),
-  CONSTRAINT `fk_history_quizes1`
+  CONSTRAINT `fk_history_quizzes1`
     FOREIGN KEY (`quizID`)
-    REFERENCES `quiz`.`quizes` (`id`))
+    REFERENCES `quiz`.`quizzes` (`id`))
 ENGINE = InnoDB;
 
 
@@ -110,10 +110,10 @@ CREATE TABLE IF NOT EXISTS `quiz`.`questions` (
   `points` INT NOT NULL,
   `text` VARCHAR(250) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_questions_quizes1_idx` (`quizID` ASC),
-  CONSTRAINT `fk_questions_quizes1`
+  INDEX `fk_questions_quizzes1_idx` (`quizID` ASC),
+  CONSTRAINT `fk_questions_quizzes1`
     FOREIGN KEY (`quizID`)
-    REFERENCES `quiz`.`quizes` (`id`))
+    REFERENCES `quiz`.`quizzes` (`id`))
 ENGINE = InnoDB;
 
 

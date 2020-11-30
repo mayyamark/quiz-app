@@ -1,8 +1,8 @@
 import {
-  SET_QUIZES,
-  FETCH_QUIZES_FAILED,
-  START_LOADING_QUIZES,
-  STOP_LOADING_QUIZES,
+  SET_QUIZZES,
+  FETCH_QUIZZES_FAILED,
+  START_LOADING_QUIZZES,
+  STOP_LOADING_QUIZZES,
   CREATE_QUIZ_COMPLETED,
   CREATE_QUIZ_FAILED,
   CLEAR_LAST_CREATED_QUIZ,
@@ -12,28 +12,28 @@ import {
 import axios from '../../axios-config.js';
 import { showInfoAlert } from '../../components/common/Alerts/Alerts';
 
-const setQuizes = (quizes) => {
+const setQuizzes = (quizzes) => {
   return {
-    type: SET_QUIZES,
-    quizes,
+    type: SET_QUIZZES,
+    quizzes,
   };
 };
 
-const fetchQuizesFailed = () => {
+const fetchQuizzesFailed = () => {
   return {
-    type: FETCH_QUIZES_FAILED,
+    type: FETCH_QUIZZES_FAILED,
   };
 };
 
-const startLoadingQuizes = () => {
+const startLoadingQuizzes = () => {
   return {
-    type: START_LOADING_QUIZES,
+    type: START_LOADING_QUIZZES,
   };
 };
 
-const stopLoadingQuizes = () => {
+const stopLoadingQuizzes = () => {
   return {
-    type: STOP_LOADING_QUIZES,
+    type: STOP_LOADING_QUIZZES,
   };
 };
 
@@ -71,18 +71,18 @@ const fetchQuizTakenHistoryFailedAction = (error) => {
   };
 };
 
-const getQuizes = (page, limit, category) => {
+const getQuizzes = (page, limit, category) => {
   return dispatch => {
-    dispatch(startLoadingQuizes());
-    axios.get(`/quizes?page=${page}&limit=${limit}&category=${category}`)
-    .then(res => dispatch(setQuizes(res.data)))
-    .catch(err => dispatch(fetchQuizesFailed()))
-    .finally(() => dispatch(stopLoadingQuizes()));
+    dispatch(startLoadingQuizzes());
+    axios.get(`/quizzes?page=${page}&limit=${limit}&category=${category}`)
+    .then(res => dispatch(setQuizzes(res.data)))
+    .catch(err => dispatch(fetchQuizzesFailed()))
+    .finally(() => dispatch(stopLoadingQuizzes()));
   };
 };
 
 const createQuiz = (quizData) => (dispatch, getState) => {
-  axios.post('/quizes', quizData)
+  axios.post('/quizzes', quizData)
     .then(response => {
       showInfoAlert(
         'Success!',
@@ -108,7 +108,7 @@ const clearLastCreatedQuiz = () => (dispatch, getState) => {
 };
 
 const getQuizTakenHistory = (quizId) => (dispatch, getState) => {
-  axios.get(`/quizes/${quizId}/history`)
+  axios.get(`/quizzes/${quizId}/history`)
   .then(response => {
     dispatch(fetchQuizTakenHistoryCompletedAction(response.data));
   })
@@ -118,11 +118,11 @@ const getQuizTakenHistory = (quizId) => (dispatch, getState) => {
 };
 
 export {
-  setQuizes,
-  fetchQuizesFailed,
-  startLoadingQuizes,
-  stopLoadingQuizes,
-  getQuizes,
+  setQuizzes,
+  fetchQuizzesFailed,
+  startLoadingQuizzes,
+  stopLoadingQuizzes,
+  getQuizzes,
   createQuiz,
   clearLastCreatedQuiz,
   getQuizTakenHistory,

@@ -16,8 +16,8 @@ import teachersAvatars from '../../../avatars/teachers/teachers-avatars.js'; // 
 import './Quizzes.css';
 import NavBar from '../../common/NavBar/NavBar';
 
-const Quizes = memo((props) => {
-  const { quizes, loading, error, onGetQuizes, hasQuizes, onSetSolvingInfo } = props;
+const Quizzes = memo((props) => {
+  const { quizzes, loading, error, onGetQuizzes, hasQuizzes, onSetSolvingInfo } = props;
   const { page, category } = useQueryParams();
   const { user } = useAuth();
 
@@ -26,12 +26,12 @@ const Quizes = memo((props) => {
   const [limit, setLimit] = useState(5);
 
   useEffect(() => {
-    onGetQuizes(page, limit, category);
+    onGetQuizzes(page, limit, category);
     onSetSolvingInfo();
-  }, [onGetQuizes, page, limit, category, onSetSolvingInfo]);
+  }, [onGetQuizzes, page, limit, category, onSetSolvingInfo]);
 
   const viewQiuzHandler = (id) => () => {
-    history.push(`/view-quiz?id=${id}`);
+    history.push(`/viewQuiz?id=${id}`);
   };
 
   const startSovlingHandler = (id) => {
@@ -51,7 +51,7 @@ const Quizes = memo((props) => {
         <ErrorPage />
       ) : loading ? (
         <CircularProgress />
-      ) : hasQuizes ? (
+      ) : hasQuizzes ? (
         <>
           <NavBar />
           <div id="quizzes-container">
@@ -87,9 +87,9 @@ const Quizes = memo((props) => {
                 'Created By',
                 ' ',
               ]}
-              tableBody={quizes.quizes.map((quiz, index) => {
+              tableBody={quizzes.quizzes.map((quiz, index) => {
                 return {
-                  id: <>{quizes.currentPage * limit - limit + index + 1}</>,
+                  id: <>{quizzes.currentPage * limit - limit + index + 1}</>,
                   name: <>{quiz.name}</>,
                   time: <>{quiz.time}</>,
                   avatar: <Avatar src={quiz.avatar} alt="avatar" />,
@@ -133,19 +133,19 @@ const Quizes = memo((props) => {
               })}
             />
             <div id="quizzes-page-links">
-              {quizes.hasPreviousPage && (
+              {quizzes.hasPreviousPage && (
                 <Link
                   to={`/quizzes?page=${
-                    quizes.currentPage - 1
+                    quizzes.currentPage - 1
                   }&category=${category}`}
                 >
                   {'<<'}
                 </Link>
               )}
-              {quizes.hasNextPage && (
+              {quizzes.hasNextPage && (
                 <Link
                   to={`/quizzes?page=${
-                    quizes.currentPage + 1
+                    quizzes.currentPage + 1
                   }&category=${category}`}
                 >
                   {'>>'}
@@ -159,12 +159,12 @@ const Quizes = memo((props) => {
   );
 });
 
-Quizes.defaultProps = {
-  quizes: {},
+Quizzes.defaultProps = {
+  quizzes: {},
   error: false,
   loading: false,
-  hasQuizes: false,
-  getQuizes: () => {},
+  hasQuizzes: false,
+  getQuizzes: () => {},
 };
 
-export default Quizes;
+export default Quizzes;

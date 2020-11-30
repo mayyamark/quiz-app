@@ -1,91 +1,91 @@
 /** Data layer.
- * @module data/quizesData
+ * @module data/quizzesData
  */
 
 import pool from './pool.js';
 
 /**
- * Data layer related on quizes.
+ * Data layer related on quizzes.
  * @type { object }
  * @const
- * @namespace quizesData
+ * @namespace quizzesData
  */
 
 /**
- * Gets quizes, matching the search.
+ * Gets quizzes, matching the search.
  * @author Mayya Markova
- * @memberof module:data/quizesData~quizesData
+ * @memberof module:data/quizzesData~quizzesData
  * @async
  * @param { string|undefined } category Search parameter: the category's name.
  * @param { string|undefined } teacher Search parameter: the author's name.
- * @returns { Promise<object> } The matching quizes.
+ * @returns { Promise<object> } The matching quizzes.
  */
 const searchBy = async (category, teacher) => {
-  let quizesSql = `
+  let quizzesSql = `
     SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName
-    FROM quizes q
+    FROM quizzes q
     JOIN users u ON q.teacherID = u.id
     JOIN categories c ON q.categoryID = c.id
   `;
 
   if (category) {
-    quizesSql += ` AND c.category LIKE '${category}'`;
+    quizzesSql += ` AND c.category LIKE '${category}'`;
   }
   if (teacher) {
-    quizesSql += `
+    quizzesSql += `
       AND u.username LIKE  '%${teacher}%'
       ORDER BY q.id DESC
     `;
   } else {
-    quizesSql += ' ORDER BY q.name ASC';
+    quizzesSql += ' ORDER BY q.name ASC';
   }
 
-  return await pool.query(quizesSql);
+  return await pool.query(quizzesSql);
 };
 
 /**
- * Gets quizes on page, matching the search.
+ * Gets quizzes on page, matching the search.
  * @author Mayya Markova
- * @memberof module:data/quizesData~quizesData
+ * @memberof module:data/quizzesData~quizzesData
  * @async
  * @param { number|undefined } offset Search parameter: the offset number.
- * @param { number|undefined } limit Search parameter: the number of quizes per page.
+ * @param { number|undefined } limit Search parameter: the number of quizzes per page.
  * @param { string|undefined } category Search parameter: the category's name.
  * @param { string|undefined } teacher Search parameter: the author's name.
  * @param { object } user An object with information about the user.
- * @returns { Promise<object> } The matching quizes and if the page parameter
+ * @returns { Promise<object> } The matching quizzes and if the page parameter
  * is defined- page information.
  */
 const searchByWithPages = async (category, teacher, offset, limit, user) => {
   if (user.role === 'teacher') {
-    let quizesSql = `
+    let quizzesSql = `
       SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName
-      FROM quizes q
+      FROM quizzes q
       JOIN users u ON q.teacherID = u.id
       JOIN categories c ON q.categoryID = c.id
     `;
 
     if (category) {
-      quizesSql += ` AND c.category LIKE '${category}'`;
+      quizzesSql += ` AND c.category LIKE '${category}'`;
     }
     if (teacher) {
-      quizesSql += `
+      quizzesSql += `
         AND u.username LIKE  '%${teacher}%'
         ORDER BY q.id DESC
       `;
     } else {
-      quizesSql += ' ORDER BY q.name ASC';
+      quizzesSql += ' ORDER BY q.name ASC';
     }
 
     if (offset !== undefined && limit) {
-      quizesSql += ` LIMIT ${limit} OFFSET ${offset}`;
+      quizzesSql += ` LIMIT ${limit} OFFSET ${offset}`;
     }
 
-    return await pool.query(quizesSql);
+    return await pool.query(quizzesSql);
   } else {
-    let quizesSql = `
+    let quizzesSql = `
       SELECT q.id, q.name, c.category, q.time, u.avatar, u.username, u.firstName, u.lastName, h.started
-      FROM quizes q
+      FROM quizzes q
       JOIN users u ON q.teacherID = u.id
       JOIN categories c ON q.categoryID = c.id
       LEFT JOIN history h on h.quizID = q.id
@@ -93,24 +93,24 @@ const searchByWithPages = async (category, teacher, offset, limit, user) => {
     `;
 
     if (category) {
-      quizesSql += ` WHERE c.category LIKE '${category}'`;
+      quizzesSql += ` WHERE c.category LIKE '${category}'`;
     }
-    quizesSql += `
+    quizzesSql += `
       ORDER BY h.started ASC, q.name ASC
     `;
 
     if (offset !== undefined && limit) {
-      quizesSql += ` LIMIT ${limit} OFFSET ${offset}`;
+      quizzesSql += ` LIMIT ${limit} OFFSET ${offset}`;
     }
 
-    return await pool.query(quizesSql);
+    return await pool.query(quizzesSql);
   }
 };
 
 /**
  * Gets a quiz by its ID.
  * @author Mayya Markova
- * @memberof module:data/quizesData~quizesData
+ * @memberof module:data/quizzesData~quizzesData
  * @async
  * @param { string|number } quizID The ID of the quiz.
  * @returns { Promise<object> } The quiz with its questions and answers or null.
@@ -118,7 +118,7 @@ const searchByWithPages = async (category, teacher, offset, limit, user) => {
 const getById = async (quizID) => {
   const quizSql = `
     SELECT q.id, q.name, c.category, q.time, u.username, u.firstName, u.lastName
-    FROM quizes q
+    FROM quizzes q
     JOIN users u ON q.teacherID = u.id
     JOIN categories c ON q.categoryID = c.id
     WHERE q.id = ?
@@ -155,7 +155,7 @@ const getById = async (quizID) => {
 
 const create = async (name, time, teacher, category) => {
   const insertQuiz = `
-      INSERT INTO quizes (name, time, teacherID, categoryID)
+      INSERT INTO quizzes (name, time, teacherID, categoryID)
       VALUES (?, ?, ?, ?);
   `;
 

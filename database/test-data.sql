@@ -125,7 +125,7 @@ INSERT INTO `categories` (`id`, `category`) VALUES
 
 
 
-INSERT INTO `quizes` (`id`, `name`, `time`, `teacherID`, `categoryID`) VALUES
+INSERT INTO `quizzes` (`id`, `name`, `time`, `teacherID`, `categoryID`) VALUES
 (1, 'Addition', 20, 1, 1),
 (2, 'Geometry', 25, 1, 1),
 (3, 'Division', 20, 1, 1),

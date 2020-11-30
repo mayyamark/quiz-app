@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { withRouter } from 'react-router';
 import ViewQuizHistoryComponent from '../../../components/private/ViewQuiz/ViewQuizHistory';
 import { connect , useDispatch } from 'react-redux';
-import { getQuizTakenHistory } from '../../../redux-store/actions/Quizes';
+import { getQuizTakenHistory } from '../../../redux-store/actions/Quizzes';
 import { Alert } from '@material-ui/lab';
 
 const mapStateToProps = (state) => {
   return {
-    quizHistory: state.quizes.quizTakenHistory,
-    error: state.quizes.error,
+    quizHistory: state.quizzes.quizTakenHistory,
+    error: state.quizzes.error,
   };
 };
 

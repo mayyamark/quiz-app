@@ -9,14 +9,14 @@ import StudentHistoryReducer from './redux-store/reducers/StudentHistoryReducer.
 import CategoriesReducer from './redux-store/reducers/CategoriesReducer';
 import teacherDashboardReducer from './redux-store/reducers/teacherDashboardReducer';
 import App from './App';
-import QuizesReducer from './redux-store/reducers/QuizesReducer';
+import QuizzesReducer from './redux-store/reducers/QuizzesReducer';
 
 const rootReducer = combineReducers({
   leaderboard: LeaderboardReducer,
   studentHistory: StudentHistoryReducer,
   categories: CategoriesReducer,
   teacherDash: teacherDashboardReducer,
-  quizes: QuizesReducer,
+  quizzes: QuizzesReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

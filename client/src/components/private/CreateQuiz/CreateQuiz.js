@@ -74,7 +74,7 @@ const CreateQuiz = (props) => {
           noValidate
           autoComplete="off"
         >
-          {props.quizesState.error}
+          {props.quizzesState.error}
         <div id="basic-quiz-info">
           <TextField
             id="outlined-basic"
@@ -90,7 +90,7 @@ const CreateQuiz = (props) => {
             value={props.category}
             onChange={props.handleCategoryChange}
           >
-            {props.quizesState.categories.map((category) => (
+            {props.quizzesState.categories.map((category) => (
               <MenuItem key={category.id} value={category.id}>
                 {category.name}
               </MenuItem>
