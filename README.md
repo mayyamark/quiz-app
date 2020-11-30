@@ -1,5 +1,5 @@
 # Intorduction
-We are very excited to show you our final Telerik Academy priject!
+We are very excited to show you our final Telerik Academy project!
 
 As part of our volunteering work to improve the quality of education in the country, we, **Nadya & Mayya** were tasked to implement an application that can be used to effectively create and carry out online quizzes.
 
@@ -58,12 +58,13 @@ To access this application you should have a **environment file** (.env) file  o
 - **PORT**: *server listening port*, if no other chosen, the default would be 5000;
 - **DB_USER**: the *username* of your MariaDB account;
 - **DB_PASSWORD**: the *password* of your MariaDB account;
-- **SECRET_KEY**: *secret data*, for a possible access, please contact us;
+- **SECRET_KEY**: a string or buffer containing the secret (symmetric) or PEM-encoded public key (asymmetric) for verifying the token's signature;
 
 
 ## Step III:
-Open the Terminal in the server folder and type the following command:
+Open the Terminal in the server folder and type the following commands:
 ```
+npm i
 npm run start:dev
 ```
 **Now our Express server is listening for requests.**
@@ -74,8 +75,9 @@ npm run docs
 ```
 
 ## Step IV:
-Open the Terminal in the client folder and type the following command:
+Open the Terminal in the client folder and type the following commands:
 ```
+npm i
 npm start
 ```
 This will run our React application.
