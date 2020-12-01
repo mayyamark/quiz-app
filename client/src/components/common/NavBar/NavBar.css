@@ -2,8 +2,20 @@
   color: whitesmoke;
   font-size: 20pt;
   font-weight: bold;
+  font-family: 'Lato', sans-serif;
 }
-.MuiToolbar-gutters button {
+span.MuiTypography-root.MuiListItemText-primary.MuiTypography-body1.MuiTypography-displayBlock {
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+}
+/* #user-avatar {
+  filter: brightness(0) invert(1);
+}
+#user-avatar:hover {
+  filter: none;
+} */
+
+/* .MuiToolbar-gutters button {
   font-weight: bold;
   border: 1px solid whitesmoke;
   margin-left: 79%;
@@ -16,4 +28,4 @@
   margin-left: 78%;
   background-color: whitesmoke;
   color: black;
-}
+} */
