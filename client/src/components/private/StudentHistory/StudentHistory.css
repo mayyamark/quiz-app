@@ -1,6 +1,4 @@
 #student-dashboard-history-container {
-  min-width: 400px;
-  max-width: 400px;
   margin: 0 auto;
 }
 #student-dashboard-history-container #history-link {
@@ -13,10 +11,6 @@
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
-}
-#student-dashboard-history-table {
-  min-width: 400px;
-  max-width: 400px;
 }
 #student-dashboard-history-table .MuiAvatar-root {
   width: 30px;

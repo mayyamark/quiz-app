@@ -52,7 +52,7 @@ const Logout = () => {
     return <PublicApp />;
   }
 
-  return <Button variant="contained" onClick={handleLogout} color="primary">LOG OUT</Button>;
+  return <Button variant="contained" onClick={handleLogout} >LOG OUT</Button>;
 };
 
 export default Logout;

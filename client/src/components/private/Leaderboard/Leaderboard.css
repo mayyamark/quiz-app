@@ -1,6 +1,4 @@
 #student-dashboard-leaderboard-container {
-  min-width: 350px;
-  max-width: 350px;
   margin: 0 auto;
 }
 #student-dashboard-leaderboard-container #leaderboard-link {
@@ -14,10 +12,7 @@
   margin-inline-end: 0px;
   font-weight: bold;
 }
-#student-dashboard-leaderboard-table {
-  min-width: 350px;
-  max-width: 350px;
-}
+
 #student-dashboard-leaderboard-table .MuiAvatar-root {
   width: 30px;
   height: 30px;

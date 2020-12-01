@@ -1,5 +1,6 @@
+div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-2 {
+  width: calc(100% + 8px);
+}
 #student-dashboard {
-  margin-top: 4%;
-  display: grid;
-  grid-template-columns: auto auto auto;
+  margin: 0 auto;
 }

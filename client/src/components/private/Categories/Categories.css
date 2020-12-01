@@ -1,15 +1,16 @@
-#dashboard-categories-container {
+/* #dashboard-categories-container {
   min-width: 280px;
   max-width: 280px;
   margin: 0 auto;
 }
-#dashboard-categories-container h1 {
-  text-align: center;
-  font-family: 'Lato', sans-serif;
-}
 #dashboard-categories-table {
   min-width: 280px;
   max-width: 280px;
+} */
+#dashboard-categories-container h1 {
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  color: black;
 }
 #dashboard-categories-table .MuiAvatar-root {
   width: 30px;
