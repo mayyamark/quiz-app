@@ -1,32 +1,20 @@
-#teacher-dashboard-container {
-  display: grid;
-  grid-template-columns: auto auto;
-}
 #create-cat input#outlined-basic {
   border: 0;
   margin: 0;
-  display: inline-flex;
-  position: relative;
-  flex-direction: column;
-  vertical-align: top;
-  min-width: 253px;
-  max-width: 253px;
+  min-width: 272px;
+  max-width: 272px;
   padding: 15px;
 }
 #create-cat {
-  min-width: 280px;
-  max-width: 280px;
-  margin: 2% auto;
+  margin: 3% auto;
 }
-#teacher-dashboard-container button#outlined-basic {
-  padding: 15px;
-  min-width: 283px;
-  max-width: 283px;
+#create-cat button#outlined-basic {
+  min-width: 302px;
+  max-width: 302px;
+  padding: 15px 0 15px 0;
 }
 #create-quiz-btn {
   padding: 15px 0px 15px 0px;
-  min-width: 600px;
-  max-width: 600px;
   border: 1px solid rgba(0, 0, 0, 0.23);
   color: rgba(0, 0, 0, 0.87);
   font-size: 0.875rem;
@@ -49,4 +37,9 @@
   -webkit-tap-highlight-color: transparent;
   margin: 0 auto;
   display: grid;
+}
+div.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-10 {
+  width: calc(100% + 40px);
+  margin: -40px;
+
 }
