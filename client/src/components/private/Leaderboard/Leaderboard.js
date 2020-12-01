@@ -36,7 +36,7 @@ const Leaderboard = memo((props) => {
                 id: <>{index + 1}</>,
                 avatar: <Avatar src={student.avatar} alt="avatar" />,
                 username: <>{student.username}</>,
-                totalScore: <>{student.totalScore}</>,
+                totalScore: <>{student.totalScore ? student.totalScore : 0}</>,
               };
             })}
           />

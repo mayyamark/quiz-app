@@ -110,7 +110,7 @@ const LeaderboardPage = memo((props) => {
                   username: <>{student.username}</>,
                   firstName: <>{student.firstName}</>,
                   lastName: <>{student.lastName}</>,
-                  totalScore: <>{student.totalScore}</>,
+                  totalScore: <>{student.totalScore ? student.totalScore : 0}</>,
                 };
               })}
             />
