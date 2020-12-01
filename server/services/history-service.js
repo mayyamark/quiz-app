@@ -160,7 +160,7 @@ const finishSolvingQuiz = (historyData, quizzesData) =>
     const finishTime = new Date();
     // time taken from milliseconds to seconds to minutes
     const timeTaken = (finishTime - quizHistory.started)/1000/60;
-    if (timeTaken > quiz.time) {
+    if (timeTaken > quiz.time + 5000) {
       return {
         error: serviceErrors.TIMEOUT,
         timeout: {

@@ -70,7 +70,7 @@ const SolvePage = memo((props) => {
   };
 
   useEffect(() => {
-    if (duration._milliseconds === 5000) {
+    if (duration._milliseconds === 0) {
       handleSubmit();
     }
   }, [duration]);
