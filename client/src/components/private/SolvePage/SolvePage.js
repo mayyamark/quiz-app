@@ -110,23 +110,26 @@ const SolvePage = memo((props) => {
         <CircularProgress />
       ) : hasQuiz ? (
         <div id="solve-quiz-container">
+          <div id="timer">
+            <AccessTimeIcon id="timer-icon" />
+            <p>{`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
+          </div>
           <FormControl>
-            <h1>{solvingInfo.quiz.name}</h1>
-            <p>
-              Category: <b>{solvingInfo.quiz.category}</b>
-            </p>
-            <p>
-              Created by:{' '}
-              <b>{`${solvingInfo.quiz.firstName} ${solvingInfo.quiz.lastName}`}</b>
-            </p>
-            <p>
-              Started at:{' '}
-              <b>{moment(new Date(solvingInfo.startTime)).format('lll')}</b>
-            </p>
-            <div id="timer">
-              <AccessTimeIcon />
-              <p>{`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
+            <div id="quiz-info">
+              <h1>{solvingInfo.quiz.name}</h1>
+              <p>
+                Category: <b>{solvingInfo.quiz.category}</b>
+              </p>
+              <p>
+                Created by:{' '}
+                <b>{`${solvingInfo.quiz.firstName} ${solvingInfo.quiz.lastName}`}</b>
+              </p>
+              <p>
+                Started at:{' '}
+                <b>{moment(new Date(solvingInfo.startTime)).format('lll')}</b>
+              </p>
             </div>
+
             {solvingInfo.quiz.questions.map((question, index) => {
               return (
                 <div
