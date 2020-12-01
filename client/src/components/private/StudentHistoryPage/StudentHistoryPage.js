@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useAuth } from '../../../auth/AuthContext';
 import { Alert } from '@material-ui/lab';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -33,13 +33,12 @@ const StudentHistoryPage = memo((props) => {
   const { user } = useAuth();
   const { page } = useQueryParams();
   const [limit, setLimit] = useState(5);
-
   useEffect(() => {
     onGetStudentHistoryPage(user.sub, page, limit, '');
   }, [onGetStudentHistoryPage, user.sub, limit, page]);
 
   const handleOnClick = () => {
-    onGetStudentHistoryPage(user.sub, page, limit, getSearchParam());
+    onGetStudentHistoryPage(user.sub, 1, limit, getSearchParam());
     removeSearchParam();
   };
 
@@ -149,7 +148,10 @@ const StudentHistoryPage = memo((props) => {
           </div>
         </>
       ) : (
-        <Alert severity="warning">There is no history data!</Alert>
+        <>
+          <NavBar />
+          <Alert severity="warning">There is no history data!</Alert>
+        </>
       )}
     </>
   );

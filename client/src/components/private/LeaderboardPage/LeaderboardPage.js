@@ -134,7 +134,10 @@ const LeaderboardPage = memo((props) => {
           </div>
         </>
       ) : (
-        <Alert severity="warning">There is no leaderboard data!</Alert>
+        <>
+          <NavBar />
+          <Alert severity="warning">There is no leaderboard data!</Alert>
+        </>
       )}
     </>
   );
