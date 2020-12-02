@@ -8,24 +8,3 @@ span.MuiTypography-root.MuiListItemText-primary.MuiTypography-body1.MuiTypograph
   font-family: 'Lato', sans-serif;
   text-align: center;
 }
-/* #user-avatar {
-  filter: brightness(0) invert(1);
-}
-#user-avatar:hover {
-  filter: none;
-} */
-
-/* .MuiToolbar-gutters button {
-  font-weight: bold;
-  border: 1px solid whitesmoke;
-  margin-left: 79%;
-  margin-left: 78%;
-  background-color: black;
-}
-.MuiToolbar-gutters button:hover {
-  font-weight: bold;
-  margin-left: 79%;
-  margin-left: 78%;
-  background-color: whitesmoke;
-  color: black;
-} */
