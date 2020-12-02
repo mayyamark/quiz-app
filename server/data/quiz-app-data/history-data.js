@@ -3,6 +3,7 @@
  */
 
 import pool from './pool.js';
+import moment from 'moment';
 
 /**
  * Data layer related on history.
@@ -24,7 +25,7 @@ const searchBy = async (userID, quiz) => {
   let historySql = `
     SELECT h.id, q.name, c.category, h.started, h.finished, h.score
     FROM history h
-    JOIN quizes q ON q.id = h.quizID
+    JOIN quizzes q ON q.id = h.quizID
     JOIN categories c ON q.categoryID = c.id
     WHERE h.userID = ?
   `;
@@ -53,7 +54,7 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
   let historySql = `
     SELECT h.id, q.name, c.category, h.started, h.finished, h.score
     FROM history h
-    JOIN quizes q ON q.id = h.quizID
+    JOIN quizzes q ON q.id = h.quizID
     JOIN categories c ON q.categoryID = c.id
     WHERE h.userID = ?
   `;
@@ -82,12 +83,36 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
  */
 const getSolveInfo = async (userID, quizID) => {
   const historySql = `
-    SELECT *
-    FROM history
-    WHERE userID = ? AND quizID = ?;
+    SELECT h.id, q.name, c.category, h.started, h.finished, h.score
+    FROM history h
+    JOIN quizzes q ON q.id = h.quizID
+    JOIN categories c ON q.categoryID = c.id
+    WHERE userID = ? AND quizID = ?
+    ORDER BY h.started DESC;
   `;
 
   const historyData = await pool.query(historySql, [userID, quizID]);
+  return historyData?.[0];
+};
+
+/**
+ * Returns the student's history by the history's ID.
+ * @author Mayya Markova
+ * @memberof module:data/historyData~historyData
+ * @async
+ * @param { string|number } id The ID of the history.
+ * @returns { Promise<object> } The history or null.
+ */
+const getById = async (id) => {
+  const historySql = `
+    SELECT h.id, q.name, c.category, h.started, h.finished, h.score
+    FROM history h
+    JOIN quizzes q ON q.id = h.quizID
+    JOIN categories c ON q.categoryID = c.id
+    WHERE h.id = ?;
+  `;
+
+  const historyData = await pool.query(historySql, [id]);
   return historyData?.[0];
 };
 
@@ -100,15 +125,32 @@ const getSolveInfo = async (userID, quizID) => {
  * @param { string|number } quizID The ID of the quiz.
  * @returns { Promise<object> } The start time.
  */
-const logStartSolving = async (userID, quizID) => {
+const logStartSolving = async (user, quizID) => {
   const startTime = new Date();
 
-  const insertSql = `
-    INSERT INTO history (userID, quizID, started)
-    VALUES (?, ?, ?);
+  const historyControlSql = `
+    SELECT q.id, q.time, h.started, h.finished
+    FROM history h
+    JOIN quizzes q ON h.quizID = q.id
+    WHERE h.userID = ? AND h.finished IS NULL
+    ORDER BY h.started DESC;
   `;
 
-  const _ = await pool.query(insertSql, [userID, quizID, startTime]);
+  const historyData = await pool.query(historyControlSql, [user.id]);
+
+  if (historyData?.[0] && user.role === 'student') {
+    if (new Date < moment(new Date(historyData[0].started)).add(historyData[0].time, 'm').toDate()) {
+      return null;
+    }
+  }
+
+  const insertSql = `
+    INSERT INTO history (userID, quizID, started, score)
+    VALUES (?, ?, ?, 0);
+  `;
+
+  const _ = await pool.query(insertSql, [user.id, quizID, startTime]);
+
   return startTime;
 };
 
@@ -148,10 +190,10 @@ const logQuizScore = async (id, score) => {
 
 const searchByQuizIdPaged = async (quizId, offset, limit) => {
   const countEntriesSql = 'SELECT count(*) AS count';
-  const historySql = 'SELECT users.username, users.firstName, users.lastName, history.started, history.score';
+  const historySql = 'SELECT users.username, users.firstName, users.lastName, users.avatar, history.started, history.score';
   const searchBySql = `
     FROM quiz.history
-    JOIN quizes ON quizes.id = history.quizID
+    JOIN quizzes ON quizzes.id = history.quizID
     JOIN users ON users.id = history.userID
     WHERE history.quizID = ?
   `;
@@ -180,6 +222,7 @@ export default {
   searchBy,
   searchByWithPages,
   getSolveInfo,
+  getById,
   logStartSolving,
   logFinishSolving,
   logQuizScore,

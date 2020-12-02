@@ -1,0 +1,47 @@
+#quizzes-options {
+  text-align: center;
+  font-family: ''Lato', sans-serifpace';
+}
+#quizzes-container h1, p {
+  text-align: center;
+}
+input#outlined-helperText.MuiOutlinedInput-input {
+  padding: 15px;
+}
+#outlined-basic-label.MuiFormLabel-root {
+  margin-right: 0.45%;
+}
+select#outlined-age-native-simple {
+  padding-bottom: 12px;
+}
+#quizzes-container .MuiTableContainer-root {
+  width: 75%;
+  margin: 2% auto;
+  overflow-x: auto;
+}
+#quizzes-container .MuiTableCell-root {
+  padding: 7px;
+}
+#quizzes-container .MuiTableCell-head {
+  padding: 12px;
+  font-weight: bold;
+}
+#quizzes-page-links {
+  text-align: center;
+  margin-top: 3.5%;
+}
+#quizzes-page-links a {
+  color: #3f51b5;
+  font-weight: bold;
+  padding: 12.4px;
+  border: 1px solid #3f51b5;
+  border-radius: 4px;
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+}
+#quizzes-page-links a:visited {
+  color: #3f51b5;
+}
+#quizzes-page-links a:hover {
+  background-color: #3f51b5;
+  color: whitesmoke;
+}

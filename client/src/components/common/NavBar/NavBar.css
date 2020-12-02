@@ -1,0 +1,10 @@
+#dashboard-link {
+  color: whitesmoke;
+  font-size: 20pt;
+  font-weight: bold;
+  font-family: 'Lato', sans-serif;
+}
+span.MuiTypography-root.MuiListItemText-primary.MuiTypography-body1.MuiTypography-displayBlock {
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+}

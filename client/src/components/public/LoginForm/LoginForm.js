@@ -94,6 +94,7 @@ const RegisterForm = (props) => {
     <>
     <CssBaseline />
     <Container id="login-form" maxWidth="sm">
+    <h2>Thanks for coming back!</h2>
     <form className={classes.root} noValidate onSubmit={sendLoginData} autoComplete="off">
       <div>
         <TextField
@@ -118,11 +119,11 @@ const RegisterForm = (props) => {
           variant="outlined"
         />
       </div>
-      <Button 
-        variant="contained" 
+      <Button
+        variant="contained"
         type="submit"
-        disabled={!isFormValid} 
-        size="large" 
+        disabled={!isFormValid}
+        size="large"
         color="primary"
         id="login-btn"
       >

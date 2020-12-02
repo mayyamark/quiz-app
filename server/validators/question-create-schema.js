@@ -15,7 +15,7 @@ const questionCreateSchema = {
   },
   points: (value) => {
     if (!value) {
-      return 'Question points is required!';
+      return 'The field points is required!';
     }
     const pointsAsNumber = Number(value);
 
@@ -24,18 +24,18 @@ const questionCreateSchema = {
       pointsAsNumber < 1 ||
       pointsAsNumber > 10
     ) {
-      return 'Question points should be valid number between 1 and 10!';
+      return 'The field points should be valid number between 1 and 10!';
     }
 
     return null;
   },
   answers: (value) => {
     if (!value) {
-      return 'answers is required!';
+      return 'Answers are required!';
     }
 
-    if (!Array.isArray(value) || value.length < 1 || value.length > 4) {
-      return 'answers should be an array of 1 to 4 answers!';
+    if (!Array.isArray(value) || value.length < 1 || value.length > 8) {
+      return 'The field answers should be an array of 1 to 8 answers!';
     }
 
     const errors = value

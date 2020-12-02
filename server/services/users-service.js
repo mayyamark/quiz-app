@@ -168,7 +168,7 @@ const getTopStudents = (usersData) => {
    * @async
    * @function getTopStudentsInnerFunction
    * @param { number|undefined } page Search parameter: the page number.
-   * @param { number|undefined } limit Search parameter: the number of quizes per page.
+   * @param { number|undefined } limit Search parameter: the number of quizzes per page.
    * @param { string|undefined } username Search parameter: a users's username.
    * @returns { Promise<object> } The matching users and if the page parameter
    * is defined- page information.

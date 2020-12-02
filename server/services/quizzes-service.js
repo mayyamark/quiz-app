@@ -1,63 +1,65 @@
 /** Service layer.
- * @module services/quizesService
+ * @module services/quizzesService
  */
 
 import serviceErrors from './service-errors.js';
 
 /**
- * Service layer related on quizes.
+ * Service layer related on quizzes.
  * @type { object }
  * @const
- * @namespace quizesService
+ * @namespace quizzesService
  */
 
 /**
- * Returns a function, which gets quizes by given search parameters.
+ * Returns a function, which gets quizzes by given search parameters.
  * @author Mayya Markova
- * @memberof module:services/quizesService~quizesService
- * @param { object } quizesData An object with data-layer functions.
+ * @memberof module:services/quizzesService~quizzesService
+ * @param { object } quizzesData An object with data-layer functions.
  * @return { function } A function, which accepts search parameters and returns the matching results.
  */
-const getQuizes = (quizesData) => {
+const getQuizzes = (quizzesData) => {
   /**
-   * Gets quizes, matching the search.
+   * Gets quizzes, matching the search.
    * @author Mayya Markova
-   * @memberof module:services/quizesService~quizesService
+   * @memberof module:services/quizzesService~quizzesService
    * @async
-   * @function getQuizesInnerFunction
+   * @function getQuizzesInnerFunction
    * @param { number|undefined } page Search parameter: the page number.
-   * @param { number|undefined } limit Search parameter: the number of quizes per page.
+   * @param { number|undefined } limit Search parameter: the number of quizzes per page.
    * @param { string|undefined } category Search parameter: the category's name.
    * @param { string|undefined } teacher Search parameter: the author's name.
-   * @returns { Promise<object> } The matching quizes and if the page parameter
+   * @param { object } user An object with information about the user.
+   * @returns { Promise<object> } The matching quizzes and if the page parameter
    * is defined- page information.
    */
-  return async (page, limit, category, teacher) => {
+  return async (page, limit, category, teacher, user) => {
     if (page || category || teacher) {
       const settedLimit = limit ? limit : 5;
       const offset = (page - 1) * settedLimit;
 
-      const allSearchedQuizes = await quizesData.searchBy(category, teacher);
+      const allSearchedQuizzes = await quizzesData.searchBy(category, teacher);
 
       if (page) {
-        const quizesOnPage = await quizesData.searchByWithPages(
+        const quizzesOnPage = await quizzesData.searchByWithPages(
           category,
           teacher,
           offset,
           settedLimit,
+          user,
         );
 
         return {
-          quizes: quizesOnPage,
+          quizzes: quizzesOnPage,
           currentPage: page,
-          quizesCount: allSearchedQuizes.length,
-          hasNextPage: offset + limit < allSearchedQuizes.length,
+          quizzesCount: allSearchedQuizzes.length,
+          hasNextPage: offset + limit < allSearchedQuizzes.length,
           hasPreviousPage: page > 1,
         };
       } else {
         return {
-          quizes: allSearchedQuizes,
-          quizesCount: allSearchedQuizes.length,
+          quizzes: allSearchedQuizzes,
+          quizzesCount: allSearchedQuizzes.length,
         };
       }
     }
@@ -67,22 +69,22 @@ const getQuizes = (quizesData) => {
 /**
  * Returns a function, which gets a quiz by its ID
  * @author Mayya Markova
- * @memberof module:services/quizesService~quizesService
- * @param { object } quizesData An object with data-layer functions.
+ * @memberof module:services/quizzesService~quizzesService
+ * @param { object } quizzesData An object with data-layer functions.
  * @return { function } A function, which accepts the ID and returns the quiz or an error.
  */
-const getQuizById = (quizesData) => {
+const getQuizById = (quizzesData) => {
   /**
    * Gets a quiz by its ID.
    * @author Mayya Markova
-   * @memberof module:services/quizesService~quizesService
+   * @memberof module:services/quizzesService~quizzesService
    * @async
    * @function getQuizByIdInnerFunction
    * @param { string|number } quizID The ID of the quiz.
    * @returns { Promise<object> } The quiz or an error.
    */
   return async (quizID) => {
-    const quiz = await quizesData.getById(quizID);
+    const quiz = await quizzesData.getById(quizID);
 
     if (!quiz) {
       return {
@@ -123,7 +125,7 @@ const createQuestion = (questionsData, answersData) => async (quiz, question) =>
   return quizQuestion;
 };
 
-const createQuiz = (quizesData, questionsData, answersData, categoriesData) =>  async (user, quizData) => {
+const createQuiz = (quizzesData, questionsData, answersData, categoriesData) =>  async (user, quizData) => {
   const category = await categoriesData.getByName(quizData.category);
 
   if (!category) {
@@ -133,7 +135,7 @@ const createQuiz = (quizesData, questionsData, answersData, categoriesData) =>  
     };
   }
 
-  const quiz = await quizesData.create(
+  const quiz = await quizzesData.create(
     quizData.name,
     quizData.timeLimit,
     user,
@@ -167,7 +169,7 @@ const createQuiz = (quizesData, questionsData, answersData, categoriesData) =>  
 };
 
 export default {
-  getQuizes,
+  getQuizzes,
   getQuizById,
   createQuiz,
 };

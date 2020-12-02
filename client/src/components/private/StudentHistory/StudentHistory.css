@@ -1,0 +1,26 @@
+#student-dashboard-history-container {
+  margin: 0 auto;
+}
+#student-dashboard-history-container #history-link {
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+#student-dashboard-history-table .MuiAvatar-root {
+  width: 30px;
+  height: 30px;
+  margin: auto auto;
+}
+#student-dashboard-history-table .MuiTableCell-body {
+  padding: 7px 0 7px 0;
+}
+#student-dashboard-history-table .MuiTableCell-head {
+  padding: 10px;
+  font-weight: bold;
+}

@@ -1,0 +1,67 @@
+#solve-quiz-container .MuiFormControl-root {
+  border: 0;
+  margin: 0;
+  display: block;
+  padding: 0;
+  position: relative;
+  min-width: 0;
+  flex-direction: column;
+  text-align: center;
+  margin-bottom: 2%;
+}
+#quiz-info {
+  margin: 3% auto;
+  width: 55%;
+  padding: 20px;
+  border: 2px solid silver;
+  border-radius: 4px;
+  user-select: none;
+}
+#quiz-info h1 {
+  color: #3f51b5;
+}
+.question-container {
+  margin: 3% auto;
+  display: grid;
+  width: 55%;
+  padding: 20px;
+  border: 1px solid silver;
+  border-radius: 4px;
+  user-select: none;
+}
+.question-container p {
+  text-align: left;
+  font-size: 14pt;
+}
+#timer {
+  position: fixed;
+  font-size: 14pt;
+  font-weight: bold;
+  width: 184vw;
+  color: #3f51b5;
+
+}
+#timer-icon {
+  position: fixed;
+  font-weight: bold;
+  width: 184vw;
+}
+#timer p {
+  margin-top: 1.5%;
+}
+#solve-btn {
+  padding: 13px;
+  font-weight: bold;
+}
+.question-text {
+  color: #3f51b5;
+  font-weight: bold;
+}
+.question-text-container {
+  display: grid;
+  grid-template-columns: 5% auto;
+}
+.marked-answer {
+  color: #3f51b5;
+  font-weight: 200;
+}

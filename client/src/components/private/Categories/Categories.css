@@ -1,0 +1,23 @@
+#dashboard-categories-container h1 {
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  color: black;
+}
+#dashboard-categories-table .MuiAvatar-root {
+  width: 30px;
+  height: 30px;
+  margin: auto auto;
+}
+#dashboard-categories-table .MuiTableCell-body {
+  padding: 7px 0 7px 0;
+}
+#dashboard-categories-table .MuiTableCell-head {
+  padding: 10px;
+  font-weight: bold;
+}
+#disabled {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color:gray;
+}

@@ -6,7 +6,7 @@ import passport from 'passport';
 import jwtStrategy from './auth/strategy.js';
 import { PORT } from './config.js';
 import authController from './controllers/auth-controller.js';
-import quizesController from './controllers/quizes-controller.js';
+import quizzesController from './controllers/quizzes-controller.js';
 import studentsController from './controllers/students-controller.js';
 import categoriesController from './controllers/categories-controller.js';
 
@@ -21,7 +21,7 @@ app.use(helmet());
 app.use(passport.initialize());
 
 app.use('/auth', authController);
-app.use('/quizes', quizesController);
+app.use('/quizzes', quizzesController);
 app.use('/students', studentsController);
 app.use('/categories', categoriesController);
 

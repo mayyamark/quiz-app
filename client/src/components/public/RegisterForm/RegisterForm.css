@@ -1,10 +1,16 @@
 #register-form {
-    text-align: -webkit-center;
-    margin: auto;
-    padding: 8% 0 0 0;
+  font-family: 'Lato', sans-serif;
+  text-align: -webkit-center;
+  margin: auto;
+  margin-top: 4%;
+  padding: 6% 0 6% 0;
+  border: 1px solid #3f51b5;
+  border-radius: 8px;
+  color: #3f51b5;
 }
 #register-btn {
-    margin-top: 3%;
-    width: 400px;
-    font-weight: bold;
+  margin-top: 3%;
+  width: 400px;
+  font-weight: bold;
+  font-family: 'Lato', sans-serif;
 }

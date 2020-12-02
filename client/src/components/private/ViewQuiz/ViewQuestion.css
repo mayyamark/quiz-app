@@ -1,0 +1,20 @@
+#view-question-container {
+  padding: 7px;
+  border: 1px solid silver;
+  border-radius: 4px;
+  margin-bottom: 2%;
+}
+li.MuiListItem-root.view-question-list-item.MuiListItem-gutters {
+  padding-left: 16px;
+  padding-right: 16px;
+  display: grid;
+  grid-template-columns: 43% 8% 45%;
+  grid-column-gap: 2%;
+}
+#view-quiz-btn {
+  padding: 13px;
+  font-weight: bold;
+}
+#view-history-btn-container {
+  text-align: center;
+}

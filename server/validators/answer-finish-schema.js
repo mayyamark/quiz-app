@@ -1,7 +1,7 @@
 const answerFinishSchema = {
   id: (value) => {
     if (!value) {
-      return 'Question points is required!';
+      return 'Question id is required!';
     }
 
     const answerId = Number(value);
@@ -21,11 +21,11 @@ const answerFinishSchema = {
     }
 
     const errors = value.map(answerIsTrue => {
-      if (!answerIsTrue) {
+      if (answerIsTrue === undefined) {
         return 'Id of marked true is required!';
       }
       const answerMarkedTrueId = Number(answerIsTrue);
-      if (answerMarkedTrueId === Number.NaN || answerMarkedTrueId < 1) {
+      if (answerMarkedTrueId === Number.NaN || answerMarkedTrueId < 0) {
         return 'Answer marked true id should be valid positive number!';
       }
 
