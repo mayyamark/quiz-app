@@ -31,7 +31,7 @@ const LeaderboardPage = memo((props) => {
 
   const { page } = useQueryParams();
 
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(5);
   useEffect(() => {
     onGetLeaderboardPage(page, limit, '');
   }, [onGetLeaderboardPage, page, limit]);

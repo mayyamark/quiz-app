@@ -39,7 +39,6 @@ const TeacherDashboard = (props) => {
   return (
     <div>
       <NavBar />
-      {teacherDash && teacherDash.error && <Alert severity="warning">{teacherDash.error}</Alert>}
       <TeacherDashboardComponent
         quizzesLoading={teacherDash.loading}
         quizzes={quizzes}
