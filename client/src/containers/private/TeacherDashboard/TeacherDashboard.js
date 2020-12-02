@@ -4,7 +4,6 @@ import { createCategory, getQuizzes } from '../../../redux-store/actions/teacher
 import TeacherDashboardComponent from '../../../components/private/TeacherDashboard/TeacherDashboard';
 import NavBar from '../../../components/common/NavBar/NavBar';
 import { useAuth } from '../../../auth/AuthContext';
-import { Alert } from '@material-ui/lab';
 
 const mapStateToProps = (state) => {
   return {

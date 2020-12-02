@@ -14,7 +14,7 @@ const TeacherCreatedQuizzes = props => {
         :
         quizzes && quizzes.length > 0 ?
           <div id="teacher-quizzes-container" >
-            <h1>My Last Quizzes</h1>
+            <h1>My Latest Quizzes</h1>
             <CustomTable
               customIdName="teacher-quizzes-table"
               tableHead={['No', 'Category', 'Quiz', 'Solve Time']}

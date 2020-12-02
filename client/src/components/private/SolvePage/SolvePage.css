@@ -15,6 +15,7 @@
   padding: 20px;
   border: 2px solid silver;
   border-radius: 4px;
+  user-select: none;
 }
 #quiz-info h1 {
   color: #3f51b5;
@@ -26,6 +27,7 @@
   padding: 20px;
   border: 1px solid silver;
   border-radius: 4px;
+  user-select: none;
 }
 .question-container p {
   text-align: left;
