@@ -1,7 +1,7 @@
 const answerFinishSchema = {
   id: (value) => {
     if (!value) {
-      return 'Question points is required!';
+      return 'Question id is required!';
     }
 
     const answerId = Number(value);

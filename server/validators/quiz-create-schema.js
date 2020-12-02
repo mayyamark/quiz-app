@@ -16,11 +16,11 @@ const quizCreateSchema = {
   },
   timeLimit: (value) => {
     if (!value) {
-      return 'timeLimit is required!';
+      return 'The field timeLimit is required!';
     }
     const pointsAsNumber = Number(value);
     if (pointsAsNumber === Number.NaN) {
-      return 'timeLimit should be valid number!';
+      return 'The field timeLimit should be valid number!';
     }
 
     return null;
@@ -30,11 +30,11 @@ const quizCreateSchema = {
   },
   questions: (value) => {
     if (!value) {
-      return 'questions is required!';
+      return 'The field questions are required!';
     }
 
     if (!(value instanceof Array) || value.length < 2 || value.length > 50) {
-      return 'questions should be an array of 2 to 50 questions!';
+      return 'The field questions should be an array of 2 to 50 questions!';
     }
 
     const errors = value

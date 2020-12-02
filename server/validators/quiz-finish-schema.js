@@ -14,11 +14,11 @@ const quizFinishSchema = {
   },
   questionAnswers: (value) => {
     if (!value) {
-      return 'questionAnswers is required!';
+      return 'The field questionAnswers is required!';
     }
 
     if (!(value instanceof Array) || value.length < 1) {
-      return 'questionAnswers should be an array with at least one answer!';
+      return 'The field questionAnswers should be an array with at least one answer!';
     }
 
     const errors = value

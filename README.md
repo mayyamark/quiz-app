@@ -26,7 +26,7 @@ Here is a snapshot of the directory organisation:
       - components: contains our presentational components:
         - common: common presentational components;
         - private: private presentational components;
-        - public: public presebtational components;
+        - public: public presentational components;
       - containers: logic components:
         - public: private logic components;
         - private: public logic components;
