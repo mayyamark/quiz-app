@@ -28,6 +28,7 @@ const RegisterForm = (props) => {
         required: true,
         minLength: 3,
         maxLength: 25,
+        regex: /^[a-zA-Z0-9]+([_.]?[a-zA-Z0-9])*$/,
       },
       valid: false,
       touched: false,
@@ -37,6 +38,7 @@ const RegisterForm = (props) => {
       validations: {
         required: true,
         minLength: 4,
+        regex: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#? !@$%^&*-])/,
       },
       valid: false,
       touched: false,
@@ -47,6 +49,7 @@ const RegisterForm = (props) => {
         required: true,
         minLength: 2,
         maxLength: 25,
+        regex: /^[A-Z][a-z0-9_-]/,
       },
       valid: false,
       touched: false,
@@ -57,6 +60,7 @@ const RegisterForm = (props) => {
         required: true,
         minLength: 2,
         maxLength: 25,
+        regex: /^[A-Z][a-z0-9_-]/,
       },
       valid: false,
       touched: false,
@@ -67,10 +71,10 @@ const RegisterForm = (props) => {
     ev.preventDefault();
 
     const registrationData = Object.keys(form).reduce((acc, key) => {
-        return {
-          ...acc,
-          [key]: form[key].value,
-        };
+      return {
+        ...acc,
+        [key]: form[key].value,
+      };
     }, {});
 
     registrationData.avatar = randomAvatar;
@@ -89,6 +93,9 @@ const RegisterForm = (props) => {
     }
     if (validations.maxLength) {
       isValid = isValid && input.length <= validations.maxLength;
+    }
+    if (validations.regex) {
+      isValid = isValid && validations.regex.test(input);
     }
 
     return isValid;
@@ -112,79 +119,98 @@ const RegisterForm = (props) => {
     setIsFormValid(checkIfFormIsValid);
   };
 
-
   return (
     <>
-    <CssBaseline />
-    <Container id="register-form" maxWidth="sm">
-    <h2>It would take only a few seconds!</h2>
-    <form className={classes.root} noValidate onSubmit={sendRegistrationData} autoComplete="off">
-      <div>
-        <TextField
-          error={form.username.touched && !form.username.valid}
-          className="outlined-error-helper-text"
-          label="Username"
-          name="username"
-          value={form.username.value}
-          onChange={handleInputChange}
-          placeholder="Enter username"
-          variant="outlined"
-          helperText={(form.username.touched && !form.username.valid) ? 'Should be between 3 and 25 symbols.' : '' }
-        />
-      </div>
-      <div>
-        <TextField
-          error={form.password.touched && !form.password.valid}
-          className="outlined-error-helper-text"
-          label="Password"
-          name="password"
-          value={form.password.value}
-          onChange={handleInputChange}
-          placeholder="Enter password"
-          type="password"
-          helperText={(form.password.touched && !form.password.valid) ? 'Should be more than 4 symbols.' : '' }
-          variant="outlined"
-        />
-      </div>
-      <div>
-        <TextField
-          error={form.firstName.touched && !form.firstName.valid}
-          className="outlined-error-helper-text"
-          label="First name"
-          name="firstName"
-          value={form.firstName.value}
-          onChange={handleInputChange}
-          placeholder="Enter first name"
-          helperText={(form.firstName.touched && !form.firstName.valid) ? 'Required' : '' }
-          variant="outlined"
-        />
-        <TextField
-          error={form.lastName.touched && !form.lastName.valid}
-          className="outlined-error-helper-text"
-          label="Last name"
-          name="lastName"
-          value={form.lastName.value}
-          onChange={handleInputChange}
-          placeholder="Enter last name"
-          helperText={(form.lastName.touched && !form.lastName.valid) ? 'Required' : '' }
-          variant="outlined"
-        />
-      </div>
-      <Button
-        variant="contained"
-        type="submit"
-        disabled={!isFormValid}
-        size="large"
-        color="primary"
-        id="register-btn"
-      >
-        REGISTER
-      </Button>
-    </form>
-    </Container>
+      <CssBaseline />
+      <Container id="register-form" maxWidth="sm">
+        <h2>It would take only a few seconds!</h2>
+        <form
+          className={classes.root}
+          noValidate
+          onSubmit={sendRegistrationData}
+          autoComplete="off"
+        >
+          <div>
+            <TextField
+              error={form.username.touched && !form.username.valid}
+              className="outlined-error-helper-text"
+              label="Username"
+              name="username"
+              value={form.username.value}
+              onChange={handleInputChange}
+              placeholder="Enter username"
+              variant="outlined"
+              helperText={
+                form.username.touched && !form.username.valid
+                  ? '* Should be between 3 and 25 symbols.'
+                  : ''
+              }
+            />
+          </div>
+          <div>
+            <TextField
+              error={form.password.touched && !form.password.valid}
+              className="outlined-error-helper-text"
+              label="Password"
+              name="password"
+              value={form.password.value}
+              onChange={handleInputChange}
+              placeholder="Enter password"
+              type="password"
+              helperText={
+                form.password.touched && !form.password.valid
+                  ? '* Should be between 4 and 25 characters. Should contain upper and lower case letters, a number and a special symbol!'
+                  : ''
+              }
+              variant="outlined"
+            />
+          </div>
+          <div>
+            <TextField
+              error={form.firstName.touched && !form.firstName.valid}
+              className="outlined-error-helper-text"
+              label="First name"
+              name="firstName"
+              value={form.firstName.value}
+              onChange={handleInputChange}
+              placeholder="Enter first name"
+              helperText={
+                form.firstName.touched && !form.firstName.valid
+                  ? '* Should start with an upper case letter!'
+                  : ''
+              }
+              variant="outlined"
+            />
+            <TextField
+              error={form.lastName.touched && !form.lastName.valid}
+              className="outlined-error-helper-text"
+              label="Last name"
+              name="lastName"
+              value={form.lastName.value}
+              onChange={handleInputChange}
+              placeholder="Enter last name"
+              helperText={
+                form.lastName.touched && !form.lastName.valid
+                  ? '* Should start with an upper case letter!!'
+                  : ''
+              }
+              variant="outlined"
+            />
+          </div>
+          <Button
+            variant="contained"
+            type="submit"
+            disabled={!isFormValid}
+            size="large"
+            color="primary"
+            id="register-btn"
+          >
+            REGISTER
+          </Button>
+        </form>
+      </Container>
     </>
   );
-
 };
 
 export default RegisterForm;

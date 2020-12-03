@@ -27,6 +27,9 @@ const userRegisterSchema = {
     if (typeof value !== 'string' || value.length < 3 || value.length > 25) {
       return 'Username should be a string in range [3..25]!';
     }
+    if (!/^[a-zA-Z0-9]+([_.]?[a-zA-Z0-9])*$/.test(value)) {
+      return 'Username always has to start with an alphanumeric character. Special characters (_, , -) have to be followed by an alphanumeric character. The last character has to be an alphanumeric character!';
+    }
 
     return null;
   },
@@ -48,6 +51,9 @@ const userRegisterSchema = {
 
     if (typeof value !== 'string' || value.length < 3 || value.length > 25) {
       return 'Password should be a string in range [3..25]!';
+    }
+    if (!/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#? !@$%^&*-])/.test(value)) {
+      return 'Should contain upper and lower case letters, a number and a special symbol!';
     }
 
     return null;
@@ -72,6 +78,10 @@ const userRegisterSchema = {
       return 'First name should be a string in range [2..25]!';
     }
 
+    if (!/^[A-Z][a-z0-9_-]/.test(value)) {
+      return 'Should start with an upper case letter!';
+    }
+
     return null;
   },
   /**
@@ -92,6 +102,10 @@ const userRegisterSchema = {
 
     if (typeof value !== 'string' || value.length < 2 || value.length > 25) {
       return 'Last name should be a string in range [2..25]!';
+    }
+
+    if (!/^[A-Z][a-z0-9_-]/.test(value)) {
+      return 'Should start with an upper case letter!';
     }
 
     return null;

@@ -192,8 +192,8 @@ const getTopStudents = (usersData) => {
         };
       } else {
         return {
-          history: allSearchedStudents,
-          historyCount: allSearchedStudents.length,
+          students: allSearchedStudents,
+          studentsCount: allSearchedStudents.length,
         };
       }
     }
