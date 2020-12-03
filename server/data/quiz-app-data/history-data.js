@@ -195,7 +195,7 @@ const searchByQuizIdPaged = async (quizId, offset, limit) => {
     FROM quiz.history
     JOIN quizzes ON quizzes.id = history.quizID
     JOIN users ON users.id = history.userID
-    WHERE history.quizID = ?
+    WHERE history.quizID = ? AND users.roleID = 2
   `;
   let withLimit = '';
 
