@@ -112,7 +112,17 @@ const SolvePage = memo((props) => {
         <div id="solve-quiz-container">
           <div id="timer">
             <AccessTimeIcon id="timer-icon" />
-            <p>{`${duration.hours()}:${duration.minutes()}:${duration.seconds()}`}</p>
+            <p>{`${
+              duration.hours() < 10 ? `0${duration.hours()}` : duration.hours()
+            }:${
+              duration.minutes() < 10
+                ? `0${duration.minutes()}`
+                : duration.minutes()
+            }:${
+              duration.seconds() < 10
+                ? `0${duration.seconds()}`
+                : duration.seconds()
+            }`}</p>
           </div>
           <FormControl>
             <div id="quiz-info">
