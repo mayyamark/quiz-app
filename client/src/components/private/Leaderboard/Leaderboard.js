@@ -10,7 +10,6 @@ const Leaderboard = memo((props) => {
   const {
     leaderboard,
     loading,
-    error,
     onInitLeaderboard,
     hasLeaderboard,
   } = props;
@@ -48,7 +47,6 @@ const Leaderboard = memo((props) => {
 
 Leaderboard.defaultProps = {
   leaderboard: {},
-  error: false,
   loading: false,
   hasLeaderbord: false,
   onInitLeaderboard: () => {},

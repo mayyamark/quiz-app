@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import moment from 'moment';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../../auth/AuthContext';
 import { Alert } from '@material-ui/lab';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -17,7 +17,6 @@ import {
   removeSearchParam,
 } from '../../../common/manage-search-param.js';
 import CustomTable from '../../common/CustomTable/CustomTable';
-import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import NavBar from '../../common/NavBar/NavBar';
 import './StudentHistoryPage.css';
 
@@ -25,7 +24,6 @@ const StudentHistoryPage = memo((props) => {
   const {
     studentHistoryPage,
     loading,
-    error,
     onGetStudentHistoryPage,
     hasStudentHistoryPage,
   } = props;
@@ -44,9 +42,7 @@ const StudentHistoryPage = memo((props) => {
 
   return (
     <>
-      {error ? (
-        <ErrorPage />
-      ) : loading ? (
+      {loading ? (
         <CircularProgress />
       ) : hasStudentHistoryPage ? (
         <>
@@ -159,7 +155,6 @@ const StudentHistoryPage = memo((props) => {
 
 StudentHistoryPage.defaultProps = {
   studentHistoryPage: {},
-  error: false,
   loading: false,
   hasStudentHistoryPage: false,
   onGetStudentHistoryPage: () => {},

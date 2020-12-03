@@ -16,7 +16,6 @@ import {
 } from '../../../common/manage-search-param.js';
 import CustomTable from '../../common/CustomTable/CustomTable';
 import SearchIcon from '@material-ui/icons/Search';
-import ErrorPage from '../../common/ErrorPage/ErrorPage';
 import './LeaderboardPage.css';
 import NavBar from '../../common/NavBar/NavBar.js';
 
@@ -24,7 +23,6 @@ const LeaderboardPage = memo((props) => {
   const {
     leaderboardPage,
     loading,
-    error,
     onGetLeaderboardPage,
     hasLeaderboardPage,
   } = props;
@@ -43,9 +41,7 @@ const LeaderboardPage = memo((props) => {
 
   return (
     <>
-      {error ? (
-        <ErrorPage />
-      ) : loading ? (
+      {loading ? (
         <CircularProgress />
       ) : hasLeaderboardPage ? (
         <>
@@ -145,7 +141,6 @@ const LeaderboardPage = memo((props) => {
 
 LeaderboardPage.defaultProps = {
   leaderboardPage: {},
-  error: false,
   loading: false,
   hasLeaderbord: false,
   onGetLeaderboardPage: () => {},

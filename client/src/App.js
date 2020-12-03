@@ -21,7 +21,7 @@ const App = () => {
         }, user.exp * 1000 - Date.now());
       }
       return () => clearTimeout();
-    }, [user]);
+    }, [user, removeToken, setUser]);
 
 
     return (

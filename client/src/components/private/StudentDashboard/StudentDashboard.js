@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StudentDashboard = () => {
-  const classes = useStyles();
+  const classes  = useStyles();
 
   return (
     <div id="student-dashboard">
