@@ -116,9 +116,12 @@ const StudentHistoryPage = memo((props) => {
                   ),
                   finished: (
                     <>
-                      {moment(new Date(history.finished)).format(
-                        'MMM Do YYYY, h:mm:ss a',
-                      )}
+                      {new Date(history.finished).getFullYear().toString() ===
+                      '1970'
+                        ? 'Anulated!'
+                        : moment(new Date(history.finished)).format(
+                            'MMM Do YYYY, h:mm:ss a',
+                          )}
                     </>
                   ),
                   score: <>{history.score}</>,

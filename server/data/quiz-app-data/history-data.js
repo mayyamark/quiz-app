@@ -63,7 +63,7 @@ const searchByWithPages = async (userID, quiz, offset, limit) => {
     historySql += ` AND q.name LIKE '%${quiz}%'`;
   }
 
-  historySql += ' ORDER BY h.finished DESC';
+  historySql += ' ORDER BY h.started DESC';
 
   if (offset !== undefined && limit) {
     historySql += ` LIMIT ${limit} OFFSET ${offset}`;
