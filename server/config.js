@@ -33,7 +33,7 @@ const PORT = config.SERVER_PORT || 5000;
  * @memberof module:config~configOptions
  */
 const DB_QUIZ_CONFIG = {
-  host: config.DB_HOST,
+  host: config.DB_HOST || 'localhost',
   port: '3306',
   user: config.DB_USER,
   password: config.DB_PASSWORD,
@@ -47,7 +47,7 @@ const DB_QUIZ_CONFIG = {
  * @memberof module:config~configOptions
  */
 const DB_BLACKLIST_CONFIG = {
-  host: config.DB_HOST,
+  host: config.DB_HOST || 'localhost',
   port: '3306',
   user: config.DB_USER,
   password: config.DB_PASSWORD,
@@ -60,7 +60,7 @@ const DB_BLACKLIST_CONFIG = {
  * @type { string }
  * @memberof module:config~configOptions
  */
-const SECRET_KEY = config.SECRET_KEY;
+const SECRET_KEY = config.SECRET_KEY || 'mysecretkey';
 
 /**
  * The lifetime of the token.
