@@ -1,0 +1,55 @@
+version: "3.4"
+
+services:
+  mariadb:
+    image: mariadb
+    container_name: quiz_mariadb_container
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    restart: unless-stopped
+    volumes:
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+  phpmyadmin:
+    depends_on:
+      - mariadb
+    image: phpmyadmin/phpmyadmin
+    container_name: quiz_phpadmin_container
+    environment:
+      PMA_HOST: mariadb
+    links:
+      - mariadb:mariadb
+    ports:
+      - 8080:80
+    restart: always
+  server:
+    build: ./server
+    container_name: quiz_node_server_container
+    depends_on:
+      - mariadb
+    environment:
+      DB_HOST: mariadb
+      DB_USER: root
+      DB_PASSWORD: root
+      SERVER_PORT: 5000
+      SECRET_KEY: mysecretkey
+    ports:
+      - 5000:5000
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    links:
+      - mariadb
+    command: npm start
+  client:
+    build: ./client
+    container_name: quiz_client_container
+    stdin_open: true    
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client/src:/app/src
+    links:
+      - server
+    command: npm start

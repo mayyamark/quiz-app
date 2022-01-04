@@ -16,7 +16,7 @@ import dotenv from 'dotenv';
  * @type { object }
  * @memberof module:config~configOptions
  */
-const config = dotenv.config().parsed;
+const config = dotenv.config().parsed || process.env;
 
 /**
  * Server listening port.
@@ -24,7 +24,7 @@ const config = dotenv.config().parsed;
  * @type { number }
  * @memberof module:config~configOptions
  */
-const PORT = config.PORT || 5000;
+const PORT = config.SERVER_PORT || 5000;
 
 /**
  * Object, containing options for the database configuration.
@@ -33,7 +33,7 @@ const PORT = config.PORT || 5000;
  * @memberof module:config~configOptions
  */
 const DB_QUIZ_CONFIG = {
-  host: 'localhost',
+  host: config.DB_HOST,
   port: '3306',
   user: config.DB_USER,
   password: config.DB_PASSWORD,
@@ -47,7 +47,7 @@ const DB_QUIZ_CONFIG = {
  * @memberof module:config~configOptions
  */
 const DB_BLACKLIST_CONFIG = {
-  host: 'localhost',
+  host: config.DB_HOST,
   port: '3306',
   user: config.DB_USER,
   password: config.DB_PASSWORD,
